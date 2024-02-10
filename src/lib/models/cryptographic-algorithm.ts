@@ -1,7 +1,7 @@
 interface AsymmetricKeyPair {
-	public: ArrayBuffer,
-	private: ArrayBuffer,
-};
+	public: ArrayBuffer;
+	private: ArrayBuffer;
+}
 
 export abstract class CryptographicAlgorithm {
 	private algorithm: RsaHashedKeyGenParams;
@@ -17,7 +17,7 @@ export abstract class CryptographicAlgorithm {
 
 		return {
 			public: await crypto.subtle.exportKey('spki', keyPair.publicKey),
-			private: await crypto.subtle.exportKey('spki', keyPair.privateKey),
+			private: await crypto.subtle.exportKey('spki', keyPair.privateKey)
 		};
 	}
 }

@@ -15,15 +15,14 @@ function createContactsListStore(window: Window) {
 
 	return {
 		subscribe,
-		triggerCreateList: () => triggerCreateContactsList(
-			store, storage, cryptoAlgorithm,),
+		triggerCreateList: () => triggerCreateContactsList(store, storage, cryptoAlgorithm)
 	};
 }
 
 async function triggerCreateContactsList(
 	store: Store<ContactsListState>,
 	storage: BrowserStorage<string>,
-	cryptoAlgorithm: CryptographicAlgorithm,
+	cryptoAlgorithm: CryptographicAlgorithm
 ) {
 	const keyPair = await cryptoAlgorithm.generate();
 	console.log('key-pair generated');
