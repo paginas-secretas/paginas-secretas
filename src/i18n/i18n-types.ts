@@ -16,6 +16,10 @@ type RootTranslation = {
 	 * T​h​i​s​ ​p​r​o​j​e​c​t​ ​w​a​s​ ​g​e​n​e​r​a​t​e​d​ ​w​i​t​h​ ​d​a​r​t​-​p​a​c​o​t​e​s​/​.​b​r​i​c​k​s​:​ ​h​t​t​p​s​:​/​/​g​i​t​h​u​b​.​c​o​m​/​d​a​r​t​-​p​a​c​o​t​e​s​/​.​b​r​i​c​k​s​/​t​r​e​e​/​m​a​s​t​e​r​/​a​p​l​i​c​a​c​a​o​-​w​e​b
 	 */
 	greetings: string;
+	/**
+	 * C​r​e​a​t​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+	 */
+	createList: string;
 };
 
 export type TranslationFunctions = {
@@ -23,6 +27,10 @@ export type TranslationFunctions = {
 	 * This project was generated with dart-pacotes/.bricks: https://github.com/dart-pacotes/.bricks/tree/master/aplicacao-web
 	 */
 	greetings: () => LocalizedString;
+	/**
+	 * Create contacts list
+	 */
+	createList: () => LocalizedString;
 };
 
 export type Formatters = {};
