@@ -4,3 +4,4 @@
 export { default as Heading } from './heading.svelte';
 export { default as RedBall } from './red_ball.svelte';
 export * from './card';
+export * from './button';
