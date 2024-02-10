@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Heading, CreateContactsListButton } from '@components';
+	import { CreateContactsListButton } from '@components';
 	import { ContactsListStore } from '@stores';
 	const store = ContactsListStore;
 
@@ -9,5 +9,6 @@
 	}
 </script>
 
-<Heading value="paginas-secretas" />
+<div class="flex flex-col items-center">
 <CreateContactsListButton onClick={triggerCreateContactsList} />
+</div>
