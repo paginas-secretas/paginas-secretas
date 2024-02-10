@@ -10,5 +10,5 @@
 </script>
 
 <div class="flex flex-col items-center">
-<CreateContactsListButton onClick={triggerCreateContactsList} />
+	<CreateContactsListButton onClick={triggerCreateContactsList} />
 </div>
