@@ -24,5 +24,5 @@ async function triggerCreateContactsList(
 	const keyPair = await cryptoAlgorithm.generate();
 	console.log('key-pair generated');
 	console.log(keyPair);
-	store.update('');
+	// store.update('');
 }
