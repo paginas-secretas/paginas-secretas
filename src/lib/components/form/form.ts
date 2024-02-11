@@ -17,6 +17,7 @@ export interface FormInput {
 	description: string | undefined;
 	placeholder: string | undefined;
 	type: FormInputType;
+	possibleValues: string[];
 }
 
 export interface FormControl {
@@ -34,7 +35,7 @@ export interface FormSubmission {
 
 export type FormOutput = string;
 
-export type FormInputType = 'raw' | 'email' | 'secret' | 'phone-number' | 'number';
+export type FormInputType = 'raw' | 'email' | 'secret' | 'phone-number' | 'number' | 'list';
 export type FormControlType = 'button';
 
 export function initialSubmission(form: Form): FormSubmission {

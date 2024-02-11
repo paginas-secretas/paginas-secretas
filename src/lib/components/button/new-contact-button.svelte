@@ -15,14 +15,16 @@
 				description: $LL.form.newContact.descriptions.name(),
 				label: $LL.form.newContact.labels.name(),
 				placeholder: $LL.form.newContact.placeholders.name(),
-				type: 'raw'
+				type: 'raw',
+				possibleValues: []
 			},
 			{
 				id: 'email',
 				description: $LL.form.newContact.descriptions.email(),
 				label: $LL.form.newContact.labels.email(),
 				placeholder: $LL.form.newContact.placeholders.email(),
-				type: 'email'
+				type: 'email',
+				possibleValues: []
 			}
 		],
 		additional: [
@@ -31,14 +33,18 @@
 				description: $LL.form.newContact.descriptions.phoneNumber(),
 				label: $LL.form.newContact.labels.phoneNumber(),
 				placeholder: $LL.form.newContact.placeholders.phoneNumber(),
-				type: 'phone-number'
+				type: 'phone-number',
+				possibleValues: []
 			},
 			{
 				id: 'gender',
 				description: $LL.form.newContact.descriptions.gender(),
 				label: $LL.form.newContact.labels.gender(),
 				placeholder: $LL.form.newContact.placeholders.gender(),
-				type: 'list'
+				type: 'list',
+				possibleValues: Object.keys($LL.form.newContact.values.gender).map((key) =>
+					($LL.form.newContact.values.gender as { [key: string]: () => LocalizedString })[key]()
+				)
 			}
 		],
 		control: {

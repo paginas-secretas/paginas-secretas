@@ -16,13 +16,26 @@
 	{#each form.required as input}
 		<div id="{form.id}-{input.id}" class="form-field">
 			<label class="form-label" for="input-{input.id}">{input.label}</label>
-			<input
-				id="input-{input.id}"
-				placeholder={input.placeholder}
-				type={toHTMLInputTypeAttribute(input.type)}
-				class="input max-w-full"
-				on:input={(event) => submission.required.set(input, event.currentTarget.value)}
-			/>
+			{#if input.type === 'list'}
+				<select
+					class="select"
+					on:input={(event) => {
+						submission.additional.set(input, event.currentTarget.value);
+					}}
+				>
+					{#each input.possibleValues as value}
+						<option>{value}</option>
+					{/each}
+				</select>
+			{:else}
+				<input
+					id="input-{input.id}"
+					placeholder={input.placeholder}
+					type={toHTMLInputTypeAttribute(input.type)}
+					class="input max-w-full"
+					on:input={(event) => submission.required.set(input, event.currentTarget.value)}
+				/>
+			{/if}
 			{#if input.description}
 				<label class="form-label" for="input-{input.id}">
 					<span class="form-label-alt">{input.description}</span>
@@ -35,13 +48,26 @@
 		{#each form.additional as input}
 			<div id="{form.id}-{input.id}" class="form-field">
 				<label class="form-label" for="input-{input.id}">{input.label}</label>
-				<input
-					id="input-{input.id}"
-					placeholder={input.placeholder}
-					type={toHTMLInputTypeAttribute(input.type)}
-					class="input max-w-full"
-					on:input={(event) => submission.additional.set(input, event.currentTarget.value)}
-				/>
+				{#if input.type === 'list'}
+					<select
+						class="select"
+						on:input={(event) => {
+							submission.additional.set(input, event.currentTarget.value);
+						}}
+					>
+						{#each input.possibleValues as value}
+							<option>{value}</option>
+						{/each}
+					</select>
+				{:else}
+					<input
+						id="input-{input.id}"
+						placeholder={input.placeholder}
+						type={toHTMLInputTypeAttribute(input.type)}
+						class="input max-w-full"
+						on:input={(event) => submission.additional.set(input, event.currentTarget.value)}
+					/>
+				{/if}
 				{#if input.description}
 					<label class="form-label" for="input-{input.id}">
 						<span class="form-label-alt">{input.description}</span>
