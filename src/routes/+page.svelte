@@ -21,7 +21,7 @@
 <div class="flex flex-col items-center">
 	{#if $contactsListStore.success}
 		<div class="flex flex-col items-center">
-			<ContactsListViewer />
+			<ContactsListViewer contactsList={$contactsListStore.value.value} />
 			<NewContactButton
 				onClick={() => {
 					showNewContactModalForm = true;
@@ -29,7 +29,13 @@
 			/>
 		</div>
 		{#if showNewContactModalForm}
-			<ModalForm form={$newContactStore.value} onSubmit={() => (showNewContactModalForm = false)} />
+			<ModalForm
+				form={$newContactStore.value}
+				onSubmit={(result) => {
+					showNewContactModalForm = false;
+					contactsListStore.triggerStoreList(result);
+				}}
+			/>
 		{/if}
 	{:else}
 		<CreateContactsListButton onClick={triggerCreateContactsList} />
