@@ -1,5 +1,8 @@
 import { CryptographicAlgorithm } from './cryptographic-algorithm';
 
+/**
+ * A {@link CryptographicAlgorithm} that uses `RSA-OAEP` with 2048 bit keys.
+ */
 export class RSAOAEPAlgorithm extends CryptographicAlgorithm {
 	constructor() {
 		super(<RsaHashedKeyGenParams>{
