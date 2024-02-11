@@ -1,3 +1,4 @@
+import type { FormTranslation } from '../form';
 import type { BaseTranslation } from '../i18n-types';
 
 const en = {
@@ -29,7 +30,7 @@ const en = {
 			values: {
 				gender: ['Female', 'Male', 'None', 'Other', 'Unknown']
 			}
-		}
+		} satisfies FormTranslation
 	}
 } satisfies BaseTranslation;
 
