@@ -22,7 +22,7 @@
 					id="select-{input.id}"
 					placeholder={input.placeholder}
 					value={input.placeholder}
-					class="select"
+					class="select max-w-full"
 					on:input={(event) => {
 						submission.additional.set(input, event.currentTarget.value);
 					}}
@@ -57,7 +57,7 @@
 						id="select-{input.id}"
 						placeholder={input.placeholder}
 						value={input.placeholder}
-						class="select"
+						class="select max-w-full"
 						on:input={(event) => {
 							submission.additional.set(input, event.currentTarget.value);
 						}}
