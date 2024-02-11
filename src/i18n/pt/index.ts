@@ -27,7 +27,9 @@ const pt = {
 				gender: 'Preenche aqui'
 			},
 			values: {
-				gender: ['Feminino', 'Masculino', 'Nenhum', 'Outro', 'Desconhecido']
+				gender: ['Feminino', 'Masculino', 'Nenhum', 'Outro', 'Desconhecido'],
+				phoneNumber: ['Casa', 'Trabalho', 'Movél', 'Outro', 'Voz'],
+				address: ['Casa', 'Trabalho']
 			}
 		}
 	}

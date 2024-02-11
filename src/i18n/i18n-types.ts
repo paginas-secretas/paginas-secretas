@@ -111,6 +111,38 @@ type RootTranslation = {
 					 */
 					'4': string;
 				};
+				phoneNumber: {
+					/**
+					 * H​o​m​e
+					 */
+					'0': string;
+					/**
+					 * W​o​r​k
+					 */
+					'1': string;
+					/**
+					 * M​o​b​i​l​e
+					 */
+					'2': string;
+					/**
+					 * O​t​h​e​r
+					 */
+					'3': string;
+					/**
+					 * V​o​i​c​e
+					 */
+					'4': string;
+				};
+				address: {
+					/**
+					 * H​o​m​e
+					 */
+					'0': string;
+					/**
+					 * W​o​r​k
+					 */
+					'1': string;
+				};
 			};
 		};
 	};
@@ -215,6 +247,38 @@ export type TranslationFunctions = {
 					 * Unknown
 					 */
 					'4': () => LocalizedString;
+				};
+				phoneNumber: {
+					/**
+					 * Home
+					 */
+					'0': () => LocalizedString;
+					/**
+					 * Work
+					 */
+					'1': () => LocalizedString;
+					/**
+					 * Mobile
+					 */
+					'2': () => LocalizedString;
+					/**
+					 * Other
+					 */
+					'3': () => LocalizedString;
+					/**
+					 * Voice
+					 */
+					'4': () => LocalizedString;
+				};
+				address: {
+					/**
+					 * Home
+					 */
+					'0': () => LocalizedString;
+					/**
+					 * Work
+					 */
+					'1': () => LocalizedString;
 				};
 			};
 		};

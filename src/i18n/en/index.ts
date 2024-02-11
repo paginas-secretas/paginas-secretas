@@ -28,7 +28,9 @@ const en = {
 				gender: 'Type here'
 			},
 			values: {
-				gender: ['Female', 'Male', 'None', 'Other', 'Unknown']
+				gender: ['Female', 'Male', 'None', 'Other', 'Unknown'],
+				phoneNumber: ['Home', 'Work', 'Mobile', 'Other', 'Voice'],
+				address: ['Home', 'Work']
 			}
 		} satisfies FormTranslation
 	}
