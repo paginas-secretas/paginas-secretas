@@ -20,6 +20,83 @@ type RootTranslation = {
 	 * N​e​w
 	 */
 	new: string;
+	form: {
+		newContact: {
+			/**
+			 * C​o​n​t​a​c​t​ ​D​e​t​a​i​l​s
+			 */
+			name: string;
+			/**
+			 * F​i​l​l​ ​i​n​ ​a​l​l​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​i​n​f​o​r​m​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​c​o​n​t​a​c​t
+			 */
+			description: string;
+			labels: {
+				/**
+				 * N​a​m​e
+				 */
+				name: string;
+				/**
+				 * E​-​m​a​i​l
+				 */
+				email: string;
+				/**
+				 * P​h​o​n​e​ ​N​u​m​b​e​r
+				 */
+				phoneNumber: string;
+				/**
+				 * G​e​n​d​e​r
+				 */
+				gender: string;
+				/**
+				 * S​u​b​m​i​t
+				 */
+				control: string;
+			};
+			descriptions: {
+				/**
+				 * T​h​e​ ​c​o​n​t​a​c​t​ ​n​a​m​e
+				 */
+				name: string;
+				/**
+				 * T​h​e​ ​c​o​n​t​a​c​t​ ​e​-​m​a​i​l​ ​a​d​d​r​e​s​s
+				 */
+				email: string;
+				/**
+				 * T​h​e​ ​c​o​n​t​a​c​t​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+				 */
+				phoneNumber: string;
+				/**
+				 * G​e​n​d​e​r
+				 */
+				gender: string;
+			};
+			placeholders: {};
+			values: {
+				gender: {
+					/**
+					 * F​e​m​a​l​e
+					 */
+					'0': string;
+					/**
+					 * M​a​l​e
+					 */
+					'1': string;
+					/**
+					 * N​o​n​e
+					 */
+					'2': string;
+					/**
+					 * O​t​h​e​r
+					 */
+					'3': string;
+					/**
+					 * U​n​k​n​o​w​n
+					 */
+					'4': string;
+				};
+			};
+		};
+	};
 };
 
 export type TranslationFunctions = {
@@ -31,6 +108,83 @@ export type TranslationFunctions = {
 	 * New
 	 */
 	new: () => LocalizedString;
+	form: {
+		newContact: {
+			/**
+			 * Contact Details
+			 */
+			name: () => LocalizedString;
+			/**
+			 * Fill in all the required information of the contact
+			 */
+			description: () => LocalizedString;
+			labels: {
+				/**
+				 * Name
+				 */
+				name: () => LocalizedString;
+				/**
+				 * E-mail
+				 */
+				email: () => LocalizedString;
+				/**
+				 * Phone Number
+				 */
+				phoneNumber: () => LocalizedString;
+				/**
+				 * Gender
+				 */
+				gender: () => LocalizedString;
+				/**
+				 * Submit
+				 */
+				control: () => LocalizedString;
+			};
+			descriptions: {
+				/**
+				 * The contact name
+				 */
+				name: () => LocalizedString;
+				/**
+				 * The contact e-mail address
+				 */
+				email: () => LocalizedString;
+				/**
+				 * The contact phone number
+				 */
+				phoneNumber: () => LocalizedString;
+				/**
+				 * Gender
+				 */
+				gender: () => LocalizedString;
+			};
+			placeholders: {};
+			values: {
+				gender: {
+					/**
+					 * Female
+					 */
+					'0': () => LocalizedString;
+					/**
+					 * Male
+					 */
+					'1': () => LocalizedString;
+					/**
+					 * None
+					 */
+					'2': () => LocalizedString;
+					/**
+					 * Other
+					 */
+					'3': () => LocalizedString;
+					/**
+					 * Unknown
+					 */
+					'4': () => LocalizedString;
+				};
+			};
+		};
+	};
 };
 
 export type Formatters = {};
