@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CreateContactsListButton } from '@components';
+	import { ContactsListViewer, CreateContactsListButton, NewContactButton } from '@components';
 	import { ContactsListStore } from '@stores';
 	const store = ContactsListStore;
 
@@ -10,5 +10,12 @@
 </script>
 
 <div class="flex flex-col items-center">
-	<CreateContactsListButton onClick={triggerCreateContactsList} />
+	{#if $store.success}
+		<div>
+			<ContactsListViewer />
+			<NewContactButton onClick={() => {}} />
+		</div>
+	{:else}
+		<CreateContactsListButton onClick={triggerCreateContactsList} />
+	{/if}
 </div>

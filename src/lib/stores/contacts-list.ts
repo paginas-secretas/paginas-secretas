@@ -1,10 +1,18 @@
 import { LocalBrowserStorage, type BrowserStorage } from '@data';
-import { RSAOAEPAlgorithm, type CryptographicAlgorithm } from '../models';
-import { createStore, setInitial, type Store } from './store';
+import {
+	RSAOAEPAlgorithm,
+	type CryptographicAlgorithm,
+	type ContactsList,
+	type AsymmetricKeyPair
+} from '../models';
+import { createStore, setSuccess, type Store } from './store';
 
 export const ContactsListStore = createContactsListStore(globalThis.window);
 
-type ContactsListState = Array<string>;
+type ContactsListState = {
+	keyPair: AsymmetricKeyPair;
+	value: ContactsList;
+};
 
 function createContactsListStore(window: Window) {
 	const cryptoAlgorithm = new RSAOAEPAlgorithm();
@@ -26,9 +34,9 @@ async function triggerCreateContactsList(
 ) {
 	const keyPair = await cryptoAlgorithm.generate();
 	console.log('key-pair generated');
-	console.log(keyPair);
 
-	// await storage.store('pub', keyPair)
-
-	setInitial(store, []);
+	setSuccess(store, {
+		keyPair: keyPair,
+		value: []
+	});
 }
