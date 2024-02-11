@@ -1,36 +1,44 @@
 <script lang="ts">
 	import { LL } from '@i18n';
 	import { ModalForm, type Form } from '../form';
+	import type { LocalizedString } from 'typesafe-i18n';
 
 	export let onClick: () => void;
 
 	const form = <Form>{
 		id: 'new-contact',
-		name: 'Contact Details',
-		description: 'Fill in all the required information of the contact',
+		name: $LL.form.newContact.name(),
+		description: $LL.form.newContact.description(),
 		required: [
 			{
 				id: 'name',
-				description: 'The contact name',
-				label: 'Name',
-				placeholder: 'Type here',
+				description: $LL.form.newContact.descriptions.name(),
+				label: $LL.form.newContact.labels.name(),
+				placeholder: $LL.form.newContact.placeholders.name(),
 				type: 'raw'
 			},
 			{
 				id: 'email',
-				description: 'The contact e-mail address',
-				label: 'E-mail',
-				placeholder: 'Type here',
+				description: $LL.form.newContact.descriptions.email(),
+				label: $LL.form.newContact.labels.email(),
+				placeholder: $LL.form.newContact.placeholders.email(),
 				type: 'email'
 			}
 		],
 		additional: [
 			{
 				id: 'phone-number',
-				description: 'The contact phone-number',
-				label: 'Phone Number',
-				placeholder: 'Type here',
+				description: $LL.form.newContact.descriptions.phoneNumber(),
+				label: $LL.form.newContact.labels.phoneNumber(),
+				placeholder: $LL.form.newContact.placeholders.phoneNumber(),
 				type: 'phone-number'
+			},
+			{
+				id: 'gender',
+				description: $LL.form.newContact.descriptions.gender(),
+				label: $LL.form.newContact.labels.gender(),
+				placeholder: $LL.form.newContact.placeholders.gender(),
+				type: 'list'
 			}
 		],
 		control: {
