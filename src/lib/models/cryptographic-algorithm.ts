@@ -1,4 +1,3 @@
-
 /**
  * Types a key used in asymmetric encryption [can either be a public or private key]
  */
@@ -8,7 +7,7 @@ class AsymmetricKey {
 
 	/**
 	 * Private constructor to require clients to use {@link AsymmetricKey.public} and {@link AsymmetricKey.private} API.
-	 * 
+	 *
 	 * @param value the bit string that represents the key
 	 * @param isPublic if the key is public
 	 */
@@ -19,7 +18,7 @@ class AsymmetricKey {
 
 	/**
 	 * Creates a new {@link AsymmetricKey} that represents a public key.
-	 * 
+	 *
 	 * @param value the bit string that represents the key
 	 */
 	static public(value: ArrayBuffer) {
@@ -28,7 +27,7 @@ class AsymmetricKey {
 
 	/**
 	 * Creates a new {@link AsymmetricKey} that represents a private key.
-	 * 
+	 *
 	 * @param value the bit string that represents the key
 	 */
 	static private(value: ArrayBuffer) {
@@ -37,9 +36,9 @@ class AsymmetricKey {
 
 	/**
 	 * Returns the asymmetric key in the text-readable, `.pem` format.
-	 * 
-	 * Example: 
-	 * 
+	 *
+	 * Example:
+	 *
 	 * ```
 	 * -----BEGIN PRIVATE KEY-----
 	 * MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEA43xnn4TTiNJZBLMT

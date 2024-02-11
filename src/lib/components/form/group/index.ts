@@ -1,1 +1,1 @@
-export { default as VerticalFormGroup } from './vertical.svelte'
+export { default as VerticalFormGroup } from './vertical.svelte';
