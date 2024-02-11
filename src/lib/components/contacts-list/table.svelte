@@ -1,42 +1,23 @@
+<script lang="ts">
+	export let headers: string[];
+	export let content: string[][];
+</script>
+
 <table class="table-hover table">
 	<thead>
 		<tr>
-			<th>Type</th>
-			<th>Where</th>
-			<th>Description</th>
-			<th>Amount</th>
+			{#each headers as header}
+				<th>{header}</th>
+			{/each}
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<th>1</th>
-			<td>Cy Ganderton</td>
-			<td>Quality Control Specialist</td>
-			<td>Blue</td>
-		</tr>
-		<tr>
-			<th>2</th>
-			<td>Hart Hagerty</td>
-			<td>Desktop Support Technician</td>
-			<td>Purple</td>
-		</tr>
-		<tr>
-			<th>3</th>
-			<td>Brice Swyre</td>
-			<td>Tax Accountant</td>
-			<td>Red</td>
-		</tr>
-		<tr>
-			<th>3</th>
-			<td>Brice Swyre</td>
-			<td>Tax Accountant</td>
-			<td>Red</td>
-		</tr>
-		<tr>
-			<th>3</th>
-			<td>Brice Swyre</td>
-			<td>Tax Accountant</td>
-			<td>Red</td>
-		</tr>
+		{#each content as entry}
+			<tr>
+				{#each entry as colunm}
+					<th>{colunm}</th>
+				{/each}
+			</tr>
+		{/each}
 	</tbody>
 </table>
