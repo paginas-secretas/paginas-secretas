@@ -1,16 +1,18 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { Form, FormSubmission } from './form';
 	import { VerticalFormGroup } from './group';
 
 	export let form: Form;
 	export let id: string;
-	const onSubmit = (submission: FormSubmission) =>
-		console.log(
-			JSON.stringify(Array.from([...submission.additional, ...submission.required]), null, 2)
-		);
+	export let onSubmit: (submission: FormSubmission) => void;
+
+	let submission: FormSubmission;
+	let modalStateElement: HTMLInputElement;
+	onMount(() => modalStateElement.click());
 </script>
 
-<input class="modal-state" {id} type="checkbox" />
+<input class="modal-state" type="checkbox" {id} bind:this={modalStateElement} />
 <div class="modal">
 	<label class="modal-overlay" for={id} />
 	<div class="modal-content flex w-full flex-col gap-5 p-7">
@@ -23,8 +25,8 @@
 		</div>
 
 		<section>
-			<form id={form.id} on:submit={() => console.log('é no modal')} action=".">
-				<VerticalFormGroup {form} {onSubmit} />
+			<form id={form.id} on:submit={() => onSubmit(submission)}>
+				<VerticalFormGroup {form} onSubmit={(formSubmission) => (submission = formSubmission)} />
 			</form>
 		</section>
 	</div>
