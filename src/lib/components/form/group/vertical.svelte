@@ -55,10 +55,7 @@
 		<div class="form-control justify-between">
 			{#if form.control.type === 'button'}
 				<button
-					on:click={function () {
-						console.log(`lol => ${JSON.stringify(submission)}`);
-						return onSubmit(submission);
-					}}
+					on:click={() => onSubmit(submission)}
 					id={form.control.id}
 					type="button"
 					class="btn btn-primary w-full">{form.control.label}</button

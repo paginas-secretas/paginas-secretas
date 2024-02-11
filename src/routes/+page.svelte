@@ -3,10 +3,10 @@
 	import { ContactsListStore } from '@stores';
 	const store = ContactsListStore;
 
-	function triggerCreateContactsList(): void {
+	const triggerCreateContactsList = function () {
 		console.log('Button clicked');
 		store.triggerCreateList();
-	}
+	};
 </script>
 
 <div class="flex flex-col items-center">
