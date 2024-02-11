@@ -13,7 +13,7 @@
 	{#if $store.success}
 		<div>
 			<ContactsListViewer />
-			<NewContactButton onClick={() => console.log('hey')} />
+			<NewContactButton />
 		</div>
 	{:else}
 		<CreateContactsListButton onClick={triggerCreateContactsList} />

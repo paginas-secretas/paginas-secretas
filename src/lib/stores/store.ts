@@ -7,8 +7,8 @@ type StoreExtensions = {
 	state: State;
 };
 
-export function createStore<T>(): Store<T> {
-	const store = writable(<TypedState<T>>{});
+export function createStore<T>(initialValue?: T): Store<T> {
+	const store = writable(<TypedState<T>>{ value: initialValue });
 
 	return {
 		set: store.set,
