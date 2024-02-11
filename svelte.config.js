@@ -25,6 +25,7 @@ const config = {
 			'@components': path.resolve('./src/lib/components/index.ts'),
 			'@http': path.resolve('./src/lib/http/index.ts'),
 			'@stores': path.resolve('./src/lib/stores/index.ts'),
+			'@models': path.resolve('./src/lib/models/index.ts'),
 			'@data': path.resolve('./src/lib/data/index.ts'),
 			'@i18n': path.resolve('./src/i18n/index.ts')
 		}
