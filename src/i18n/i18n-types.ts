@@ -70,7 +70,24 @@ type RootTranslation = {
 				 */
 				gender: string;
 			};
-			placeholders: {};
+			placeholders: {
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				name: string;
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				email: string;
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				phoneNumber: string;
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				gender: string;
+			};
 			values: {
 				gender: {
 					/**
@@ -158,7 +175,24 @@ export type TranslationFunctions = {
 				 */
 				gender: () => LocalizedString;
 			};
-			placeholders: {};
+			placeholders: {
+				/**
+				 * Type here
+				 */
+				name: () => LocalizedString;
+				/**
+				 * Type here
+				 */
+				email: () => LocalizedString;
+				/**
+				 * Type here
+				 */
+				phoneNumber: () => LocalizedString;
+				/**
+				 * Type here
+				 */
+				gender: () => LocalizedString;
+			};
 			values: {
 				gender: {
 					/**

@@ -20,7 +20,12 @@ const en = {
 				phoneNumber: 'The contact phone number',
 				gender: 'Gender'
 			},
-			placeholders: {},
+			placeholders: {
+				name: 'Type here',
+				email: 'Type here',
+				phoneNumber: 'Type here',
+				gender: 'Type here'
+			},
 			values: {
 				gender: ['Female', 'Male', 'None', 'Other', 'Unknown']
 			}
