@@ -74,7 +74,7 @@
 			/>
 		</div>
 		{#if showNewContactModalForm}
-			<ModalForm id="modal-{form.id}" {form} onSubmit={() => (showNewContactModalForm = false)} />
+			<ModalForm {form} onSubmit={() => (showNewContactModalForm = false)} />
 		{/if}
 	{:else}
 		<CreateContactsListButton onClick={triggerCreateContactsList} />

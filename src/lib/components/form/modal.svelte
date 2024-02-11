@@ -4,8 +4,9 @@
 	import { VerticalFormGroup } from './group';
 
 	export let form: Form;
-	export let id: string;
 	export let onSubmit: (submission: FormSubmission) => void;
+
+	const id = `modal-${form.id}`;
 
 	let submission: FormSubmission;
 	let modalStateElement: HTMLInputElement;
