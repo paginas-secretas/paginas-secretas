@@ -48,6 +48,10 @@ export function isMultipleValuesFormInput(input: FormInput): input is MultipleVa
 	return input.type === 'list';
 }
 
+export function isButtonFormControl(control: FormControl) {
+	return control.type === 'button';
+}
+
 export function initialSubmission(form: Form): FormSubmission {
 	return {
 		additional: new Map(form.additional.map((input) => [input, ''])),

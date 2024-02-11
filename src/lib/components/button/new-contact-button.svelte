@@ -48,6 +48,6 @@
 </script>
 
 <article>
-	<label class="btn btn-primary" for={form.id}>{$LL.new()}</label>
-	<ModalForm {form} />
+	<label class="btn btn-primary" for="modal-{form.id}">{$LL.new()}</label>
+	<ModalForm id="modal-{form.id}" {form} />
 </article>

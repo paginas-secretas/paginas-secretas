@@ -4,7 +4,8 @@
 		type Form,
 		type FormSubmission,
 		initialSubmission,
-		isMultipleValuesFormInput
+		isMultipleValuesFormInput,
+		isButtonFormControl
 	} from '../form';
 
 	export let form: Form;
@@ -19,10 +20,11 @@
 			<label class="form-label" for="input-{input.id}">{input.label}</label>
 			{#if isMultipleValuesFormInput(input)}
 				<select
-					id="select-{input.id}"
+					id="input-{input.id}"
 					placeholder={input.placeholder}
 					value={input.placeholder}
 					class="select max-w-full"
+					required
 					on:input={(event) => {
 						submission.additional.set(input, event.currentTarget.value);
 					}}
@@ -37,6 +39,7 @@
 					placeholder={input.placeholder}
 					type={toHTMLInputTypeAttribute(input.type)}
 					class="input max-w-full"
+					required
 					on:input={(event) => submission.required.set(input, event.currentTarget.value)}
 				/>
 			{/if}
@@ -54,7 +57,7 @@
 				<label class="form-label" for="input-{input.id}">{input.label}</label>
 				{#if isMultipleValuesFormInput(input)}
 					<select
-						id="select-{input.id}"
+						id="input-{input.id}"
 						placeholder={input.placeholder}
 						value={input.placeholder}
 						class="select max-w-full"
@@ -86,12 +89,13 @@
 
 	<div class="form-field pt-5">
 		<div class="form-control justify-between">
-			{#if form.control.type === 'button'}
+			{#if isButtonFormControl(form.control)}
 				<button
-					on:click={() => onSubmit(submission)}
 					id={form.control.id}
-					type="button"
-					class="btn btn-primary w-full">{form.control.label}</button
+					type="submit"
+					class="btn btn-primary w-full"
+					form={form.id}
+					on:click={() => onSubmit(submission)}>{form.control.label}</button
 				>
 			{/if}
 		</div>
