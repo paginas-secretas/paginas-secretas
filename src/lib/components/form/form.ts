@@ -11,13 +11,19 @@ export interface Form {
 	control: FormControl;
 }
 
-export interface FormInput {
+export type FormInput = SingleValueFormInput | MultipleValuesFormInput;
+
+interface SingleValueFormInput {
 	id: string;
 	label: string;
 	description: string | undefined;
 	placeholder: string | undefined;
 	type: FormInputType;
-	possibleValues: string[];
+}
+
+interface MultipleValuesFormInput extends SingleValueFormInput {
+	type: 'list';
+	values: string[];
 }
 
 export interface FormControl {
@@ -25,6 +31,9 @@ export interface FormControl {
 	label: string;
 	type: FormControlType;
 }
+
+export type FormInputType = 'raw' | 'email' | 'secret' | 'phone-number' | 'number' | 'list';
+export type FormControlType = 'button';
 
 // output
 
@@ -35,8 +44,9 @@ export interface FormSubmission {
 
 export type FormOutput = string;
 
-export type FormInputType = 'raw' | 'email' | 'secret' | 'phone-number' | 'number' | 'list';
-export type FormControlType = 'button';
+export function isMultipleValuesFormInput(input: FormInput): input is MultipleValuesFormInput {
+	return input.type === 'list';
+}
 
 export function initialSubmission(form: Form): FormSubmission {
 	return {
@@ -53,9 +63,10 @@ export function toHTMLInputTypeAttribute(type: FormInputType): HTMLInputTypeAttr
 			return 'number';
 		case 'phone-number':
 			return 'tel';
-		case 'raw':
-			return 'text';
 		case 'secret':
 			return 'password';
+		case 'raw':
+		default:
+			return 'text';
 	}
 }

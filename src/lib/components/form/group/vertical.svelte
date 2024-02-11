@@ -3,7 +3,8 @@
 		toHTMLInputTypeAttribute,
 		type Form,
 		type FormSubmission,
-		initialSubmission
+		initialSubmission,
+		isMultipleValuesFormInput
 	} from '../form';
 
 	export let form: Form;
@@ -16,14 +17,17 @@
 	{#each form.required as input}
 		<div id="{form.id}-{input.id}" class="form-field">
 			<label class="form-label" for="input-{input.id}">{input.label}</label>
-			{#if input.type === 'list'}
+			{#if isMultipleValuesFormInput(input)}
 				<select
+					id="select-{input.id}"
+					placeholder={input.placeholder}
+					value={input.placeholder}
 					class="select"
 					on:input={(event) => {
 						submission.additional.set(input, event.currentTarget.value);
 					}}
 				>
-					{#each input.possibleValues as value}
+					{#each input.values as value}
 						<option>{value}</option>
 					{/each}
 				</select>
@@ -48,14 +52,17 @@
 		{#each form.additional as input}
 			<div id="{form.id}-{input.id}" class="form-field">
 				<label class="form-label" for="input-{input.id}">{input.label}</label>
-				{#if input.type === 'list'}
+				{#if isMultipleValuesFormInput(input)}
 					<select
+						id="select-{input.id}"
+						placeholder={input.placeholder}
+						value={input.placeholder}
 						class="select"
 						on:input={(event) => {
 							submission.additional.set(input, event.currentTarget.value);
 						}}
 					>
-						{#each input.possibleValues as value}
+						{#each input.values as value}
 							<option>{value}</option>
 						{/each}
 					</select>
