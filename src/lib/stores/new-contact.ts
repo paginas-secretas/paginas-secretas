@@ -1,9 +1,8 @@
 import type { Form, FormSubmission } from '@components';
 import { createStore, type Store } from './store';
 import type { TranslationFunctions } from '@i18n';
-import type { ContactsList } from '@models';
 
-type NewContactState = Form | FormSubmission;
+type NewContactState = Form;
 
 function createNewContactForm(ll: TranslationFunctions) {
 	const formLL = ll.form.newContact;
@@ -53,7 +52,7 @@ function createNewContactForm(ll: TranslationFunctions) {
 	} satisfies Form;
 }
 
-export function createNewContactStore(ll: TranslationFunctions, contactsList: ContactsList) {
+export function createNewContactStore(ll: TranslationFunctions) {
 	const form = createNewContactForm(ll);
 	const store = createStore<NewContactState>(form);
 	const subscribe = store.subscribe;
