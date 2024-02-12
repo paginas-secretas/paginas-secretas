@@ -20,6 +20,10 @@ type RootTranslation = {
 	 * N​e​w
 	 */
 	new: string;
+	/**
+	 * S​a​v​e
+	 */
+	saveList: string;
 	form: {
 		newContact: {
 			/**
@@ -169,6 +173,10 @@ export type TranslationFunctions = {
 	 * New
 	 */
 	new: () => LocalizedString;
+	/**
+	 * Save
+	 */
+	saveList: () => LocalizedString;
 	form: {
 		newContact: {
 			/**

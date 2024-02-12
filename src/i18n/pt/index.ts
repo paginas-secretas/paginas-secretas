@@ -3,6 +3,7 @@ import type { Translation } from '../i18n-types';
 const pt = {
 	createList: 'Criar lista de contactos',
 	new: 'Novo',
+	saveList: 'Guardar',
 	form: {
 		newContact: {
 			name: 'Detalhes do Contacto',
