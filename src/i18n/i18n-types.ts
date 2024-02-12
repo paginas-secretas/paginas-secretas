@@ -51,6 +51,10 @@ type RootTranslation = {
 				 * S​u​b​m​i​t
 				 */
 				control: string;
+				/**
+				 * B​i​r​t​h​d​a​y
+				 */
+				birthday: string;
 			};
 			descriptions: {
 				/**
@@ -69,6 +73,10 @@ type RootTranslation = {
 				 * G​e​n​d​e​r
 				 */
 				gender: string;
+				/**
+				 * T​h​e​ ​c​o​n​t​a​c​t​ ​b​i​r​t​h​d​a​y
+				 */
+				birthday: string;
 			};
 			placeholders: {
 				/**
@@ -87,6 +95,10 @@ type RootTranslation = {
 				 * T​y​p​e​ ​h​e​r​e
 				 */
 				gender: string;
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				birthday: string;
 			};
 			values: {
 				gender: {
@@ -188,6 +200,10 @@ export type TranslationFunctions = {
 				 * Submit
 				 */
 				control: () => LocalizedString;
+				/**
+				 * Birthday
+				 */
+				birthday: () => LocalizedString;
 			};
 			descriptions: {
 				/**
@@ -206,6 +222,10 @@ export type TranslationFunctions = {
 				 * Gender
 				 */
 				gender: () => LocalizedString;
+				/**
+				 * The contact birthday
+				 */
+				birthday: () => LocalizedString;
 			};
 			placeholders: {
 				/**
@@ -224,6 +244,10 @@ export type TranslationFunctions = {
 				 * Type here
 				 */
 				gender: () => LocalizedString;
+				/**
+				 * Type here
+				 */
+				birthday: () => LocalizedString;
 			};
 			values: {
 				gender: {

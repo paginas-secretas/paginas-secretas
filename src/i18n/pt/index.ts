@@ -12,19 +12,22 @@ const pt = {
 				email: 'E-mail',
 				phoneNumber: 'Número de telefone',
 				gender: 'Género',
-				control: 'Submeter'
+				control: 'Submeter',
+				birthday: 'Aniversário'
 			},
 			descriptions: {
 				name: 'Nome do contacto',
 				email: 'Endereço de e-mail do contacto',
 				phoneNumber: 'Número de telefone do contacto',
-				gender: 'Género'
+				gender: 'Género',
+				birthday: 'Aniversário do contacto'
 			},
 			placeholders: {
 				name: 'Preenche aqui',
 				email: 'Preenche aqui',
 				phoneNumber: 'Preenche aqui',
-				gender: 'Preenche aqui'
+				gender: 'Preenche aqui',
+				birthday: 'Preenche aqui'
 			},
 			values: {
 				gender: ['Feminino', 'Masculino', 'Nenhum', 'Outro', 'Desconhecido'],

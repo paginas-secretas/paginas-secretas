@@ -13,19 +13,22 @@ const en = {
 				email: 'E-mail',
 				phoneNumber: 'Phone Number',
 				gender: 'Gender',
-				control: 'Submit'
+				control: 'Submit',
+				birthday: 'Birthday'
 			},
 			descriptions: {
 				name: 'The contact name',
 				email: 'The contact e-mail address',
 				phoneNumber: 'The contact phone number',
-				gender: 'Gender'
+				gender: 'Gender',
+				birthday: 'The contact birthday'
 			},
 			placeholders: {
 				name: 'Type here',
 				email: 'Type here',
 				phoneNumber: 'Type here',
-				gender: 'Type here'
+				gender: 'Type here',
+				birthday: 'Type here'
 			},
 			values: {
 				gender: ['Female', 'Male', 'None', 'Other', 'Unknown'],
