@@ -54,6 +54,7 @@ async function triggerStoreContactsList(
 ) {
 	const arraySubmissions = [...submission.required, ...submission.additional];
 
+	const birthday = arraySubmissions.find((entry) => entry[0].id == 'birthday')?.[1];
 	const contact = <Contact>{
 		name: arraySubmissions.find((entry) => entry[0].id == 'name')?.[1],
 		email: arraySubmissions.find((entry) => entry[0].id == 'email')?.[1],
@@ -61,7 +62,7 @@ async function triggerStoreContactsList(
 			value: arraySubmissions.find((entry) => entry[0].id == 'phone-number')?.[1],
 			type: arraySubmissions.find((entry) => entry[0].id == 'phone-number-type')?.[1]
 		},
-		birthDate: new Date(arraySubmissions.find((entry) => entry[0].id == 'birth-date')?.[1] ?? 0),
+		birthDate: birthday ? new Date(birthday) : undefined,
 		gender: arraySubmissions.find((entry) => entry[0].id == 'gender')?.[1]
 	};
 

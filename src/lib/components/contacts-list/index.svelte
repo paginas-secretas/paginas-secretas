@@ -1,14 +1,21 @@
 <script lang="ts">
+	import { LL } from '@i18n';
 	import type { ContactsList } from '@models';
 	import Table from './table.svelte';
 
 	export let contactsList: ContactsList;
+	const labels = $LL.form.newContact.labels;
 
-	// TODO: improve this
-	const headers = ['name', 'birthDate', 'email', 'phonenumber', 'gender'];
-	const content: string[][] = contactsList.map((value) => [
+	const headers = [
+		labels.name(),
+		labels.birthday(),
+		labels.email(),
+		labels.phoneNumber(),
+		labels.gender()
+	];
+	$: content = contactsList.map((value) => [
 		value.name,
-		value.birthDate.toISOString(),
+		value.birthDate?.toDateString() ?? '-',
 		value.email,
 		value.phoneNumber.value,
 		value.gender

@@ -16,12 +16,13 @@
 	};
 
 	$: showNewContactModalForm = false;
+	$: contactsList = $contactsListStore.value;
 </script>
 
 <div class="flex flex-col items-center">
 	{#if $contactsListStore.success}
 		<div class="flex flex-col items-center">
-			<ContactsListViewer contactsList={$contactsListStore.value.value} />
+			<ContactsListViewer contactsList={contactsList.value} />
 			<NewContactButton
 				onClick={() => {
 					showNewContactModalForm = true;

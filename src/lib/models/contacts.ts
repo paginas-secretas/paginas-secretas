@@ -5,7 +5,7 @@ export interface Contact {
 	email: string;
 	phoneNumber: PhoneNumber;
 	gender: string;
-	birthDate: Date;
+	birthDate: Date | undefined;
 }
 
 export interface Address {
