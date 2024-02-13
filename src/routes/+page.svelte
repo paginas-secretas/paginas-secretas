@@ -7,12 +7,18 @@
 	} from '@components';
 	import { ContactsListStore, createNewContactStore } from '@stores';
 	import LL from '../i18n/i18n-svelte';
+	import SaveContactsListButton from '$lib/components/button/save-contacts-list-button.svelte';
 	const contactsListStore = ContactsListStore;
 	const newContactStore = createNewContactStore($LL);
 
 	const triggerCreateContactsList = function () {
 		console.log('Button clicked');
 		contactsListStore.triggerCreateList();
+	};
+
+	const triggerStoreContactsList = function () {
+		console.log('Store Contacts List  Button clicked');
+		contactsListStore.triggerStoreContactsList();
 	};
 
 	$: showNewContactModalForm = false;
@@ -28,13 +34,14 @@
 					showNewContactModalForm = true;
 				}}
 			/>
+			<SaveContactsListButton onClick={triggerStoreContactsList} />
 		</div>
 		{#if showNewContactModalForm}
 			<ModalForm
 				form={$newContactStore.value}
 				onSubmit={(result) => {
 					showNewContactModalForm = false;
-					contactsListStore.triggerStoreList(result);
+					contactsListStore.triggerAddContact(result);
 				}}
 			/>
 		{/if}
