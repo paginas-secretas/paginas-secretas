@@ -2,8 +2,8 @@
  * Types a key used in asymmetric encryption [can either be a public or private key]
  */
 class AsymmetricKey {
-	private value: ArrayBuffer;
-	private isPublic: boolean;
+	public readonly value: ArrayBuffer;
+	public readonly isPublic: boolean;
 
 	/**
 	 * Private constructor to require clients to use {@link AsymmetricKey.public} and {@link AsymmetricKey.private} API.
@@ -90,5 +90,23 @@ export abstract class CryptographicAlgorithm {
 			public: AsymmetricKey.public(await crypto.subtle.exportKey('spki', keyPair.publicKey)),
 			private: AsymmetricKey.private(await crypto.subtle.exportKey('pkcs8', keyPair.privateKey))
 		};
+	}
+
+	async encrypt(key: AsymmetricKey, data: string): Promise<string> {
+		const cryptoKey: CryptoKey = await crypto.subtle.importKey(
+			'spki',
+			key.value,
+			this.algorithm,
+			true,
+			['encrypt']
+		);
+
+		const encrypted = await crypto.subtle.encrypt(
+			this.algorithm,
+			cryptoKey,
+			new TextEncoder().encode(data)
+		);
+
+		return Promise.resolve(String.fromCodePoint(...new Uint8Array(encrypted)));
 	}
 }
