@@ -13,7 +13,10 @@ export class ContactsManager implements Manager {
 			const encryptedContactsList = <EncryptedContactsList>{
 				contacts: encryptedContacts
 			};
-			const response = await this.client.add(contactsEndpoint, JSON.stringify(encryptedContactsList));
+			const response = await this.client.add(
+				contactsEndpoint,
+				JSON.stringify(encryptedContactsList)
+			);
 
 			return response.status == 200 ? response.json() : Promise.resolve(response.status);
 		} catch (err) {
