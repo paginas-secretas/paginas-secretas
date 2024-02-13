@@ -2,7 +2,7 @@ type Request = {
 	url: string;
 	method: Method;
 	headers: Headers;
-	body: Object;
+	body: string;
 };
 
 enum Method {
@@ -23,7 +23,7 @@ export abstract class Client {
 		return this.request(request);
 	}
 
-	public add(endpoint: string, body: Object, headers?: Headers): Promise<Response> {
+	public add(endpoint: string, body: string, headers?: Headers): Promise<Response> {
 		const request = <Request>{
 			url: this.resolveUrl(this.baseUrl, endpoint),
 			method: Method.post,
