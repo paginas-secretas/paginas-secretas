@@ -11,7 +11,10 @@ export interface Form {
 	control: FormControl;
 }
 
-export type FormInput = SingleValueFormInput | MultipleValuesFormInput;
+export type FormInput =
+	| SingleValueFormInput
+	| MultipleValuesFormInput
+	| SingleValueWithMultipleValuesFormInput;
 
 interface SingleValueFormInput {
 	id: string;
@@ -24,6 +27,13 @@ interface SingleValueFormInput {
 interface MultipleValuesFormInput extends SingleValueFormInput {
 	type: 'list';
 	values: string[];
+}
+
+interface SingleValueWithMultipleValuesFormInput {
+	id: string;
+	label: string;
+	input: SingleValueFormInput;
+	types: MultipleValuesFormInput;
 }
 
 export interface FormControl {
@@ -53,7 +63,13 @@ export interface FormSubmission {
 export type FormOutput = string;
 
 export function isMultipleValuesFormInput(input: FormInput): input is MultipleValuesFormInput {
-	return input.type === 'list';
+	return !isSingleValueWithMultipleValuesFormInput(input) && input.type === 'list';
+}
+
+export function isSingleValueWithMultipleValuesFormInput(
+	input: FormInput
+): input is SingleValueWithMultipleValuesFormInput {
+	return 'types' in input;
 }
 
 export function isButtonFormControl(control: FormControl) {
@@ -61,9 +77,21 @@ export function isButtonFormControl(control: FormControl) {
 }
 
 export function initialSubmission(form: Form): FormSubmission {
+	const additional: FormInput[] = form.additional.flatMap((input) => {
+		if (isSingleValueWithMultipleValuesFormInput(input)) {
+			return [input.input, input.types];
+		}
+		return [input];
+	});
+	const required: FormInput[] = form.required.flatMap((input) => {
+		if (isSingleValueWithMultipleValuesFormInput(input)) {
+			return [input.input, input.types];
+		}
+		return [input];
+	});
 	return {
-		additional: new Map(form.additional.map((input) => [input, ''])),
-		required: new Map(form.required.map((input) => [input, '']))
+		additional: new Map(additional.map((input) => [input, ''])),
+		required: new Map(required.map((input) => [input, '']))
 	};
 }
 
