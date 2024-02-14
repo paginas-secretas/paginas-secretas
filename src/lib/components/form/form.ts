@@ -32,7 +32,15 @@ export interface FormControl {
 	type: FormControlType;
 }
 
-export type FormInputType = 'raw' | 'email' | 'secret' | 'phone-number' | 'number' | 'list';
+export type FormInputType =
+	| 'raw'
+	| 'email'
+	| 'secret'
+	| 'phone-number'
+	| 'number'
+	| 'date'
+	| 'list'
+	| 'types';
 export type FormControlType = 'button';
 
 // output
@@ -69,6 +77,8 @@ export function toHTMLInputTypeAttribute(type: FormInputType): HTMLInputTypeAttr
 			return 'tel';
 		case 'secret':
 			return 'password';
+		case 'date':
+			return 'date';
 		case 'raw':
 		default:
 			return 'text';
