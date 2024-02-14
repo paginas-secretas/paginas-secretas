@@ -30,10 +30,22 @@ function createNewContactForm(ll: TranslationFunctions) {
 		additional: [
 			{
 				id: 'phone-number',
-				description: formLL.descriptions.phoneNumber(),
 				label: formLL.labels.phoneNumber(),
-				placeholder: formLL.placeholders.phoneNumber(),
-				type: 'phone-number'
+				input: {
+					id: 'phone-number',
+					description: formLL.descriptions.phoneNumber(),
+					label: formLL.labels.phoneNumber(),
+					placeholder: formLL.placeholders.phoneNumber(),
+					type: 'phone-number'
+				},
+				types: {
+					id: 'phone-number-type',
+					description: formLL.descriptions.phoneNumberType(),
+					label: formLL.labels.phoneNumberType(),
+					placeholder: formLL.placeholders.phoneNumberType(),
+					type: 'list',
+					values: Object.values(formLL.values.phoneNumberType).map((ls) => ls())
+				}
 			},
 			{
 				id: 'birthday',
