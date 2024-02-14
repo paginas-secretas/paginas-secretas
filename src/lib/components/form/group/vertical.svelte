@@ -5,7 +5,8 @@
 		type FormSubmission,
 		initialSubmission,
 		isMultipleValuesFormInput,
-		isButtonFormControl
+		isButtonFormControl,
+		isSingleValueWithMultipleValuesFormInput
 	} from '../form';
 
 	export let form: Form;
@@ -33,6 +34,52 @@
 						<option>{value}</option>
 					{/each}
 				</select>
+				{#if input.description}
+					<label class="form-label" for="input-{input.id}">
+						<span class="form-label-alt">{input.description}</span>
+					</label>
+				{/if}
+			{:else if isSingleValueWithMultipleValuesFormInput(input)}
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
+					<div>
+						<select
+							id="input-{input.types.id}"
+							placeholder={input.types.placeholder}
+							value={input.types.placeholder}
+							class="select"
+							required
+							on:input={(event) => {
+								if (isSingleValueWithMultipleValuesFormInput(input)) {
+									submission.additional.set(input.types, event.currentTarget.value);
+								}
+							}}
+						>
+							{#each input.types.values as value}
+								<option>{value}</option>
+							{/each}
+						</select>
+					</div>
+
+					<div>
+						<input
+							id="input-{input.input.id}"
+							placeholder={input.input.placeholder}
+							type={toHTMLInputTypeAttribute(input.input.type)}
+							class="input"
+							required
+							on:input={(event) => {
+								if (isSingleValueWithMultipleValuesFormInput(input)) {
+									submission.additional.set(input.input, event.currentTarget.value);
+								}
+							}}
+						/>
+					</div>
+				</div>
+				{#if input.input.description}
+					<label class="form-label" for="input-{input.input.id}">
+						<span class="form-label-alt">{input.input.description}</span>
+					</label>
+				{/if}
 			{:else}
 				<input
 					id="input-{input.id}"
@@ -42,11 +89,11 @@
 					required
 					on:input={(event) => submission.required.set(input, event.currentTarget.value)}
 				/>
-			{/if}
-			{#if input.description}
-				<label class="form-label" for="input-{input.id}">
-					<span class="form-label-alt">{input.description}</span>
-				</label>
+				{#if input.description}
+					<label class="form-label" for="input-{input.id}">
+						<span class="form-label-alt">{input.description}</span>
+					</label>
+				{/if}
 			{/if}
 		</div>
 	{/each}
@@ -69,6 +116,50 @@
 							<option>{value}</option>
 						{/each}
 					</select>
+					{#if input.description}
+						<label class="form-label" for="input-{input.id}">
+							<span class="form-label-alt">{input.description}</span>
+						</label>
+					{/if}
+				{:else if isSingleValueWithMultipleValuesFormInput(input)}
+					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
+						<div>
+							<select
+								id="input-{input.types.id}"
+								placeholder={input.types.placeholder}
+								value={input.types.placeholder}
+								class="select"
+								on:input={(event) => {
+									if (isSingleValueWithMultipleValuesFormInput(input)) {
+										submission.additional.set(input.types, event.currentTarget.value);
+									}
+								}}
+							>
+								{#each input.types.values as value}
+									<option>{value}</option>
+								{/each}
+							</select>
+						</div>
+
+						<div>
+							<input
+								id="input-{input.input.id}"
+								placeholder={input.input.placeholder}
+								type={toHTMLInputTypeAttribute(input.input.type)}
+								class="input"
+								on:input={(event) => {
+									if (isSingleValueWithMultipleValuesFormInput(input)) {
+										submission.additional.set(input.input, event.currentTarget.value);
+									}
+								}}
+							/>
+						</div>
+					</div>
+					{#if input.input.description}
+						<label class="form-label" for="input-{input.input.id}">
+							<span class="form-label-alt">{input.input.description}</span>
+						</label>
+					{/if}
 				{:else}
 					<input
 						id="input-{input.id}"
@@ -77,11 +168,11 @@
 						class="input max-w-full"
 						on:input={(event) => submission.additional.set(input, event.currentTarget.value)}
 					/>
-				{/if}
-				{#if input.description}
-					<label class="form-label" for="input-{input.id}">
-						<span class="form-label-alt">{input.description}</span>
-					</label>
+					{#if input.description}
+						<label class="form-label" for="input-{input.id}">
+							<span class="form-label-alt">{input.description}</span>
+						</label>
+					{/if}
 				{/if}
 			</div>
 		{/each}
