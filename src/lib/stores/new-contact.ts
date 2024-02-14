@@ -36,6 +36,13 @@ function createNewContactForm(ll: TranslationFunctions) {
 				type: 'phone-number'
 			},
 			{
+				id: 'birthday',
+				description: formLL.descriptions.birthday(),
+				label: formLL.labels.birthday(),
+				placeholder: formLL.placeholders.birthday(),
+				type: 'date'
+			},
+			{
 				id: 'gender',
 				description: formLL.descriptions.gender(),
 				label: formLL.labels.gender(),
