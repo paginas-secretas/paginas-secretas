@@ -12,6 +12,7 @@ const pt = {
 				name: 'Nome',
 				email: 'E-mail',
 				phoneNumber: 'Número de telefone',
+				phoneNumberType: 'Tipo do número de telefone',
 				gender: 'Género',
 				control: 'Submeter',
 				birthday: 'Aniversário'
@@ -20,6 +21,7 @@ const pt = {
 				name: 'Nome do contacto',
 				email: 'Endereço de e-mail do contacto',
 				phoneNumber: 'Número de telefone do contacto',
+				phoneNumberType: 'Tipo do número de telefone do contacto',
 				gender: 'Género',
 				birthday: 'Aniversário do contacto'
 			},
@@ -27,12 +29,13 @@ const pt = {
 				name: 'Preenche aqui',
 				email: 'Preenche aqui',
 				phoneNumber: 'Preenche aqui',
+				phoneNumberType: 'Selecione aqui',
 				gender: 'Preenche aqui',
 				birthday: 'Preenche aqui'
 			},
 			values: {
 				gender: ['Feminino', 'Masculino', 'Nenhum', 'Outro', 'Desconhecido'],
-				phoneNumber: ['Casa', 'Trabalho', 'Movél', 'Outro', 'Voz'],
+				phoneNumberType: ['Casa', 'Trabalho', 'Movél', 'Outro', 'Voz'],
 				address: ['Casa', 'Trabalho']
 			}
 		}

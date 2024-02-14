@@ -13,6 +13,7 @@ const en = {
 				name: 'Name',
 				email: 'E-mail',
 				phoneNumber: 'Phone Number',
+				phoneNumberType: 'Phone Number Type',
 				gender: 'Gender',
 				control: 'Submit',
 				birthday: 'Birthday'
@@ -21,6 +22,7 @@ const en = {
 				name: 'The contact name',
 				email: 'The contact e-mail address',
 				phoneNumber: 'The contact phone number',
+				phoneNumberType: 'The contact phone number type',
 				gender: 'Gender',
 				birthday: 'The contact birthday'
 			},
@@ -28,12 +30,13 @@ const en = {
 				name: 'Type here',
 				email: 'Type here',
 				phoneNumber: 'Type here',
+				phoneNumberType: 'Select',
 				gender: 'Type here',
-				birthday: 'Type here'
+				birthday: 'Select'
 			},
 			values: {
 				gender: ['Female', 'Male', 'None', 'Other', 'Unknown'],
-				phoneNumber: ['Home', 'Work', 'Mobile', 'Other', 'Voice'],
+				phoneNumberType: ['Home', 'Work', 'Mobile', 'Other', 'Voice'],
 				address: ['Home', 'Work']
 			}
 		} satisfies FormTranslation

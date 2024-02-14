@@ -48,6 +48,10 @@ type RootTranslation = {
 				 */
 				phoneNumber: string;
 				/**
+				 * P​h​o​n​e​ ​N​u​m​b​e​r​ ​T​y​p​e
+				 */
+				phoneNumberType: string;
+				/**
 				 * G​e​n​d​e​r
 				 */
 				gender: string;
@@ -74,6 +78,10 @@ type RootTranslation = {
 				 */
 				phoneNumber: string;
 				/**
+				 * T​h​e​ ​c​o​n​t​a​c​t​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​y​p​e
+				 */
+				phoneNumberType: string;
+				/**
 				 * G​e​n​d​e​r
 				 */
 				gender: string;
@@ -96,11 +104,15 @@ type RootTranslation = {
 				 */
 				phoneNumber: string;
 				/**
+				 * S​e​l​e​c​t
+				 */
+				phoneNumberType: string;
+				/**
 				 * T​y​p​e​ ​h​e​r​e
 				 */
 				gender: string;
 				/**
-				 * T​y​p​e​ ​h​e​r​e
+				 * S​e​l​e​c​t
 				 */
 				birthday: string;
 			};
@@ -127,7 +139,7 @@ type RootTranslation = {
 					 */
 					'4': string;
 				};
-				phoneNumber: {
+				phoneNumberType: {
 					/**
 					 * H​o​m​e
 					 */
@@ -201,6 +213,10 @@ export type TranslationFunctions = {
 				 */
 				phoneNumber: () => LocalizedString;
 				/**
+				 * Phone Number Type
+				 */
+				phoneNumberType: () => LocalizedString;
+				/**
 				 * Gender
 				 */
 				gender: () => LocalizedString;
@@ -227,6 +243,10 @@ export type TranslationFunctions = {
 				 */
 				phoneNumber: () => LocalizedString;
 				/**
+				 * The contact phone number type
+				 */
+				phoneNumberType: () => LocalizedString;
+				/**
 				 * Gender
 				 */
 				gender: () => LocalizedString;
@@ -249,11 +269,15 @@ export type TranslationFunctions = {
 				 */
 				phoneNumber: () => LocalizedString;
 				/**
+				 * Select
+				 */
+				phoneNumberType: () => LocalizedString;
+				/**
 				 * Type here
 				 */
 				gender: () => LocalizedString;
 				/**
-				 * Type here
+				 * Select
 				 */
 				birthday: () => LocalizedString;
 			};
@@ -280,7 +304,7 @@ export type TranslationFunctions = {
 					 */
 					'4': () => LocalizedString;
 				};
-				phoneNumber: {
+				phoneNumberType: {
 					/**
 					 * Home
 					 */
