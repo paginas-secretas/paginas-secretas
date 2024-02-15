@@ -32,6 +32,7 @@ interface MultipleValuesFormInput extends SingleValueFormInput {
 interface SingleValueWithMultipleValuesFormInput {
 	id: string;
 	label: string;
+	count: number;
 	input: SingleValueFormInput;
 	types: MultipleValuesFormInput;
 }
@@ -60,7 +61,12 @@ export interface FormSubmission {
 	additional: Map<FormInput, FormOutput>;
 }
 
-export type FormOutput = string;
+export type SingleValueWithMultipleValuesFormOutput = {
+	input: string;
+	type: string;
+};
+
+export type FormOutput = string | SingleValueWithMultipleValuesFormOutput[];
 
 export function isMultipleValuesFormInput(input: FormInput): input is MultipleValuesFormInput {
 	return !isSingleValueWithMultipleValuesFormInput(input) && input.type === 'list';
@@ -72,26 +78,44 @@ export function isSingleValueWithMultipleValuesFormInput(
 	return 'types' in input;
 }
 
+export function isSingleValueWithMultipleValuesFormOutput(
+	output: FormOutput
+): output is SingleValueWithMultipleValuesFormOutput[] {
+	return typeof output !== 'string';
+}
+
 export function isButtonFormControl(control: FormControl) {
 	return control.type === 'button';
 }
 
 export function initialSubmission(form: Form): FormSubmission {
-	const additional: FormInput[] = form.additional.flatMap((input) => {
-		if (isSingleValueWithMultipleValuesFormInput(input)) {
-			return [input.input, input.types];
-		}
-		return [input];
-	});
-	const required: FormInput[] = form.required.flatMap((input) => {
-		if (isSingleValueWithMultipleValuesFormInput(input)) {
-			return [input.input, input.types];
-		}
-		return [input];
-	});
+	const additional = form.additional;
+	const required = form.required;
+	const defaultSingleValue = '';
+
 	return {
-		additional: new Map(additional.map((input) => [input, ''])),
-		required: new Map(required.map((input) => [input, '']))
+		additional: new Map(
+			additional.map((input) => [
+				input,
+				'count' in input
+					? Array(input.count).fill(<SingleValueWithMultipleValuesFormOutput>{
+							input: defaultSingleValue,
+							type: defaultSingleValue
+					  })
+					: defaultSingleValue
+			])
+		),
+		required: new Map(
+			required.map((input) => [
+				input,
+				'count' in input
+					? Array(input.count).fill(<SingleValueWithMultipleValuesFormOutput>{
+							input: defaultSingleValue,
+							type: defaultSingleValue
+					  })
+					: defaultSingleValue
+			])
+		)
 	};
 }
 

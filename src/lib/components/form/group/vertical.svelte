@@ -7,17 +7,21 @@
 		initialSubmission,
 		isMultipleValuesFormInput,
 		isButtonFormControl,
-		isSingleValueWithMultipleValuesFormInput
+		isSingleValueWithMultipleValuesFormInput,
+		isSingleValueWithMultipleValuesFormOutput
 	} from '../form';
 
 	export let form: Form;
 	export let onSubmit: (submission: FormSubmission) => void;
 
-	const submission = initialSubmission(form);
+	const _submission = initialSubmission(form);
+	$: submission = _submission;
 </script>
 
 <div class="form-group">
 	{#each form.required as input}
+		{@const values = submission.required.get(input) ?? []}
+
 		<div id="{form.id}-{input.id}" class="form-field">
 			<label class="form-label" for="input-{input.id}">{input.label}</label>
 			{#if isMultipleValuesFormInput(input)}
@@ -41,44 +45,57 @@
 					</label>
 				{/if}
 			{:else if isSingleValueWithMultipleValuesFormInput(input)}
-				<div class="flex flex-row gap-2" id="grid-{input.id}">
-					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
-						<div>
-							<select
-								id="input-{input.types.id}"
-								placeholder={input.types.placeholder}
-								value={input.types.placeholder}
-								class="select"
-								required
-								on:input={(event) => {
-									if (isSingleValueWithMultipleValuesFormInput(input)) {
-										submission.additional.set(input.types, event.currentTarget.value);
-									}
-								}}
-							>
-								{#each input.types.values as value}
-									<option>{value}</option>
-								{/each}
-							</select>
-						</div>
+				{#if isSingleValueWithMultipleValuesFormOutput(values)}
+					{#each values as value, idx}
+						<div class="flex flex-row gap-2" id="grid-{input.id}">
+							<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
+								<div>
+									<select
+										id="input-{input.types.id}-${idx}"
+										placeholder={input.types.placeholder}
+										value={value.type}
+										class="select"
+										required
+										on:input={(event) => {
+											value.type = event.currentTarget.value;
+										}}
+									>
+										{#each input.types.values as value}
+											<option>{value}</option>
+										{/each}
+									</select>
+								</div>
 
-						<div>
-							<input
-								id="input-{input.input.id}"
-								placeholder={input.input.placeholder}
-								type={toHTMLInputTypeAttribute(input.input.type)}
-								class="input"
-								required
-								on:input={(event) => {
-									if (isSingleValueWithMultipleValuesFormInput(input)) {
-										submission.additional.set(input.input, event.currentTarget.value);
-									}
+								<div>
+									<input
+										id="input-{input.input.id}--${idx}"
+										placeholder={input.input.placeholder}
+										type={toHTMLInputTypeAttribute(input.input.type)}
+										class="input"
+										required
+										on:input={(event) => {
+											value.input = event.currentTarget.value;
+										}}
+									/>
+								</div>
+							</div>
+							<PlusButton
+								onClick={() => {
+									submission.required = submission.required.set(
+										input,
+										values.concat({ input: '', type: '' })
+									);
 								}}
 							/>
 						</div>
-					</div>
-					<PlusButton onClick={() => console.log('clicked add')} />
-				</div>
+					{/each}
+				{/if}
+
+				{#if input.input.description}
+					<label class="form-label" for="input-{input.input.id}">
+						<span class="form-label-alt">{input.input.description}</span>
+					</label>
+				{/if}
 			{:else}
 				<input
 					id="input-{input.id}"
@@ -99,6 +116,8 @@
 	{#if form.required.length > 0 && form.additional.length > 0}
 		<div class="divider divider-horizontal">Optional</div>
 		{#each form.additional as input}
+			{@const values = submission.additional.get(input) ?? []}
+
 			<div id="{form.id}-{input.id}" class="form-field">
 				<label class="form-label" for="input-{input.id}">{input.label}</label>
 				{#if isMultipleValuesFormInput(input)}
@@ -121,44 +140,52 @@
 						</label>
 					{/if}
 				{:else if isSingleValueWithMultipleValuesFormInput(input)}
-					<div class="flex flex-row gap-2" id="grid-{input.id}">
-						<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
-							<div>
-								<select
-									id="input-{input.types.id}"
-									placeholder={input.types.placeholder}
-									value={input.types.placeholder}
-									class="select"
-									on:input={(event) => {
-										if (isSingleValueWithMultipleValuesFormInput(input)) {
-											submission.additional.set(input.types, event.currentTarget.value);
-										}
-									}}
-								>
-									{#each input.types.values as value}
-										<option>{value}</option>
-									{/each}
-								</select>
-							</div>
+					{#if isSingleValueWithMultipleValuesFormOutput(values)}
+						{#each values as value, idx}
+							<div class="flex flex-row gap-2" id="grid-{input.id}">
+								<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+									<div>
+										<select
+											id="input-{input.types.id}-{idx}"
+											placeholder={input.types.placeholder}
+											value={value.type}
+											class="select"
+											on:input={(event) => {
+												value.type = event.currentTarget.value;
+											}}
+										>
+											{#each input.types.values as value}
+												<option>{value}</option>
+											{/each}
+										</select>
+									</div>
 
-							<div>
-								<input
-									id="input-{input.input.id}"
-									placeholder={input.input.placeholder}
-									type={toHTMLInputTypeAttribute(input.input.type)}
-									class="input"
-									on:input={(event) => {
-										if (isSingleValueWithMultipleValuesFormInput(input)) {
-											submission.additional.set(input.input, event.currentTarget.value);
-										}
+									<div>
+										<input
+											id="input-{input.input.id}-{idx}"
+											placeholder={input.input.placeholder}
+											type={toHTMLInputTypeAttribute(input.input.type)}
+											class="input"
+											on:input={(event) => {
+												value.input = event.currentTarget.value;
+											}}
+										/>
+									</div>
+								</div>
+								<PlusButton
+									onClick={() => {
+										submission.additional = submission.additional.set(
+											input,
+											values.concat({ input: '', type: '' })
+										);
 									}}
 								/>
 							</div>
-						</div>
-						<PlusButton onClick={() => console.log('clicked add')} />
-					</div>
+						{/each}
+					{/if}
+
 					{#if input.input.description}
-						<label class="form-label" for="input-{input.input.id}">
+						<label class="form-label" for="input-{input.id}-0">
 							<span class="form-label-alt">{input.input.description}</span>
 						</label>
 					{/if}
