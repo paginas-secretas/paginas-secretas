@@ -8,7 +8,7 @@ import {
 	type PhoneNumber
 } from '../models';
 import { createStore, setSuccess, type Store } from './store';
-import type { FormSubmission } from '@components';
+import { isSingleValueWithMultipleValuesFormOutput, type FormSubmission } from '@components';
 import { State, from } from './state';
 import { ContactsManager, ContactsManagerClient, type Manager } from '@http';
 
@@ -56,14 +56,15 @@ async function triggerAddContact(store: Store<ContactsListState>, submission: Fo
 	const arraySubmissions = [...submission.required, ...submission.additional];
 
 	const birthday = arraySubmissions.find((entry) => entry[0].id == 'birthday')?.[1];
+	const numbers = arraySubmissions.find((entry) => entry[0].id == 'phone-number')?.[1] ?? [];
+
 	const contact = <Contact>{
 		name: arraySubmissions.find((entry) => entry[0].id == 'name')?.[1],
 		email: arraySubmissions.find((entry) => entry[0].id == 'email')?.[1],
-		phoneNumber: <PhoneNumber>{
-			value: arraySubmissions.find((entry) => entry[0].id == 'phone-number')?.[1],
-			type: arraySubmissions.find((entry) => entry[0].id == 'phone-number-type')?.[1]
-		},
-		birthDate: birthday ? new Date(birthday) : undefined,
+		phoneNumbers: isSingleValueWithMultipleValuesFormOutput(numbers)
+			? numbers.map((x) => <PhoneNumber>{ value: x.input, type: x.type })
+			: [],
+		birthDate: birthday ? new Date(birthday.toString()) : undefined,
 		gender: arraySubmissions.find((entry) => entry[0].id == 'gender')?.[1]
 	};
 

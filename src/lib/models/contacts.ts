@@ -3,7 +3,7 @@ export type ContactsList = Array<Contact>;
 export interface Contact {
 	name: string;
 	email: string;
-	phoneNumber: PhoneNumber;
+	phoneNumbers: PhoneNumber[];
 	gender: string;
 	birthDate: Date | undefined;
 }

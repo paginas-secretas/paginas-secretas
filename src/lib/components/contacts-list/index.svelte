@@ -13,11 +13,13 @@
 		labels.phoneNumber(),
 		labels.gender()
 	];
+
 	$: content = contactsList.map((value) => [
 		value.name,
 		value.birthDate?.toDateString() ?? '-',
 		value.email,
-		value.phoneNumber.value,
+		// temp
+		value.phoneNumbers.at(0)?.value,
 		value.gender
 	]);
 </script>

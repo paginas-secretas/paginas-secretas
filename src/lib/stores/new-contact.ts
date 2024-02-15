@@ -31,6 +31,7 @@ function createNewContactForm(ll: TranslationFunctions) {
 			{
 				id: 'phone-number',
 				label: formLL.labels.phoneNumber(),
+				count: 1,
 				input: {
 					id: 'phone-number',
 					description: formLL.descriptions.phoneNumber(),
