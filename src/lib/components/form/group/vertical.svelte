@@ -41,44 +41,44 @@
 					</label>
 				{/if}
 			{:else if isSingleValueWithMultipleValuesFormInput(input)}
-			<div class="flex flex-row gap-2" id="grid-{input.id}">
-				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
-					<div>
-						<select
-							id="input-{input.types.id}"
-							placeholder={input.types.placeholder}
-							value={input.types.placeholder}
-							class="select"
-							required
-							on:input={(event) => {
-								if (isSingleValueWithMultipleValuesFormInput(input)) {
-									submission.additional.set(input.types, event.currentTarget.value);
-								}
-							}}
-						>
-							{#each input.types.values as value}
-								<option>{value}</option>
-							{/each}
-						</select>
-					</div>
+				<div class="flex flex-row gap-2" id="grid-{input.id}">
+					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
+						<div>
+							<select
+								id="input-{input.types.id}"
+								placeholder={input.types.placeholder}
+								value={input.types.placeholder}
+								class="select"
+								required
+								on:input={(event) => {
+									if (isSingleValueWithMultipleValuesFormInput(input)) {
+										submission.additional.set(input.types, event.currentTarget.value);
+									}
+								}}
+							>
+								{#each input.types.values as value}
+									<option>{value}</option>
+								{/each}
+							</select>
+						</div>
 
-					<div>
-						<input
-							id="input-{input.input.id}"
-							placeholder={input.input.placeholder}
-							type={toHTMLInputTypeAttribute(input.input.type)}
-							class="input"
-							required
-							on:input={(event) => {
-								if (isSingleValueWithMultipleValuesFormInput(input)) {
-									submission.additional.set(input.input, event.currentTarget.value);
-								}
-							}}
-						/>
+						<div>
+							<input
+								id="input-{input.input.id}"
+								placeholder={input.input.placeholder}
+								type={toHTMLInputTypeAttribute(input.input.type)}
+								class="input"
+								required
+								on:input={(event) => {
+									if (isSingleValueWithMultipleValuesFormInput(input)) {
+										submission.additional.set(input.input, event.currentTarget.value);
+									}
+								}}
+							/>
+						</div>
 					</div>
+					<PlusButton onClick={() => console.log('clicked add')} />
 				</div>
-				<PlusButton onClick={() => console.log('clicked add')} />
-			</div>
 			{:else}
 				<input
 					id="input-{input.id}"
