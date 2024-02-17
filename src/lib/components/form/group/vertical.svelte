@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PlusButton } from '@components';
+	import { PlusButton, MinusButton } from '@components';
 	import {
 		toHTMLInputTypeAttribute,
 		type Form,
@@ -8,7 +8,8 @@
 		isMultipleValuesFormInput,
 		isButtonFormControl,
 		isSingleValueWithMultipleValuesFormInput,
-		isSingleValueWithMultipleValuesFormOutput
+		isSingleValueWithMultipleValuesFormOutput,
+		initialSubmissionSingleValueWithMultipleValuesFormOutput
 	} from '../form';
 
 	export let form: Form;
@@ -51,7 +52,7 @@
 							<div class="grid grid-cols-1 gap-4 sm:grid-cols-2" id="grid-{input.id}">
 								<div>
 									<select
-										id="input-{input.types.id}-${idx}"
+										id="input-{input.types.id}-${value.id}"
 										placeholder={input.types.placeholder}
 										value={value.type}
 										class="select"
@@ -68,7 +69,7 @@
 
 								<div>
 									<input
-										id="input-{input.input.id}--${idx}"
+										id="input-{input.input.id}-${value.id}"
 										placeholder={input.input.placeholder}
 										type={toHTMLInputTypeAttribute(input.input.type)}
 										class="input"
@@ -79,14 +80,25 @@
 									/>
 								</div>
 							</div>
-							<PlusButton
-								onClick={() => {
-									submission.required = submission.required.set(
-										input,
-										values.concat({ input: '', type: '' })
-									);
-								}}
-							/>
+							{#if values.length > 1 && idx + 1 != values.length}
+								<MinusButton
+									onClick={() => {
+										submission.additional = submission.additional.set(
+											input,
+											values.filter((x) => x.id != value.id)
+										);
+									}}
+								/>
+							{:else}
+								<PlusButton
+									onClick={() => {
+										submission.additional = submission.additional.set(
+											input,
+											values.concat(initialSubmissionSingleValueWithMultipleValuesFormOutput())
+										);
+									}}
+								/>
+							{/if}
 						</div>
 					{/each}
 				{/if}
@@ -119,7 +131,7 @@
 			{@const values = submission.additional.get(input) ?? []}
 
 			<div id="{form.id}-{input.id}" class="form-field">
-				<label class="form-label" for="input-{input.id}">{input.label}</label>
+				<div class="form-label">{input.label}</div>
 				{#if isMultipleValuesFormInput(input)}
 					<select
 						id="input-{input.id}"
@@ -146,7 +158,7 @@
 								<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 									<div>
 										<select
-											id="input-{input.types.id}-{idx}"
+											id="input-{input.types.id}-{value.id}"
 											placeholder={input.types.placeholder}
 											value={value.type}
 											class="select"
@@ -162,9 +174,10 @@
 
 									<div>
 										<input
-											id="input-{input.input.id}-{idx}"
+											id="input-{input.input.id}-{value.id}"
 											placeholder={input.input.placeholder}
 											type={toHTMLInputTypeAttribute(input.input.type)}
+											value={value.input}
 											class="input"
 											on:input={(event) => {
 												value.input = event.currentTarget.value;
@@ -172,22 +185,33 @@
 										/>
 									</div>
 								</div>
-								<PlusButton
-									onClick={() => {
-										submission.additional = submission.additional.set(
-											input,
-											values.concat({ input: '', type: '' })
-										);
-									}}
-								/>
+								{#if values.length > 1 && idx + 1 != values.length}
+									<MinusButton
+										onClick={() => {
+											submission.additional = submission.additional.set(
+												input,
+												values.filter((x) => x.id != value.id)
+											);
+										}}
+									/>
+								{:else}
+									<PlusButton
+										onClick={() => {
+											submission.additional = submission.additional.set(
+												input,
+												values.concat(initialSubmissionSingleValueWithMultipleValuesFormOutput())
+											);
+										}}
+									/>
+								{/if}
 							</div>
 						{/each}
 					{/if}
 
 					{#if input.input.description}
-						<label class="form-label" for="input-{input.id}-0">
+						<div class="form-label">
 							<span class="form-label-alt">{input.input.description}</span>
-						</label>
+						</div>
 					{/if}
 				{:else}
 					<input

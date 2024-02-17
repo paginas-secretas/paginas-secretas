@@ -62,6 +62,7 @@ export interface FormSubmission {
 }
 
 export type SingleValueWithMultipleValuesFormOutput = {
+	id: string;
 	input: string;
 	type: string;
 };
@@ -88,32 +89,37 @@ export function isButtonFormControl(control: FormControl) {
 	return control.type === 'button';
 }
 
+export function initialSubmissionOutput() {
+	return '';
+}
+
+export function initialSubmissionSingleValueWithMultipleValuesFormOutput() {
+	return {
+		id: `${new Date().getMilliseconds()}`,
+		input: '',
+		type: ''
+	} satisfies SingleValueWithMultipleValuesFormOutput;
+}
+
 export function initialSubmission(form: Form): FormSubmission {
 	const additional = form.additional;
 	const required = form.required;
-	const defaultSingleValue = '';
 
 	return {
 		additional: new Map(
 			additional.map((input) => [
 				input,
 				'count' in input
-					? Array(input.count).fill(<SingleValueWithMultipleValuesFormOutput>{
-							input: defaultSingleValue,
-							type: defaultSingleValue
-					  })
-					: defaultSingleValue
+					? Array(input.count).fill(initialSubmissionSingleValueWithMultipleValuesFormOutput())
+					: initialSubmissionOutput()
 			])
 		),
 		required: new Map(
 			required.map((input) => [
 				input,
 				'count' in input
-					? Array(input.count).fill(<SingleValueWithMultipleValuesFormOutput>{
-							input: defaultSingleValue,
-							type: defaultSingleValue
-					  })
-					: defaultSingleValue
+					? Array(input.count).fill(initialSubmissionSingleValueWithMultipleValuesFormOutput())
+					: initialSubmissionOutput()
 			])
 		)
 	};
