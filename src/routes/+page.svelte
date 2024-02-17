@@ -3,7 +3,8 @@
 		ContactsListViewer,
 		CreateContactsListButton,
 		NewContactButton,
-		ModalForm
+		ModalForm,
+		onNextTick
 	} from '@components';
 	import { ContactsListStore, createNewContactStore } from '@stores';
 	import LL from '../i18n/i18n-svelte';
@@ -31,7 +32,11 @@
 			<ContactsListViewer contactsList={contactsList.value} />
 			<NewContactButton
 				onClick={() => {
-					showNewContactModalForm = true;
+					showNewContactModalForm = !showNewContactModalForm;
+
+					if (!showNewContactModalForm) {
+						onNextTick(() => (showNewContactModalForm = true));
+					}
 				}}
 			/>
 			<SaveContactsListButton onClick={triggerStoreContactsList} />
