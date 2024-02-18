@@ -1,4 +1,4 @@
 export * from './button';
-export * from './contacts-list';
+export * from './contacts';
 export * from './form';
 export * from './util';

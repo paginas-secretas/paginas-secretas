@@ -1,10 +1,10 @@
 <script lang="ts">
 	import {
-		ContactsListViewer,
 		CreateContactsListButton,
 		NewContactButton,
 		ModalForm,
-		onNextTick
+		onNextTick,
+		ContactsViewer
 	} from '@components';
 	import { ContactsListStore, createNewContactStore } from '@stores';
 	import LL from '../i18n/i18n-svelte';
@@ -29,7 +29,7 @@
 <div class="flex flex-col items-center">
 	{#if $contactsListStore.success}
 		<div class="flex flex-col items-center">
-			<ContactsListViewer contactsList={contactsList.value} />
+			<ContactsViewer contactsList={contactsList.value} />
 			<NewContactButton
 				onClick={() => {
 					showNewContactModalForm = !showNewContactModalForm;
