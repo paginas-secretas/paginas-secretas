@@ -26,31 +26,29 @@
 	$: contactsList = $contactsListStore.value;
 </script>
 
-<div class="flex flex-col items-center">
-	{#if $contactsListStore.success}
-		<div class="flex flex-col items-center">
-			<ContactsViewer contactsList={contactsList.value} />
-			<NewContactButton
-				onClick={() => {
-					showNewContactModalForm = !showNewContactModalForm;
+{#if $contactsListStore.success}
+	<div class="bg-blue-400">
+		<ContactsViewer contactsList={contactsList.value} />
+		<!-- <NewContactButton
+			onClick={() => {
+				showNewContactModalForm = !showNewContactModalForm;
 
-					if (!showNewContactModalForm) {
-						onNextTick(() => (showNewContactModalForm = true));
-					}
-				}}
-			/>
-			<SaveContactsListButton onClick={triggerStoreContactsList} />
-		</div>
-		{#if showNewContactModalForm}
-			<ModalForm
-				form={$newContactStore.value}
-				onSubmit={(result) => {
-					showNewContactModalForm = false;
-					contactsListStore.triggerAddContact(result);
-				}}
-			/>
-		{/if}
-	{:else}
-		<CreateContactsListButton onClick={triggerCreateContactsList} />
+				if (!showNewContactModalForm) {
+					onNextTick(() => (showNewContactModalForm = true));
+				}
+			}}
+		/>
+		<SaveContactsListButton onClick={triggerStoreContactsList} /> -->
+	</div>
+	{#if showNewContactModalForm}
+		<ModalForm
+			form={$newContactStore.value}
+			onSubmit={(result) => {
+				showNewContactModalForm = false;
+				contactsListStore.triggerAddContact(result);
+			}}
+		/>
 	{/if}
-</div>
+{:else}
+	<CreateContactsListButton onClick={triggerCreateContactsList} />
+{/if}
