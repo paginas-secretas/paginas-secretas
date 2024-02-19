@@ -1,9 +1,9 @@
-import { CryptographicAlgorithm } from './cryptographic-algorithm';
+import { AsymmetricCryptographicAlgorithm } from './cryptographic-algorithm';
 
 /**
- * A {@link CryptographicAlgorithm} that uses `RSA-OAEP` with 2048 bit keys.
+ * A {@link AsymmetricCryptographicAlgorithm} that uses `RSA-OAEP` with 2048 bit keys.
  */
-export class RSAOAEPAlgorithm extends CryptographicAlgorithm {
+export class RSAOAEPAlgorithm extends AsymmetricCryptographicAlgorithm {
 	constructor() {
 		super(<RsaHashedKeyGenParams>{
 			name: 'RSA-OAEP',
