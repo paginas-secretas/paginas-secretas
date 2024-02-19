@@ -1,12 +1,15 @@
 import { LocalBrowserStorage, type BrowserStorage } from '@data';
 import {
 	RSAOAEPAlgorithm,
-	type CryptographicAlgorithm,
 	type ContactsList,
 	type AsymmetricKeyPair,
 	type Contact,
-	type PhoneNumber
-} from '../models';
+	type PhoneNumber,
+	AESGCMAlgorithm,
+	SymmetricCryptographicAlgorithm,
+	AsymmetricCryptographicAlgorithm,
+	SymmetricKey
+} from '@models';
 import { createStore, setSuccess, type Store } from './store';
 import { isSingleValueWithMultipleValuesFormOutput, type FormSubmission } from '@components';
 import { State, from } from './state';
@@ -16,11 +19,13 @@ export const ContactsListStore = createContactsListStore(globalThis.window);
 
 type ContactsListState = {
 	keyPair: AsymmetricKeyPair;
+	symmetricKey: SymmetricKey;
 	value: ContactsList;
 };
 
 function createContactsListStore(window: Window) {
-	const cryptoAlgorithm = new RSAOAEPAlgorithm();
+	const asymmetricCryptoAlgorithm = new RSAOAEPAlgorithm();
+	const symmetricCryptoAlgorithm = new AESGCMAlgorithm();
 	const storage = new LocalBrowserStorage(window);
 	const client = new ContactsManagerClient();
 	const manager = new ContactsManager(client);
@@ -29,26 +34,43 @@ function createContactsListStore(window: Window) {
 
 	return {
 		subscribe,
-		triggerCreateList: () => triggerCreateContactsList(store, storage, cryptoAlgorithm),
+		triggerCreateList: () =>
+			triggerCreateContactsList(
+				store,
+				storage,
+				asymmetricCryptoAlgorithm,
+				symmetricCryptoAlgorithm
+			),
 		triggerAddContact: (submission: FormSubmission) => triggerAddContact(store, submission),
 		triggerStoreContactsList: () =>
-			triggerStoreContactsList(store, storage, cryptoAlgorithm, manager)
+			triggerStoreContactsList(
+				store,
+				storage,
+				asymmetricCryptoAlgorithm,
+				symmetricCryptoAlgorithm,
+				manager
+			)
 	};
 }
 
 async function triggerCreateContactsList(
 	store: Store<ContactsListState>,
 	storage: BrowserStorage<string>,
-	cryptoAlgorithm: CryptographicAlgorithm
+	asymmetricCryptoAlgorithm: AsymmetricCryptographicAlgorithm,
+	symmetricCryptoAlgorithm: SymmetricCryptographicAlgorithm
 ) {
-	const keyPair = await cryptoAlgorithm.generate();
+	const keyPair = await asymmetricCryptoAlgorithm.generate();
 
-	storage.store('public', keyPair.public.toString());
-	storage.store('private', keyPair.private.toString());
+	storage.store('asymmetric-public', keyPair.public.toString());
+	storage.store('asymmetric-private', keyPair.private.toString());
+
+	const symmetricKey = await symmetricCryptoAlgorithm.generate();
+
+	storage.store('symmetricKey-private', symmetricKey.toString());
 
 	setSuccess(store, {
 		keyPair: keyPair,
-		value: []
+		symmetricKey: symmetricKey,
 	});
 }
 
@@ -77,19 +99,34 @@ async function triggerAddContact(store: Store<ContactsListState>, submission: Fo
 async function triggerStoreContactsList(
 	store: Store<ContactsListState>,
 	storage: BrowserStorage<string>,
-	cryptoAlgorithm: CryptographicAlgorithm,
+	asymmetricCryptoAlgorithm: AsymmetricCryptographicAlgorithm,
+	symmetricCryptoAlgorithm: SymmetricCryptographicAlgorithm,
 	manager: Manager
 ) {
 	let keyPair: AsymmetricKeyPair = <AsymmetricKeyPair>{};
+	let symmetricKey: SymmetricKey = <SymmetricKey>{};
 	let list: ContactsList = [];
 	store.update((s) => {
 		keyPair = s.value.keyPair;
+		symmetricKey = s.value.symmetricKey;
 		list = s.value.value;
 		return from(s.value, s.state);
 	});
 
-	const encryptedList = await cryptoAlgorithm.encrypt(keyPair.public, JSON.stringify(list));
+	const encryptedList = await symmetricCryptoAlgorithm.encrypt(symmetricKey, JSON.stringify(list));
+
+	const symmetricKeyEncrypted = await asymmetricCryptoAlgorithm.encrypt(
+		keyPair.public,
+		symmetricKey.toString()
+	);
+
 	const encryptedListBase64 = btoa(encryptedList);
 	storage.store('encryptedList', encryptedListBase64);
-	manager.add(encryptedListBase64);
+
+	const encryptedContacts = {
+		key: btoa(symmetricKeyEncrypted),
+		contacts: encryptedListBase64
+	};
+
+	manager.add(btoa(JSON.stringify(encryptedContacts)));
 }
