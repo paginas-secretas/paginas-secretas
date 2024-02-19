@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ContactsList } from '@models';
 	import { ContactList } from './contact-list';
+	import { ContactInformation } from './contact-information';
 
 	export let contactsList: ContactsList;
 </script>
@@ -14,7 +15,8 @@
 			<div class="divider divider-vertical w-min" />
 		</div>
 
-		<div class="grow">Contact info</div>
+		<!-- TODO: change contact based on the selected -->
+		<div class="grow"><ContactInformation contact={contactsList[0]} /></div>
 	</div>
 {:else}
 	No contacts added yet!
