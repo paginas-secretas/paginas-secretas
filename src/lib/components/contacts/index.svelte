@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ContactsList } from '@models';
-	import { ContactList } from './contact-list';
 	import { ContactInformation } from './contact-information';
+	import { ContactsExplorer } from './contacts-explorer';
 
 	export let contactsList: ContactsList;
 </script>
@@ -9,8 +9,7 @@
 {#if contactsList.length > 0}
 	<div class="flex flex-row max-h-screen">
 		<div class="flex w-1/4">
-			<ContactList {contactsList} />
-			<div class="divider divider-vertical w-min" />
+			<ContactsExplorer {contactsList} />
 		</div>
 
 		<!-- TODO: change contact based on the selected -->
