@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { LL } from '@i18n';
 	export let value: string;
 </script>
 
@@ -19,7 +20,7 @@
 			class="peer h-full w-full outline-none text-sm text-white pr-2 bg-gray-800"
 			type="text"
 			id="contacts-search-bar"
-			placeholder="Search something.."
+			placeholder={$LL.searchBarPlaceholder()}
 			bind:value
 		/>
 	</div>
