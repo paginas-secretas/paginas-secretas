@@ -46,7 +46,8 @@ const en = {
 		birthday: 'Birthday',
 		phoneNumbers: 'Phone Numbers',
 		addresses: 'Addresses'
-	}
+	},
+	searchBarPlaceholder: 'Search contact'
 } satisfies BaseTranslation;
 
 export default en;

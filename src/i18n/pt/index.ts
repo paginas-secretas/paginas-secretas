@@ -45,7 +45,8 @@ const pt = {
 		birthday: 'Aniversário',
 		phoneNumbers: 'Números de telefone',
 		addresses: 'Moradas'
-	}
+	},
+	searchBarPlaceholder: 'Procure contacto'
 } satisfies Translation;
 
 export default pt;

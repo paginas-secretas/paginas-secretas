@@ -192,6 +192,7 @@ type RootTranslation = {
 		 */
 		addresses: string;
 	};
+	searchBarPlaceholder: string;
 };
 
 export type TranslationFunctions = {
@@ -375,6 +376,7 @@ export type TranslationFunctions = {
 		 */
 		addresses: () => LocalizedString;
 	};
+	searchBarPlaceholder: () => LocalizedString;
 };
 
 export type Formatters = {};
