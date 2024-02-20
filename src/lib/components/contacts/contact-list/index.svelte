@@ -5,7 +5,7 @@
 	export let contactsList: ContactsList;
 </script>
 
-<ul class="overflow-auto">
+<ul class="overflow-auto grow">
 	{#each contactsList as contact}
 		<li class="px-4 py-3">
 			<ContactTile {contact} />

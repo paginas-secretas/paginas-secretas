@@ -7,11 +7,9 @@
 </script>
 
 {#if contactsList.length > 0}
-	<div class="flex flex-row">
+	<div class="flex flex-row max-h-screen">
 		<div class="flex w-1/4">
-			<div class="grow">
-				<ContactList {contactsList} />
-			</div>
+			<ContactList {contactsList} />
 			<div class="divider divider-vertical w-min" />
 		</div>
 
