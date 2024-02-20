@@ -174,6 +174,25 @@ type RootTranslation = {
 			};
 		};
 	};
+	contactInformation: {
+		/**
+		 * P​e​r​s​o​n​a​l​ ​I​n​f​o​r​m​a​t​i​o​n
+		 */
+		personalInformation: string;
+		/**
+		 * B​i​r​t​h​d​a​y
+		 */
+		birthday: string;
+		/**
+		 * P​h​o​n​e​ ​N​u​m​b​e​r​s
+		 */
+		phoneNumbers: string;
+		/**
+		 * A​d​d​r​e​s​s​e​s
+		 */
+		addresses: string;
+	};
+	searchBarPlaceholder: string;
 };
 
 export type TranslationFunctions = {
@@ -339,6 +358,25 @@ export type TranslationFunctions = {
 			};
 		};
 	};
+	contactInformation: {
+		/**
+		 * Personal Information
+		 */
+		personalInformation: () => LocalizedString;
+		/**
+		 * Birthday
+		 */
+		birthday: () => LocalizedString;
+		/**
+		 * Phone Numbers
+		 */
+		phoneNumbers: () => LocalizedString;
+		/**
+		 * Addresses
+		 */
+		addresses: () => LocalizedString;
+	};
+	searchBarPlaceholder: () => LocalizedString;
 };
 
 export type Formatters = {};

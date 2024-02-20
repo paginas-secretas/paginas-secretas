@@ -1,16 +1,28 @@
 <script lang="ts">
+	import { LL } from '@i18n';
 	import type { Contact } from '@models';
 
 	export let contact: Contact;
 </script>
 
-<!-- TODO: change string to constants defined in LL  -->
-<div>
+<div class="pt-5">
+	<div class="flex flex-col gap-2 items-center">
+		<div class="avatar h-20 w-20">
+			<span class="text-2xl"
+				>{contact.name.split(' ').reduce((p, c) => `${p}${c.charAt(0)}`, '')}</span
+			>
+		</div>
+		<div class="flex flex-col items-center">
+			<p class="text-2xl font-extrabold">{contact.name}</p>
+			<p class="text-lg">{contact.gender}</p>
+		</div>
+	</div>
+
 	<div class="py-10">
-		<h1>Personal Information</h1>
+		<p class="text-xl font-bold">{$LL.contactInformation.personalInformation()}</p>
 		<div class="divider divider-horizontal" />
 
-		<div id="personal-info" class="flex flex-row gap-4 px-5">
+		<div id="personal-info" class="grid grid-cols-2 px-5">
 			<div id="email" class="flex flex-row gap-2">
 				<div>
 					<svg width="24" height="24" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +34,7 @@
 					</svg>
 				</div>
 				<div class="flex flex-col">
-					<p><b>{contact.email}</b></p>
+					<p class="font-bold">{contact.email}</p>
 				</div>
 			</div>
 			<div id="birthDate" class="flex flex-row gap-2">
@@ -35,15 +47,15 @@
 					</svg>
 				</div>
 				<div class="flex flex-col">
-					<p><b>{contact.birthDate?.toDateString() ?? '-'}</b></p>
-					<p>Birthday</p>
+					<p class="font-bold">{contact.birthDate?.toDateString() ?? '-'}</p>
+					<p>{$LL.contactInformation.birthday()}</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="py-10">
-		<h1>Phone Numbers</h1>
+		<p class="text-xl font-bold">{$LL.contactInformation.phoneNumbers()}</p>
 		<div class="divider divider-horizontal" />
 
 		<div id="phone-numbers" class="flex flex-col gap-4 px-5">
@@ -60,7 +72,7 @@
 					{#each contact.phoneNumbers as phone}
 						<div id="phone">
 							<div class="flex flex-col">
-								<p><b>{phone.value}</b></p>
+								<p class="font-bold">{phone.value}</p>
 								<p>{phone.type}</p>
 							</div>
 						</div>
@@ -71,7 +83,7 @@
 	</div>
 
 	<div class="py-10">
-		<h1>Addresses</h1>
+		<p class="text-xl font-bold">{$LL.contactInformation.addresses()}</p>
 		<div class="divider divider-horizontal" />
 
 		<div id="addresses" class="flex flex-col gap-4 px-5">
@@ -85,7 +97,7 @@
 					</svg>
 				</div>
 				<div class="flex flex-col">
-					<p><b>TODO</b></p>
+					<p class="font-bold">TODO</p>
 					<p>TODO</p>
 				</div>
 			</div>

@@ -1,4 +1,7 @@
-import { SymmetricCryptographicAlgorithm } from './cryptographic-algorithm';
+import {
+	SymmetricCryptographicAlgorithm,
+	type AESGCMEncryptResult
+} from './cryptographic-algorithm';
 import type { SymmetricKey } from './encryption-key';
 
 /**
@@ -12,11 +15,18 @@ export class AESGCMAlgorithm extends SymmetricCryptographicAlgorithm {
 		});
 	}
 
-	override async encrypt(key: SymmetricKey, data: string): Promise<string> {
+	override async encrypt(key: SymmetricKey, data: string): Promise<AESGCMEncryptResult> {
+		const iv = crypto.getRandomValues(new Uint8Array(12));
 		const encryptAlgorithm = <AesGcmParams>{
 			name: 'AES-GCM',
-			iv: crypto.getRandomValues(new Uint8Array(12))
+			iv: iv
 		};
-		return super.encryptData(key, data, encryptAlgorithm, 'raw');
+
+		const encrypted: string = await super.encryptData(key, data, encryptAlgorithm, 'raw');
+
+		return <AESGCMEncryptResult>{
+			data: encrypted,
+			iv: iv.buffer
+		};
 	}
 }

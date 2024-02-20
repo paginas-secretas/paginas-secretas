@@ -40,7 +40,14 @@ const en = {
 				address: ['Home', 'Work']
 			}
 		} satisfies FormTranslation
-	}
+	},
+	contactInformation: {
+		personalInformation: 'Personal Information',
+		birthday: 'Birthday',
+		phoneNumbers: 'Phone Numbers',
+		addresses: 'Addresses'
+	},
+	searchBarPlaceholder: 'Search contact'
 } satisfies BaseTranslation;
 
 export default en;

@@ -6,6 +6,9 @@ import {
 	type CryptographicKey
 } from './encryption-key';
 
+export type AESGCMEncryptResult = { data: string; iv: ArrayBufferLike };
+type EncryptResult = string | AESGCMEncryptResult;
+
 /**
  * Abstracts the contract to generate a key pair for asymmetric encryption.
  */
@@ -18,7 +21,7 @@ export abstract class CryptographicAlgorithm {
 
 	abstract generate(): Promise<CryptographicKey>;
 
-	abstract encrypt(key: EncryptionKey, data: string): Promise<string>;
+	abstract encrypt(key: EncryptionKey, data: string): Promise<EncryptResult>;
 
 	protected async encryptData(
 		key: EncryptionKey,
@@ -47,7 +50,7 @@ export abstract class CryptographicAlgorithm {
 /**
  * Implements the contract defined in {@link CryptographicAlgorithm} to generate a key for symmetric encryption.
  */
-export class SymmetricCryptographicAlgorithm extends CryptographicAlgorithm {
+export abstract class SymmetricCryptographicAlgorithm extends CryptographicAlgorithm {
 	private algorithm: AesKeyGenParams | HmacKeyGenParams | Pbkdf2Params;
 
 	constructor(algorithm: AesKeyGenParams | HmacKeyGenParams | Pbkdf2Params) {
@@ -64,10 +67,6 @@ export class SymmetricCryptographicAlgorithm extends CryptographicAlgorithm {
 		);
 
 		return SymmetricKey.private(await crypto.subtle.exportKey('raw', keyPair));
-	}
-
-	override async encrypt(key: SymmetricKey, data: string): Promise<string> {
-		return super.encryptData(key, data, this.algorithm, 'raw');
 	}
 }
 

@@ -8,7 +8,9 @@ import {
 	AESGCMAlgorithm,
 	SymmetricCryptographicAlgorithm,
 	AsymmetricCryptographicAlgorithm,
-	SymmetricKey
+	SymmetricKey,
+	type AESGCMEncryptResult,
+	type EncryptedContactsInfo
 } from '@models';
 import { createStore, setSuccess, type Store } from './store';
 import { isSingleValueWithMultipleValuesFormOutput, type FormSubmission } from '@components';
@@ -114,7 +116,17 @@ async function triggerStoreContactsList(
 		return from(s.value, s.state);
 	});
 
-	const encryptedList = await symmetricCryptoAlgorithm.encrypt(symmetricKey, JSON.stringify(list));
+	const encrypted = await symmetricCryptoAlgorithm.encrypt(symmetricKey, JSON.stringify(list));
+
+	let encryptedList: string;
+	let iv = '';
+	if (typeof encrypted !== 'string') {
+		const aesgcmEncryptResult: AESGCMEncryptResult = encrypted as AESGCMEncryptResult;
+		encryptedList = aesgcmEncryptResult.data;
+		iv = String.fromCodePoint(...new Uint8Array(aesgcmEncryptResult.iv));
+	} else {
+		encryptedList = encrypted as string;
+	}
 
 	const symmetricKeyEncrypted = await asymmetricCryptoAlgorithm.encrypt(
 		keyPair.public,
@@ -124,8 +136,9 @@ async function triggerStoreContactsList(
 	const encryptedListBase64 = btoa(encryptedList);
 	storage.store('encryptedList', encryptedListBase64);
 
-	const encryptedContacts = {
+	const encryptedContacts = <EncryptedContactsInfo>{
 		key: btoa(symmetricKeyEncrypted),
+		iv: btoa(iv),
 		contacts: encryptedListBase64
 	};
 
