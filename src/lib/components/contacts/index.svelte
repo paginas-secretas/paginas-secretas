@@ -2,6 +2,7 @@
 	import type { ContactsList } from '@models';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
+	import { NewContactButton } from '../button';
 
 	export let contactsList: ContactsList;
 
@@ -17,8 +18,9 @@
 			/>
 		</div>
 
-		<!-- TODO: change contact based on the selected -->
 		<div class="grow"><ContactInformation contact={contactSelected} /></div>
+
+		<NewContactButton onClick={() => {}} />
 	</div>
 {:else}
 	No contacts added yet!
