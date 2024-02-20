@@ -26,6 +26,12 @@ export type EncryptedContacts = string;
 export type DocumentReference = string;
 export type DocumentHash = string;
 
+export interface EncryptedContactsInfo {
+	key: string;
+	iv: string;
+	contacts: EncryptedContacts;
+}
+
 export interface EncryptedContactsList {
 	contacts: EncryptedContacts;
 }
