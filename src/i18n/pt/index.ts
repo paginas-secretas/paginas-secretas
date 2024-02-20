@@ -39,6 +39,12 @@ const pt = {
 				address: ['Casa', 'Trabalho']
 			}
 		}
+	},
+	contactInformation: {
+		personalInformation: 'Informação Pessoal',
+		birthday: 'Aniversário',
+		phoneNumbers: 'Números de telefone',
+		addresses: 'Moradas'
 	}
 } satisfies Translation;
 
