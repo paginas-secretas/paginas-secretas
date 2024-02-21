@@ -40,3 +40,12 @@ export interface PartialEncryptedContactsList {
 	ref: DocumentReference;
 	hash: DocumentHash;
 }
+
+export interface LocalContactsList {
+	asymmetric: {
+		public: string;
+		private: string;
+	};
+	symmetric: string;
+	contactsList: ContactsList;
+}

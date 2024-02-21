@@ -10,7 +10,8 @@ import {
 	AsymmetricCryptographicAlgorithm,
 	SymmetricKey,
 	type AESGCMEncryptResult,
-	type EncryptedContactsInfo
+	type EncryptedContactsInfo,
+	type LocalContactsList
 } from '@models';
 import { createStore, setSuccess, type Store } from './store';
 import { isSingleValueWithMultipleValuesFormOutput, type FormSubmission } from '@components';
@@ -63,12 +64,7 @@ async function triggerCreateContactsList(
 ) {
 	const keyPair = await asymmetricCryptoAlgorithm.generate();
 
-	storage.store('asymmetric-public', keyPair.public.toString());
-	storage.store('asymmetric-private', keyPair.private.toString());
-
 	const symmetricKey = await symmetricCryptoAlgorithm.generate();
-
-	storage.store('symmetricKey-private', symmetricKey.toString());
 
 	setSuccess(store, {
 		keyPair: keyPair,
@@ -142,5 +138,17 @@ async function triggerStoreContactsList(
 		contacts: encryptedListBase64
 	};
 
-	manager.add(btoa(JSON.stringify(encryptedContacts)));
+	const partialEncryptedContactsList = await manager.add(btoa(JSON.stringify(encryptedContacts)));
+
+	storage.store(
+		`${partialEncryptedContactsList.ref}/${partialEncryptedContactsList.hash}`,
+		JSON.stringify(<LocalContactsList>{
+			asymmetric: {
+				public: keyPair.public.toString(),
+				private: keyPair.private.toString()
+			},
+			symmetric: symmetricKey.toString(),
+			contactsList: list
+		})
+	);
 }
