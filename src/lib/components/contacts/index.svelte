@@ -2,24 +2,25 @@
 	import type { ContactsList } from '@models';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
+	import { NewContactButton } from '../button';
+	import { NoContactRecords } from '../illustrations';
 
 	export let contactsList: ContactsList;
+	export let onNewContactClick: () => void;
 
-	$: contactSelected = contactsList[0];
+	$: contactSelected = contactsList.at(-1);
 </script>
 
-{#if contactsList.length > 0}
-	<div class="flex flex-row max-h-screen">
-		<div class="flex w-1/4">
-			<ContactsExplorer
-				{contactsList}
-				onContactSelected={(contact) => (contactSelected = contact)}
-			/>
-		</div>
-
-		<!-- TODO: change contact based on the selected -->
-		<div class="grow"><ContactInformation contact={contactSelected} /></div>
+<div class="flex flex-row h-screen">
+	<div class="flex w-1/4">
+		<ContactsExplorer {contactsList} onContactSelected={(contact) => (contactSelected = contact)} />
 	</div>
-{:else}
-	No contacts added yet!
-{/if}
+
+	{#if contactSelected}
+		<ContactInformation contact={contactSelected} />
+	{:else}
+		<NoContactRecords />
+	{/if}
+
+	<NewContactButton onClick={onNewContactClick} />
+</div>

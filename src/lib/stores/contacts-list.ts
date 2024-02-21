@@ -69,7 +69,155 @@ async function triggerCreateContactsList(
 	setSuccess(store, {
 		keyPair: keyPair,
 		symmetricKey: symmetricKey,
-		value: []
+		value: [
+			{
+				name: 'Rute Santos',
+				birthDate: new Date('1998/01/24'),
+				email: 'rutesantos4@gmail.com',
+				gender: 'Female',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'Francisco Spínola',
+				birthDate: new Date('2000/09/14'),
+				email: 'fssecure@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'Francisco Spínola',
+				birthDate: new Date('2000/09/14'),
+				email: 'fssecure@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'Francisco Spínola',
+				birthDate: new Date('2000/09/14'),
+				email: 'fssecure@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'Francisco Spínola',
+				birthDate: new Date('2000/09/14'),
+				email: 'fssecure@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'Francisco Spínola',
+				birthDate: new Date('2000/09/14'),
+				email: 'fssecure@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'Francisco Spínola',
+				birthDate: new Date('2000/09/14'),
+				email: 'fssecure@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			},
+			{
+				name: 'João Freitas',
+				birthDate: new Date('1997/07/22'),
+				email: 'joao.mag.freitas@gmail.com',
+				gender: 'Male',
+				phoneNumbers: []
+			}
+		]
 	});
 }
 

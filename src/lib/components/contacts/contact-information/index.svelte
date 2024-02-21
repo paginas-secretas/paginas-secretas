@@ -5,7 +5,7 @@
 	export let contact: Contact;
 </script>
 
-<div class="pt-5">
+<div class="pt-5 overflow-auto grow">
 	<div class="flex flex-col gap-2 items-center">
 		<div class="avatar h-20 w-20">
 			<span class="text-2xl"
