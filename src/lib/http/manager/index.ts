@@ -1,2 +1,2 @@
 export * from './manager';
-export * from './contacts.manager';
+export * from './contacts-manager';
