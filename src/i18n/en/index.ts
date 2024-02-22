@@ -5,6 +5,7 @@ const en = {
 	createList: 'Create contacts list',
 	new: 'New',
 	saveList: 'Save',
+	share: 'Share',
 	form: {
 		newContact: {
 			name: 'Contact Details',

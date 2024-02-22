@@ -4,6 +4,7 @@ const pt = {
 	createList: 'Criar lista de contactos',
 	new: 'Novo',
 	saveList: 'Guardar',
+	share: 'Partilhar',
 	form: {
 		newContact: {
 			name: 'Detalhes do Contacto',

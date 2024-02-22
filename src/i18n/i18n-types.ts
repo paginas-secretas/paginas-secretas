@@ -24,6 +24,10 @@ type RootTranslation = {
 	 * S​a​v​e
 	 */
 	saveList: string;
+	/**
+	 * S​h​a​r​e
+	 */
+	share: string;
 	form: {
 		newContact: {
 			/**
@@ -192,6 +196,9 @@ type RootTranslation = {
 		 */
 		addresses: string;
 	};
+	/**
+	 * S​e​a​r​c​h​ ​c​o​n​t​a​c​t
+	 */
 	searchBarPlaceholder: string;
 };
 
@@ -208,6 +215,10 @@ export type TranslationFunctions = {
 	 * Save
 	 */
 	saveList: () => LocalizedString;
+	/**
+	 * Share
+	 */
+	share: () => LocalizedString;
 	form: {
 		newContact: {
 			/**
@@ -376,6 +387,9 @@ export type TranslationFunctions = {
 		 */
 		addresses: () => LocalizedString;
 	};
+	/**
+	 * Search contact
+	 */
 	searchBarPlaceholder: () => LocalizedString;
 };
 
