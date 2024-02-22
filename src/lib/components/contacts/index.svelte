@@ -15,7 +15,11 @@
 
 <div class="flex flex-row h-screen">
 	<div class="flex w-1/4">
-		<ContactsExplorer {contactsList} onContactSelected={(contact) => (contactSelected = contact)} />
+		<ContactsExplorer
+			{contactsList}
+			onContactSelected={(contact) => (contactSelected = contact)}
+			onShareSelected={console.log}
+		/>
 	</div>
 
 	{#if contactSelected}
