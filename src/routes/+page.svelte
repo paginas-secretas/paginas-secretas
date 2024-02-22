@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CreateContactsListButton, ModalForm, ContactsViewer, onNextTick } from '@components';
+	import { ModalForm, ContactsViewer, onNextTick } from '@components';
 	import { ContactsListStore, createNewContactStore } from '@stores';
 	import LL from '../i18n/i18n-svelte';
 	import { onMount } from 'svelte';
@@ -33,9 +33,9 @@
 				onNextTick(() => (showNewContactModalForm = true));
 			}
 		}}
+		onSaveContactsClick={triggerStoreContactsList}
 	/>
 
-	<!-- <SaveContactsListButton onClick={triggerStoreContactsList} /> -->
 	{#if showNewContactModalForm}
 		<ModalForm
 			form={$newContactStore.value}

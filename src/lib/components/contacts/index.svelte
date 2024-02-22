@@ -2,12 +2,14 @@
 	import type { ContactsList } from '@models';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
-	import { NewContactButton } from '../button';
+	import { NewContactButton, SaveContactsListButton } from '../button';
 	import { NoContactRecords } from '../illustrations';
 
 	export let contactsList: ContactsList;
 	export let onNewContactClick: () => void;
+	export let onSaveContactsClick: () => void;
 
+	$: unsavedChanges = true;
 	$: contactSelected = contactsList.at(-1);
 </script>
 
@@ -22,5 +24,10 @@
 		<NoContactRecords />
 	{/if}
 
-	<NewContactButton onClick={onNewContactClick} />
+	<div class="flex flex-col fixed bottom-10 right-8 gap-3">
+		<NewContactButton onClick={onNewContactClick} />
+		{#if unsavedChanges}
+			<SaveContactsListButton onClick={onSaveContactsClick} />
+		{/if}
+	</div>
 </div>
