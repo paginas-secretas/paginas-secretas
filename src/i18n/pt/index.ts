@@ -5,6 +5,7 @@ const pt = {
 	new: 'Novo',
 	saveList: 'Guardar',
 	share: 'Partilhar',
+	generateKeyPair: 'Gerar chaves',
 	form: {
 		newContact: {
 			name: 'Detalhes do Contacto',

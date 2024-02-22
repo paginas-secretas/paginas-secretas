@@ -28,6 +28,10 @@ type RootTranslation = {
 	 * S​h​a​r​e
 	 */
 	share: string;
+	/**
+	 * G​e​r​a​r​ ​c​h​a​v​e​s
+	 */
+	generateKeyPair: string;
 	form: {
 		newContact: {
 			/**
@@ -219,6 +223,10 @@ export type TranslationFunctions = {
 	 * Share
 	 */
 	share: () => LocalizedString;
+	/**
+	 * Gerar chaves
+	 */
+	generateKeyPair: () => LocalizedString;
 	form: {
 		newContact: {
 			/**
