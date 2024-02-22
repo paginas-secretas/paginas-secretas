@@ -40,6 +40,22 @@ const pt = {
 				phoneNumberType: ['Casa', 'Trabalho', 'Movél', 'Outro', 'Voz'],
 				address: ['Casa', 'Trabalho']
 			}
+		},
+		shareContacts: {
+			name: 'Partilha os Contactos',
+			description:
+				'Preenche toda a informação necessária para poder partilhar a sua lista de contactos',
+			labels: {
+				publicKey: 'Chave pública (assimétrica) do utilizador',
+				control: 'Submeter'
+			},
+			descriptions: {
+				publicKey: 'A chave pública (assimétrica) do utilizador'
+			},
+			placeholders: {
+				publicKey: 'Preenche aqui'
+			},
+			values: {}
 		}
 	},
 	contactInformation: {

@@ -41,6 +41,21 @@ const en = {
 				phoneNumberType: ['Home', 'Work', 'Mobile', 'Other', 'Voice'],
 				address: ['Home', 'Work']
 			}
+		} satisfies FormTranslation,
+		shareContacts: {
+			name: 'Share Contacts',
+			description: 'Fill in all the required information to be able to share your contacts list',
+			labels: {
+				publicKey: 'User public (asymmetric) key',
+				control: 'Submit'
+			},
+			descriptions: {
+				publicKey: 'The user public (asymmetric) key'
+			},
+			placeholders: {
+				publicKey: 'Type here'
+			},
+			values: {}
 		} satisfies FormTranslation
 	},
 	contactInformation: {

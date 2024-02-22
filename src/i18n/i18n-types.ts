@@ -181,6 +181,39 @@ type RootTranslation = {
 				};
 			};
 		};
+		shareContacts: {
+			/**
+			 * S​h​a​r​e​ ​C​o​n​t​a​c​t​s
+			 */
+			name: string;
+			/**
+			 * F​i​l​l​ ​i​n​ ​a​l​l​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​h​a​r​e​ ​y​o​u​r​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 */
+			description: string;
+			labels: {
+				/**
+				 * U​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+				/**
+				 * S​u​b​m​i​t
+				 */
+				control: string;
+			};
+			descriptions: {
+				/**
+				 * T​h​e​ ​u​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+			};
+			placeholders: {
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				publicKey: string;
+			};
+			values: {};
+		};
 	};
 	contactInformation: {
 		/**
@@ -375,6 +408,39 @@ export type TranslationFunctions = {
 					'1': () => LocalizedString;
 				};
 			};
+		};
+		shareContacts: {
+			/**
+			 * Share Contacts
+			 */
+			name: () => LocalizedString;
+			/**
+			 * Fill in all the required information to be able to share your contacts list
+			 */
+			description: () => LocalizedString;
+			labels: {
+				/**
+				 * User public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+				/**
+				 * Submit
+				 */
+				control: () => LocalizedString;
+			};
+			descriptions: {
+				/**
+				 * The user public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+			};
+			placeholders: {
+				/**
+				 * Type here
+				 */
+				publicKey: () => LocalizedString;
+			};
+			values: {};
 		};
 	};
 	contactInformation: {
