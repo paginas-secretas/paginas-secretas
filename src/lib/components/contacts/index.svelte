@@ -19,6 +19,7 @@
 			{contactsList}
 			onContactSelected={(contact) => (contactSelected = contact)}
 			onShareSelected={console.log}
+			onGenerateKeyPairSelected={console.log}
 		/>
 	</div>
 

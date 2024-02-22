@@ -8,8 +8,12 @@
 	export let contactsList: ContactsList;
 	export let onContactSelected: (contact: Contact) => void;
 	export let onShareSelected: () => void;
+	export let onGenerateKeyPairSelected: () => void;
 
-	const options = new Map([[$LL.share().toString(), onShareSelected]]);
+	const options = new Map([
+		[$LL.share().toString(), onShareSelected],
+		[$LL.generateKeyPair().toString(), onGenerateKeyPairSelected]
+	]);
 
 	$: searchValue = '';
 	$: contacts = contactsList.filter((c) => c.name.includes(searchValue));
