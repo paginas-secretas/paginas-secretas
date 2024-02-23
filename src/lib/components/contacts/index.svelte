@@ -46,7 +46,7 @@
 			form={$shareContactsStore.value}
 			onSubmit={(result) => {
 				showShareModalForm = false;
-				shareContactsStore.submit(result);
+				shareContactsStore.submit(result, contactsList);
 			}}
 		/>
 	{/if}
