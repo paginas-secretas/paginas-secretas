@@ -9,7 +9,8 @@
 		isButtonFormControl,
 		isSingleValueWithMultipleValuesFormInput,
 		isSingleValueWithMultipleValuesFormOutput,
-		initialSubmissionSingleValueWithMultipleValuesFormOutput
+		initialSubmissionSingleValueWithMultipleValuesFormOutput,
+		isAreaInputType
 	} from '../form';
 
 	export let form: Form;
@@ -68,16 +69,29 @@
 								</div>
 
 								<div>
-									<input
-										id="input-{input.input.id}-${value.id}"
-										placeholder={input.input.placeholder}
-										type={toHTMLInputTypeAttribute(input.input.type)}
-										class="input"
-										required
-										on:input={(event) => {
-											value.input = event.currentTarget.value;
-										}}
-									/>
+									{#if isAreaInputType(input.input.type)}
+										<textarea
+											id="input-{input.input.id}-${value.id}"
+											placeholder={input.input.placeholder}
+											class="textarea"
+											rows="5"
+											required
+											on:input={(event) => {
+												value.input = event.currentTarget.value;
+											}}
+										/>
+									{:else}
+										<input
+											id="input-{input.input.id}-${value.id}"
+											placeholder={input.input.placeholder}
+											type={toHTMLInputTypeAttribute(input.input.type)}
+											class="input"
+											required
+											on:input={(event) => {
+												value.input = event.currentTarget.value;
+											}}
+										/>
+									{/if}
 								</div>
 							</div>
 							{#if values.length > 1 && idx + 1 != values.length}
@@ -109,14 +123,25 @@
 					</label>
 				{/if}
 			{:else}
-				<input
-					id="input-{input.id}"
-					placeholder={input.placeholder}
-					type={toHTMLInputTypeAttribute(input.type)}
-					class="input max-w-full"
-					required
-					on:input={(event) => submission.required.set(input, event.currentTarget.value)}
-				/>
+				{#if isAreaInputType(input.type)}
+					<textarea
+						id="input-{input.id}"
+						placeholder={input.placeholder}
+						class="textarea max-w-full"
+						rows="5"
+						required
+						on:input={(event) => submission.required.set(input, event.currentTarget.value)}
+					/>
+				{:else}
+					<input
+						id="input-{input.id}"
+						placeholder={input.placeholder}
+						type={toHTMLInputTypeAttribute(input.type)}
+						class="input max-w-full"
+						required
+						on:input={(event) => submission.required.set(input, event.currentTarget.value)}
+					/>
+				{/if}
 				{#if input.description}
 					<label class="form-label" for="input-{input.id}">
 						<span class="form-label-alt">{input.description}</span>
@@ -173,16 +198,29 @@
 									</div>
 
 									<div>
-										<input
-											id="input-{input.input.id}-{value.id}"
-											placeholder={input.input.placeholder}
-											type={toHTMLInputTypeAttribute(input.input.type)}
-											value={value.input}
-											class="input"
-											on:input={(event) => {
-												value.input = event.currentTarget.value;
-											}}
-										/>
+										{#if isAreaInputType(input.input.type)}
+											<textarea
+												id="input-{input.input.id}-{value.id}"
+												placeholder={input.input.placeholder}
+												class="textarea max-w-full"
+												rows="5"
+												required
+												on:input={(event) => {
+													value.input = event.currentTarget.value;
+												}}
+											/>
+										{:else}
+											<input
+												id="input-{input.input.id}-{value.id}"
+												placeholder={input.input.placeholder}
+												type={toHTMLInputTypeAttribute(input.input.type)}
+												value={value.input}
+												class="input"
+												on:input={(event) => {
+													value.input = event.currentTarget.value;
+												}}
+											/>
+										{/if}
 									</div>
 								</div>
 								{#if values.length > 1 && idx + 1 != values.length}
@@ -214,13 +252,23 @@
 						</div>
 					{/if}
 				{:else}
-					<input
-						id="input-{input.id}"
-						placeholder={input.placeholder}
-						type={toHTMLInputTypeAttribute(input.type)}
-						class="input max-w-full"
-						on:input={(event) => submission.additional.set(input, event.currentTarget.value)}
-					/>
+					{#if isAreaInputType(input.type)}
+						<textarea
+							id="input-{input.id}"
+							placeholder={input.placeholder}
+							class="textarea max-w-full"
+							rows="5"
+							on:input={(event) => submission.additional.set(input, event.currentTarget.value)}
+						/>
+					{:else}
+						<input
+							id="input-{input.id}"
+							placeholder={input.placeholder}
+							type={toHTMLInputTypeAttribute(input.type)}
+							class="input max-w-full"
+							on:input={(event) => submission.additional.set(input, event.currentTarget.value)}
+						/>
+					{/if}
 					{#if input.description}
 						<label class="form-label" for="input-{input.id}">
 							<span class="form-label-alt">{input.description}</span>

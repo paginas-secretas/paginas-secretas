@@ -24,6 +24,14 @@ type RootTranslation = {
 	 * S​a​v​e
 	 */
 	saveList: string;
+	/**
+	 * S​h​a​r​e
+	 */
+	share: string;
+	/**
+	 * G​e​n​e​r​a​t​e​ ​k​e​y​s
+	 */
+	generateKeyPair: string;
 	form: {
 		newContact: {
 			/**
@@ -173,6 +181,69 @@ type RootTranslation = {
 				};
 			};
 		};
+		shareContacts: {
+			/**
+			 * S​h​a​r​e​ ​C​o​n​t​a​c​t​s
+			 */
+			name: string;
+			/**
+			 * F​i​l​l​ ​i​n​ ​a​l​l​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​h​a​r​e​ ​y​o​u​r​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 */
+			description: string;
+			labels: {
+				/**
+				 * U​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+				/**
+				 * S​u​b​m​i​t
+				 */
+				control: string;
+			};
+			descriptions: {
+				/**
+				 * T​h​e​ ​u​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+			};
+			placeholders: {
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				publicKey: string;
+			};
+			values: {};
+		};
+	};
+	alert: {
+		generatePublicKey: {
+			/**
+			 * P​u​b​l​i​c​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * H​e​r​e​'​s​ ​y​o​u​r​ ​n​e​w​l​y​ ​p​u​b​l​i​c​ ​k​e​y​.​ ​S​h​a​r​e​ ​i​t​ ​o​n​l​y​ ​w​i​t​h​ ​t​h​e​ ​o​w​n​e​r​ ​o​f​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
+		sharedContactsList: {
+			/**
+			 * S​h​a​r​e​d​ ​C​o​n​t​a​c​t​s​ ​L​i​s​t
+			 */
+			title: string;
+			/**
+			 * H​e​r​e​'​s​ ​t​h​e​ ​U​R​L​ ​f​o​r​ ​a​c​c​e​s​s​i​n​g​ ​t​h​e​ ​s​h​a​r​e​d​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.​ ​S​h​a​r​e​ ​i​t​ ​w​i​t​h​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​o​w​n​e​r​.
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -192,6 +263,9 @@ type RootTranslation = {
 		 */
 		addresses: string;
 	};
+	/**
+	 * S​e​a​r​c​h​ ​c​o​n​t​a​c​t
+	 */
 	searchBarPlaceholder: string;
 };
 
@@ -208,6 +282,14 @@ export type TranslationFunctions = {
 	 * Save
 	 */
 	saveList: () => LocalizedString;
+	/**
+	 * Share
+	 */
+	share: () => LocalizedString;
+	/**
+	 * Generate keys
+	 */
+	generateKeyPair: () => LocalizedString;
 	form: {
 		newContact: {
 			/**
@@ -357,6 +439,69 @@ export type TranslationFunctions = {
 				};
 			};
 		};
+		shareContacts: {
+			/**
+			 * Share Contacts
+			 */
+			name: () => LocalizedString;
+			/**
+			 * Fill in all the required information to be able to share your contacts list
+			 */
+			description: () => LocalizedString;
+			labels: {
+				/**
+				 * User public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+				/**
+				 * Submit
+				 */
+				control: () => LocalizedString;
+			};
+			descriptions: {
+				/**
+				 * The user public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+			};
+			placeholders: {
+				/**
+				 * Type here
+				 */
+				publicKey: () => LocalizedString;
+			};
+			values: {};
+		};
+	};
+	alert: {
+		generatePublicKey: {
+			/**
+			 * Public Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * Here's your newly public key. Share it only with the owner of the contacts list.
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
+		sharedContactsList: {
+			/**
+			 * Shared Contacts List
+			 */
+			title: () => LocalizedString;
+			/**
+			 * Here's the URL for accessing the shared contacts list. Share it with the public key owner.
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
 	};
 	contactInformation: {
 		/**
@@ -376,6 +521,9 @@ export type TranslationFunctions = {
 		 */
 		addresses: () => LocalizedString;
 	};
+	/**
+	 * Search contact
+	 */
 	searchBarPlaceholder: () => LocalizedString;
 };
 

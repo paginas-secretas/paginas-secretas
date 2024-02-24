@@ -45,6 +45,7 @@ export interface FormControl {
 
 export type FormInputType =
 	| 'raw'
+	| 'area'
 	| 'email'
 	| 'secret'
 	| 'phone-number'
@@ -83,6 +84,10 @@ export function isSingleValueWithMultipleValuesFormOutput(
 	output: FormOutput
 ): output is SingleValueWithMultipleValuesFormOutput[] {
 	return typeof output !== 'string';
+}
+
+export function isAreaInputType(inputType: FormInputType) {
+	return inputType === 'area';
 }
 
 export function isButtonFormControl(control: FormControl) {

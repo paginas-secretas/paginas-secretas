@@ -20,7 +20,7 @@
 		<label for={id} class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
 		<div class="flex flex-col gap-2">
 			<h2 class="text-center text-2xl font-semibold">{form.name}</h2>
-			<p class="mx-auto max-w-xs text-sm text-content2">
+			<p class="mx-auto max-w-xs text-center text-sm text-content2">
 				{form.description}
 			</p>
 		</div>

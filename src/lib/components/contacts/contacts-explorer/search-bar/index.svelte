@@ -3,7 +3,7 @@
 	export let value: string;
 </script>
 
-<div class="max-w-md mx-8">
+<div class="max-w-md">
 	<div
 		class="relative flex items-center w-full h-12 rounded-3xl focus-within:shadow-lg overflow-hidden bg-gray-800"
 	>
