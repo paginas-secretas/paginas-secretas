@@ -96,7 +96,7 @@ async function triggerShareContacts(
 		(arraySubmissions.find((entry) => entry[0].id == 'public-key')?.[1] as string) ?? '';
 
 	console.log(`asymmetricPublicKey ${asymmetricPublicKey}`);
-	const asymmetricPublicKeyArrayBuffer = base64StringToArrayBuffer(asymmetricPublicKey);
+	const asymmetricPublicKeyArrayBuffer = importPemKey(asymmetricPublicKey);
 	console.log(`asymmetricPublicKeyUint8Array ${asymmetricPublicKeyArrayBuffer}`);
 
 	const symmetricKeyEncrypted = await asymmetricCryptoAlgorithm.encrypt(
@@ -115,8 +115,12 @@ async function triggerShareContacts(
 	manager.add(btoa(JSON.stringify(encryptedContacts)));
 }
 
-function base64StringToArrayBuffer(b64str: string): ArrayBufferLike {
-	const byteStr = atob(b64str);
+function importPemKey(pem: string): ArrayBufferLike {
+	const b64 = pem.replaceAll(/(-----([A-Z ]{14,21})-----)|\n/g, '');
+
+	console.log(b64);
+
+	const byteStr = atob(b64);
 	const bytes = new Uint8Array(byteStr.length);
 	for (let i = 0; i < byteStr.length; i++) {
 		bytes[i] = byteStr.charCodeAt(i);
