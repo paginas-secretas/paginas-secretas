@@ -71,14 +71,11 @@ async function triggerShareContacts(
 	submission: FormSubmission,
 	contactsList: ContactsList
 ) {
-	console.log('triggerShareContacts');
-
 	const symmetricKey = await symmetricCryptoAlgorithm.generate();
 	const encrypted = await symmetricCryptoAlgorithm.encrypt(
 		symmetricKey,
 		JSON.stringify(contactsList)
 	);
-	console.log(`symmetricKey ${symmetricKey.toString()}`);
 
 	let encryptedList: string;
 	let iv = '';
@@ -86,7 +83,6 @@ async function triggerShareContacts(
 		const aesgcmEncryptResult: AESGCMEncryptResult = encrypted as AESGCMEncryptResult;
 		encryptedList = aesgcmEncryptResult.data;
 		iv = String.fromCodePoint(...new Uint8Array(aesgcmEncryptResult.iv));
-		console.log(`iv${iv}`);
 	} else {
 		encryptedList = encrypted as string;
 	}
@@ -95,9 +91,7 @@ async function triggerShareContacts(
 	const asymmetricPublicKey =
 		(arraySubmissions.find((entry) => entry[0].id == 'public-key')?.[1] as string) ?? '';
 
-	console.log(`asymmetricPublicKey ${asymmetricPublicKey}`);
 	const asymmetricPublicKeyArrayBuffer = importPemKey(asymmetricPublicKey);
-	console.log(`asymmetricPublicKeyUint8Array ${asymmetricPublicKeyArrayBuffer}`);
 
 	const symmetricKeyEncrypted = await asymmetricCryptoAlgorithm.encrypt(
 		AsymmetricKey.public(asymmetricPublicKeyArrayBuffer),

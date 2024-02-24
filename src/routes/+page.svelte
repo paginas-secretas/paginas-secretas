@@ -8,12 +8,10 @@
 	const newContactStore = createNewContactStore($LL);
 
 	const triggerCreateContactsList = function () {
-		console.log('Button clicked');
 		contactsListStore.triggerCreateList();
 	};
 
 	const triggerStoreContactsList = function () {
-		console.log('Store Contacts List  Button clicked');
 		contactsListStore.triggerStoreContactsList();
 	};
 
