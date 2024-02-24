@@ -22,8 +22,6 @@
 	$: showShareModalForm = false;
 	$: showSharedContactsListAlert = $shareContactsStore.success;
 	$: showGenerateKeyPairAlert = $generateKeyPairStore.success;
-
-	console.log($shareContactsStore.value);
 </script>
 
 <div class="flex flex-row h-screen">
