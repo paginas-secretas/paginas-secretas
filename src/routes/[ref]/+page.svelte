@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ModalForm, ContactsViewer, onNextTick } from '@components';
 	import { ContactsListStore, createNewContactStore } from '@stores';
 	import { LL } from '@i18n';
 	import { onMount } from 'svelte';

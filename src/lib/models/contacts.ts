@@ -49,3 +49,13 @@ export interface LocalContactsList {
 	symmetric: string;
 	contactsList: ContactsList;
 }
+
+export function toEncryptedContactsInfo(contacts: EncryptedContactsList): EncryptedContactsInfo {
+	const json = atob(contacts.contacts);
+
+	const info = <EncryptedContactsInfo>{
+		...JSON.parse(json, (key, value) => (typeof value === 'string' ? atob(value) : value))
+	};
+
+	return info;
+}

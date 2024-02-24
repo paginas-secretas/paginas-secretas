@@ -56,7 +56,23 @@ const pt = {
 				publicKey: 'Preenche aqui'
 			},
 			values: {}
-		}
+		},
+		decryptContacts: {
+			name: 'Decifrar Contactos',
+			description: 'Preenche toda a informação necessária para poder decifrar a lista de contactos',
+			labels: {
+				publicKey: 'Chave privada (assimétrica) do utilizador',
+				control: 'Submeter'
+			},
+			descriptions: {
+				publicKey:
+					'A chave privada (assimétrica) do utilizador que permite decifrar a lista de contactos'
+			},
+			placeholders: {
+				publicKey: 'Preenche aqui'
+			},
+			values: {}
+		} satisfies FormTranslation
 	},
 	alert: {
 		generatePublicKey: {
