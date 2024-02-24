@@ -4,19 +4,22 @@
 	import { ContactsExplorer } from './contacts-explorer';
 	import { NewContactButton, SaveContactsListButton } from '../button';
 	import { NoContactRecords } from '../illustrations';
-	import { ModalForm, onNextTick } from '@components';
+	import { ModalForm, SimpleAlert, onNextTick } from '@components';
 	import { LL } from '@i18n';
-	import { createShareContactsStore } from '@stores';
+	import { createGenerateKeyPairStore, createShareContactsStore } from '@stores';
 
 	export let contactsList: ContactsList;
 	export let onNewContactClick: () => void;
 	export let onSaveContactsClick: () => void;
 
 	const shareContactsStore = createShareContactsStore($LL);
+	const generateKeyPairStore = createGenerateKeyPairStore();
+	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 
 	$: unsavedChanges = true;
 	$: contactSelected = contactsList.at(-1);
 	$: showShareModalForm = false;
+	$: showGenerateKeyPairAlert = $generateKeyPairStore.success;
 </script>
 
 <div class="flex flex-row h-screen">
@@ -31,7 +34,13 @@
 					onNextTick(() => (showShareModalForm = true));
 				}
 			}}
-			onGenerateKeyPairSelected={console.log}
+			onGenerateKeyPairSelected={() => {
+				if (showGenerateKeyPairAlert) {
+					showGenerateKeyPairAlert = false;
+				}
+
+				onNextTick(() => generateKeyPairStore.generate());
+			}}
 		/>
 	</div>
 
@@ -47,6 +56,22 @@
 			onSubmit={(result) => {
 				showShareModalForm = false;
 				shareContactsStore.submit(result, contactsList);
+			}}
+		/>
+	{/if}
+
+	{#if showGenerateKeyPairAlert}
+		<SimpleAlert
+			value={{
+				title: generateKeyPairTranslations.title(),
+				subtitle: generateKeyPairTranslations.subtitle(),
+				message: $generateKeyPairStore.value.public.toString(),
+				action: [
+					generateKeyPairTranslations.action(),
+					() => {
+						showGenerateKeyPairAlert = false;
+					}
+				]
 			}}
 		/>
 	{/if}
