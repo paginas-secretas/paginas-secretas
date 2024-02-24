@@ -44,6 +44,8 @@ function createContactsListStore(window: Window) {
 				asymmetricCryptoAlgorithm,
 				symmetricCryptoAlgorithm
 			),
+		triggerFetchContactsList: (ref: string, hash: string) =>
+			triggerFetchContactsList(store, manager, ref, hash),
 		triggerAddContact: (submission: FormSubmission) => triggerAddContact(store, submission),
 		triggerStoreContactsList: () =>
 			triggerStoreContactsList(
@@ -151,4 +153,15 @@ async function triggerStoreContactsList(
 			contactsList: list
 		})
 	);
+}
+
+async function triggerFetchContactsList(
+	store: Store<ContactsListState>,
+	manager: Manager,
+	ref: string,
+	hash: string
+) {
+	const result = manager.fetch(ref, hash);
+
+	console.log(result);
 }

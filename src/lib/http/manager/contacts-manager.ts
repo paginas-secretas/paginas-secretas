@@ -24,4 +24,20 @@ export class ContactsManager implements Manager {
 			throw 'Could not upload encrypted contacts list';
 		}
 	}
+
+	async fetch(ref: string, hash: string): Promise<EncryptedContactsList> {
+		try {
+			const response = await this.client.get(
+				`${contactsEndpoint}/${ref}`,
+				new Headers({
+					'x-doc-hash': hash
+				})
+			);
+
+			return response.status == 200 ? response.json() : Promise.resolve(response.status);
+		} catch (err) {
+			console.error(err);
+			throw 'Could not fetch encrypted contacts list';
+		}
+	}
 }
