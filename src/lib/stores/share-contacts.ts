@@ -72,14 +72,14 @@ async function triggerShareContacts(
 	contactsList: ContactsList
 ) {
 	console.log('triggerShareContacts');
-	
+
 	const symmetricKey = await symmetricCryptoAlgorithm.generate();
 	const encrypted = await symmetricCryptoAlgorithm.encrypt(
 		symmetricKey,
 		JSON.stringify(contactsList)
 	);
 	console.log(`symmetricKey ${symmetricKey.toString()}`);
-	
+
 	let encryptedList: string;
 	let iv = '';
 	if (typeof encrypted !== 'string') {
