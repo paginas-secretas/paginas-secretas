@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { Alert } from './alert';
+	import { isValidURL } from '../util';
 
 	export let value: Alert;
 	const id = `alert-${new Date().getMilliseconds()}`;
+	const isURL = isValidURL(value.message);
 
 	let modalStateElement: HTMLInputElement;
 	onMount(() => modalStateElement.click());
@@ -22,8 +24,13 @@
 		</div>
 
 		<section>
-			{@const isURL = new URL(value.message)}
-			<div class="text-wrap break-words">{value.message}</div>
+			{#if isURL}
+				<div class="text-wrap break-words">
+					<a class="link link-primary" href={value.message}>{value.message}</a>
+				</div>
+			{:else}
+				<div class="text-wrap break-words">{value.message}</div>
+			{/if}
 
 			<div class="pt-5">
 				<div class="justify-between">

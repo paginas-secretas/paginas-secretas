@@ -9,3 +9,12 @@ import { tick } from 'svelte';
 export function onNextTick(callback: () => void) {
 	return tick().finally(callback);
 }
+
+export function isValidURL(value: string): boolean {
+	try {
+		new URL(value);
+		return true;
+	} catch (err) {
+		return false;
+	}
+}
