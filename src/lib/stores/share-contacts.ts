@@ -117,9 +117,6 @@ async function triggerShareContacts(
 
 function importPemKey(pem: string): ArrayBufferLike {
 	const b64 = pem.replaceAll(/(-----([A-Z ]{14,21})-----)|\n/g, '');
-
-	console.log(b64);
-
 	const byteStr = atob(b64);
 	const bytes = new Uint8Array(byteStr.length);
 	for (let i = 0; i < byteStr.length; i++) {
