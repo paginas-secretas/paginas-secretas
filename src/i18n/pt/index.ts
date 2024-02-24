@@ -63,7 +63,13 @@ const pt = {
 			title: 'Chave Pública',
 			subtitle:
 				'Aqui tens uma nova chave pública. Partilha-a apenas com quem te vai partilhar a lista de contactos.',
-			action: 'Confirm'
+			action: 'Confirmar'
+		},
+		sharedContactsList: {
+			title: 'Lista de Contactos',
+			subtitle:
+				'Aqui está o URL para aceder à lista de contactos. Envia este link a quem te partilhou a chave pública.',
+			action: 'Confirmar'
 		}
 	},
 	contactInformation: {

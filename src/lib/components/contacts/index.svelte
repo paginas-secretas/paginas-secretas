@@ -15,11 +15,15 @@
 	const shareContactsStore = createShareContactsStore($LL);
 	const generateKeyPairStore = createGenerateKeyPairStore();
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
+	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
 	$: unsavedChanges = true;
 	$: contactSelected = contactsList.at(-1);
 	$: showShareModalForm = false;
+	$: showSharedContactsListAlert = $shareContactsStore.success;
 	$: showGenerateKeyPairAlert = $generateKeyPairStore.success;
+
+	console.log($shareContactsStore.value);
 </script>
 
 <div class="flex flex-row h-screen">
@@ -52,7 +56,7 @@
 
 	{#if showShareModalForm}
 		<ModalForm
-			form={$shareContactsStore.value}
+			form={$shareContactsStore.value.form}
 			onSubmit={(result) => {
 				showShareModalForm = false;
 				shareContactsStore.submit(result, contactsList);
@@ -70,6 +74,22 @@
 					generateKeyPairTranslations.action(),
 					() => {
 						showGenerateKeyPairAlert = false;
+					}
+				]
+			}}
+		/>
+	{/if}
+
+	{#if showSharedContactsListAlert && $shareContactsStore.value.url}
+		<SimpleAlert
+			value={{
+				title: sharedContactsListTranslations.title(),
+				subtitle: sharedContactsListTranslations.subtitle(),
+				message: $shareContactsStore.value.url.toString(),
+				action: [
+					sharedContactsListTranslations.action(),
+					() => {
+						showSharedContactsListAlert = false;
 					}
 				]
 			}}

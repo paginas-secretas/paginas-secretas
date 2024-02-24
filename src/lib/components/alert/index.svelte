@@ -22,6 +22,7 @@
 		</div>
 
 		<section>
+			{@const isURL = new URL(value.message)}
 			<div class="text-wrap break-words">{value.message}</div>
 
 			<div class="pt-5">

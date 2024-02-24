@@ -12,32 +12,38 @@ import {
 	type EncryptedContactsInfo
 } from '@models';
 import { ContactsManager, ContactsManagerClient, type Manager } from '@http';
+import { State, from } from './state';
 
-type ShareContactsState = Form;
+type ShareContactsState = {
+	form: Form;
+	url?: URL;
+};
 
 function createShareContactsForm(ll: TranslationFunctions) {
 	const formLL = ll.form.shareContacts;
 
 	return {
-		id: 'share-contacts',
-		name: formLL.name(),
-		description: formLL.description(),
-		required: [
-			{
-				id: 'public-key',
-				description: formLL.descriptions.publicKey(),
-				label: formLL.labels.publicKey(),
-				placeholder: formLL.placeholders.publicKey(),
-				type: 'area'
+		form: {
+			id: 'share-contacts',
+			name: formLL.name(),
+			description: formLL.description(),
+			required: [
+				{
+					id: 'public-key',
+					description: formLL.descriptions.publicKey(),
+					label: formLL.labels.publicKey(),
+					placeholder: formLL.placeholders.publicKey(),
+					type: 'area'
+				}
+			],
+			additional: [],
+			control: {
+				id: 'share-contacts-control',
+				label: formLL.labels.control(),
+				type: 'button'
 			}
-		],
-		additional: [],
-		control: {
-			id: 'share-contacts-control',
-			label: formLL.labels.control(),
-			type: 'button'
-		}
-	} satisfies Form;
+		} satisfies Form
+	};
 }
 
 export function createShareContactsStore(ll: TranslationFunctions) {
@@ -106,7 +112,14 @@ async function triggerShareContacts(
 		contacts: encryptedListBase64
 	};
 
-	manager.add(btoa(JSON.stringify(encryptedContacts)));
+	const result = await manager.add(btoa(JSON.stringify(encryptedContacts)));
+	const url = new URL(`${window.location.origin}/${result.ref}/${result.hash}`);
+
+	return store.update((state) => {
+		state.value.url = url;
+
+		return from(state.value, State.success);
+	});
 }
 
 function importPemKey(pem: string): ArrayBufferLike {

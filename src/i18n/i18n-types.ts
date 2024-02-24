@@ -230,6 +230,20 @@ type RootTranslation = {
 			 */
 			action: string;
 		};
+		sharedContactsList: {
+			/**
+			 * S​h​a​r​e​d​ ​C​o​n​t​a​c​t​s​ ​L​i​s​t
+			 */
+			title: string;
+			/**
+			 * H​e​r​e​'​s​ ​t​h​e​ ​U​R​L​ ​f​o​r​ ​a​c​c​e​s​s​i​n​g​ ​t​h​e​ ​s​h​a​r​e​d​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.​ ​S​h​a​r​e​ ​i​t​ ​w​i​t​h​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​o​w​n​e​r​.
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -467,6 +481,20 @@ export type TranslationFunctions = {
 			title: () => LocalizedString;
 			/**
 			 * Here's your newly public key. Share it only with the owner of the contacts list.
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
+		sharedContactsList: {
+			/**
+			 * Shared Contacts List
+			 */
+			title: () => LocalizedString;
+			/**
+			 * Here's the URL for accessing the shared contacts list. Share it with the public key owner.
 			 */
 			subtitle: () => LocalizedString;
 			/**

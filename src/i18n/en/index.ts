@@ -63,6 +63,12 @@ const en = {
 			title: 'Public Key',
 			subtitle: "Here's your newly public key. Share it only with the owner of the contacts list.",
 			action: 'Confirm'
+		} satisfies AlertTranslation,
+		sharedContactsList: {
+			title: 'Shared Contacts List',
+			subtitle:
+				"Here's the URL for accessing the shared contacts list. Share it with the public key owner.",
+			action: 'Confirm'
 		} satisfies AlertTranslation
 	},
 	contactInformation: {
