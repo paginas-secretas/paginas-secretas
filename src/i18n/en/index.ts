@@ -6,7 +6,7 @@ const en = {
 	new: 'New',
 	saveList: 'Save',
 	share: 'Share',
-	generateKeyPair: 'Generate key',
+	generateKeyPair: 'Generate keys',
 	form: {
 		newContact: {
 			name: 'Contact Details',

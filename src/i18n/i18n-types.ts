@@ -29,7 +29,7 @@ type RootTranslation = {
 	 */
 	share: string;
 	/**
-	 * G​e​n​e​r​a​t​e​ ​k​e​y
+	 * G​e​n​e​r​a​t​e​ ​k​e​y​s
 	 */
 	generateKeyPair: string;
 	form: {
@@ -273,7 +273,7 @@ export type TranslationFunctions = {
 	 */
 	share: () => LocalizedString;
 	/**
-	 * Generate key
+	 * Generate keys
 	 */
 	generateKeyPair: () => LocalizedString;
 	form: {
