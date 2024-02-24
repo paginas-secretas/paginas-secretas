@@ -1,4 +1,4 @@
-import type { FormTranslation } from '../form';
+import type { AlertTranslation, FormTranslation } from '../types';
 import type { BaseTranslation } from '../i18n-types';
 
 const en = {
@@ -6,7 +6,7 @@ const en = {
 	new: 'New',
 	saveList: 'Save',
 	share: 'Share',
-	generateKeyPair: 'Generate keys',
+	generateKeyPair: 'Generate key',
 	form: {
 		newContact: {
 			name: 'Contact Details',
@@ -57,6 +57,13 @@ const en = {
 			},
 			values: {}
 		} satisfies FormTranslation
+	},
+	alert: {
+		generatePublicKey: {
+			title: 'Public Key',
+			subtitle: "Here's your newly public key. Share it only with the owner of the contacts list.",
+			action: 'Confirm'
+		} satisfies AlertTranslation
 	},
 	contactInformation: {
 		personalInformation: 'Personal Information',

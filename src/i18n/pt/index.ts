@@ -58,6 +58,14 @@ const pt = {
 			values: {}
 		}
 	},
+	alert: {
+		generatePublicKey: {
+			title: 'Chave Pública',
+			subtitle:
+				'Aqui tens uma nova chave pública. Partilha-a apenas com quem te vai partilhar a lista de contactos.',
+			action: 'Confirm'
+		}
+	},
 	contactInformation: {
 		personalInformation: 'Informação Pessoal',
 		birthday: 'Aniversário',

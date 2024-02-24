@@ -9,4 +9,11 @@ export type FormTranslation = {
 	values: FormValuesTranslation;
 };
 
+export type AlertTranslation = {
+	title: string;
+	subtitle: string;
+	message?: string;
+	action: string;
+};
+
 type FormValuesTranslation = { [key: string]: string[] };

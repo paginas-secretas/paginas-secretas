@@ -29,7 +29,7 @@ type RootTranslation = {
 	 */
 	share: string;
 	/**
-	 * G​e​n​e​r​a​t​e​ ​k​e​y​s
+	 * G​e​n​e​r​a​t​e​ ​k​e​y
 	 */
 	generateKeyPair: string;
 	form: {
@@ -215,6 +215,22 @@ type RootTranslation = {
 			values: {};
 		};
 	};
+	alert: {
+		generatePublicKey: {
+			/**
+			 * P​u​b​l​i​c​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * H​e​r​e​'​s​ ​y​o​u​r​ ​n​e​w​l​y​ ​p​u​b​l​i​c​ ​k​e​y​.​ ​S​h​a​r​e​ ​i​t​ ​o​n​l​y​ ​w​i​t​h​ ​t​h​e​ ​o​w​n​e​r​ ​o​f​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
+	};
 	contactInformation: {
 		/**
 		 * P​e​r​s​o​n​a​l​ ​I​n​f​o​r​m​a​t​i​o​n
@@ -257,7 +273,7 @@ export type TranslationFunctions = {
 	 */
 	share: () => LocalizedString;
 	/**
-	 * Generate keys
+	 * Generate key
 	 */
 	generateKeyPair: () => LocalizedString;
 	form: {
@@ -441,6 +457,22 @@ export type TranslationFunctions = {
 				publicKey: () => LocalizedString;
 			};
 			values: {};
+		};
+	};
+	alert: {
+		generatePublicKey: {
+			/**
+			 * Public Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * Here's your newly public key. Share it only with the owner of the contacts list.
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
 		};
 	};
 	contactInformation: {
