@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { ModalForm } from '@components';
+	import { ContactsViewer, ModalForm } from '@components';
 	import { createLoadSharedContactsListStore } from '@stores';
 	import { onMount } from 'svelte';
 	import LL from '../../../i18n/i18n-svelte';
@@ -8,15 +8,11 @@
 	const { ref, hash } = $page.params;
 	const contactsListStore = createLoadSharedContactsListStore();
 
-	$: showDecryptContactsListForm = !!$contactsListStore.value?.encrypted;
+	$: showDecryptContactsListForm =
+		!!$contactsListStore.value?.encrypted && !$contactsListStore.value?.decrypted;
 
 	onMount(() => contactsListStore.load(ref, hash));
 </script>
-
-Olá!!!
-
-{ref}
-{hash}
 
 {#if showDecryptContactsListForm}
 	<ModalForm
@@ -44,5 +40,12 @@ Olá!!!
 			showDecryptContactsListForm = false;
 			contactsListStore.decrypt(submission);
 		}}
+	/>
+{/if}
+{#if $contactsListStore.value?.decrypted}
+	<ContactsViewer
+		contactsList={$contactsListStore.value.decrypted}
+		onNewContactClick={console.log}
+		onSaveContactsClick={console.log}
 	/>
 {/if}

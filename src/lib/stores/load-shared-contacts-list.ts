@@ -5,13 +5,17 @@ import {
 	RSAOAEPAlgorithm,
 	type EncryptedContactsList,
 	toEncryptedContactsInfo,
-	SymmetricKey
+	SymmetricKey,
+	AESGCMAlgorithm,
+	arrayBuffer,
+	type ContactsList,
+	type Contact
 } from '@models';
 import type { FormSubmission } from '@components';
-import { State, from } from './state';
 
 type LoadSharedContactsListState = {
 	encrypted: EncryptedContactsList;
+	decrypted?: ContactsList;
 };
 
 export function createLoadSharedContactsListStore() {
@@ -53,8 +57,27 @@ async function triggerDecryptContactsList(
 	const privatePem = [...submission.required].find((e) => e)?.[1] ?? '';
 	const privateKey = AsymmetricKey.private(privatePem.toString());
 	const algorithm = new RSAOAEPAlgorithm();
+	const symmetricAlgorithm = new AESGCMAlgorithm();
 
 	const info = toEncryptedContactsInfo(encrypted);
-	console.log(JSON.stringify(info));
 	const symmetricKey = SymmetricKey.private(await algorithm.decrypt(privateKey, info.key));
+	// needs to be decrypted
+	const iv = arrayBuffer(info.iv);
+
+	const contacts = await symmetricAlgorithm.decrypt(symmetricKey, {
+		data: info.contacts,
+		iv: iv
+	});
+
+	// hack
+	return setSuccess(store, {
+		encrypted: encrypted,
+		decrypted: [...JSON.parse(contacts)].map(
+			(x) =>
+				<Contact>{
+					...x,
+					birthDate: new Date(x.birthDate)
+				}
+		)
+	});
 }

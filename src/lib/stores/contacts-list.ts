@@ -134,6 +134,7 @@ async function triggerStoreContactsList(
 
 	const encryptedContacts = <EncryptedContactsInfo>{
 		key: btoa(symmetricKeyEncrypted),
+		// needs to be encrypted
 		iv: btoa(iv),
 		contacts: encryptedListBase64
 	};
