@@ -133,12 +133,18 @@ export interface AsymmetricKeyPair {
 
 export type CryptographicKey = SymmetricKey | AsymmetricKeyPair;
 
+export function arrayBuffer(data: string) {
+	const bytes = new Uint8Array(data.length);
+
+	for (let i = 0; i < data.length; i++) {
+		bytes[i] = data.charCodeAt(i);
+	}
+
+	return bytes.buffer;
+}
+
 function importPem(pem: string): ArrayBufferLike {
 	const b64 = pem.replaceAll(/(-----([A-Z ]{14,21})-----)|\n/g, '');
 	const byteStr = atob(b64);
-	const bytes = new Uint8Array(byteStr.length);
-	for (let i = 0; i < byteStr.length; i++) {
-		bytes[i] = byteStr.charCodeAt(i);
-	}
-	return bytes.buffer;
+	return arrayBuffer(byteStr);
 }

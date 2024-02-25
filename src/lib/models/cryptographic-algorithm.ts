@@ -3,7 +3,8 @@ import {
 	SymmetricKey,
 	AsymmetricKey,
 	type AsymmetricKeyPair,
-	type CryptographicKey
+	type CryptographicKey,
+	arrayBuffer
 } from './encryption-key';
 
 export type AESGCMEncryptResult = { data: string; iv: ArrayBufferLike };
@@ -62,11 +63,7 @@ export abstract class CryptographicAlgorithm {
 			['decrypt']
 		);
 
-		const decrypted = await crypto.subtle.decrypt(
-			algorithm,
-			cryptoKey,
-			new TextEncoder().encode(data)
-		);
+		const decrypted = await crypto.subtle.decrypt(algorithm, cryptoKey, arrayBuffer(data));
 
 		return Promise.resolve(String.fromCodePoint(...new Uint8Array(decrypted)));
 	}
@@ -124,6 +121,6 @@ export abstract class AsymmetricCryptographicAlgorithm extends CryptographicAlgo
 	}
 
 	override async decrypt(key: AsymmetricKey, data: string): Promise<string> {
-		return super.encryptData(key, data, this.algorithm, 'spki');
+		return super.decryptData(key, data, this.algorithm, 'pkcs8');
 	}
 }
