@@ -6,20 +6,27 @@
 	import { NoContactRecords } from '../illustrations';
 	import { ModalForm, SimpleAlert, onNextTick } from '@components';
 	import { LL } from '@i18n';
-	import { createGenerateKeyPairStore, createShareContactsStore } from '@stores';
+	import {
+		ContactsListStore,
+		createGenerateKeyPairStore,
+		createNewContactStore,
+		createShareContactsStore
+	} from '@stores';
 
 	export let contactsList: ContactsList;
-	export let onNewContactClick: () => void;
 	export let onSaveContactsClick: () => void;
 
 	const shareContactsStore = createShareContactsStore($LL);
+	const newContactStore = createNewContactStore($LL);
 	const generateKeyPairStore = createGenerateKeyPairStore();
+	const contactsListStore = ContactsListStore;
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
 	$: unsavedChanges = true;
 	$: contactSelected = contactsList.at(-1);
 	$: showShareModalForm = false;
+	$: showNewContactModalForm = false;
 	$: showSharedContactsListAlert = $shareContactsStore.success;
 	$: showGenerateKeyPairAlert = $generateKeyPairStore.success;
 </script>
@@ -94,8 +101,26 @@
 		/>
 	{/if}
 
+	{#if showNewContactModalForm}
+		<ModalForm
+			form={$newContactStore.value}
+			onSubmit={(result) => {
+				showNewContactModalForm = false;
+				contactsListStore.triggerAddContact(result);
+			}}
+		/>
+	{/if}
+
 	<div class="flex flex-col fixed bottom-10 right-8 gap-3">
-		<NewContactButton onClick={onNewContactClick} />
+		<NewContactButton
+			onClick={() => {
+				showNewContactModalForm = !showNewContactModalForm;
+
+				if (!showNewContactModalForm) {
+					onNextTick(() => (showNewContactModalForm = true));
+				}
+			}}
+		/>
 		{#if unsavedChanges}
 			<SaveContactsListButton onClick={onSaveContactsClick} />
 		{/if}

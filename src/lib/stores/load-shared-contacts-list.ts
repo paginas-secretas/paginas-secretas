@@ -11,7 +11,8 @@ import {
 	type ContactsList,
 	type Contact
 } from '@models';
-import type { FormSubmission } from '@components';
+import type { Form, FormSubmission } from '@components';
+import type { TranslationFunctions } from '@i18n';
 
 type LoadSharedContactsListState = {
 	encrypted: EncryptedContactsList;
@@ -34,6 +35,29 @@ export function createLoadSharedContactsListStore() {
 				return state;
 			})
 	};
+}
+
+export function createLoadSharedContactsForm(LL: TranslationFunctions) {
+	return {
+		id: 'load-shared-contacts',
+		name: LL.form.decryptContacts.name(),
+		description: LL.form.decryptContacts.description(),
+		required: [
+			{
+				id: 'public-key',
+				label: LL.form.decryptContacts.labels.publicKey(),
+				description: LL.form.decryptContacts.descriptions.publicKey(),
+				placeholder: LL.form.decryptContacts.placeholders.publicKey(),
+				type: 'area'
+			}
+		],
+		additional: [],
+		control: {
+			id: 'submit',
+			label: LL.form.decryptContacts.labels.control(),
+			type: 'button'
+		}
+	} satisfies Form;
 }
 
 async function triggerFetchContactsList(
