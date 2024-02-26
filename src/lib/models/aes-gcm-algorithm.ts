@@ -30,14 +30,12 @@ export class AESGCMAlgorithm extends SymmetricCryptographicAlgorithm {
 		};
 	}
 
-	override async decrypt(key: EncryptionKey, data: AESGCMEncryptResult): Promise<string> {
+	override decrypt(key: EncryptionKey, data: AESGCMEncryptResult): Promise<string> {
 		const encryptAlgorithm = <AesGcmParams>{
 			name: 'AES-GCM',
 			iv: data.iv
 		};
 
-		const decrypted: string = await super.decryptData(key, data.data, encryptAlgorithm, 'raw');
-
-		return decrypted;
+		return super.decryptData(key, data.data, encryptAlgorithm, 'raw');
 	}
 }
