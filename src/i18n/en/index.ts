@@ -56,6 +56,21 @@ const en = {
 				publicKey: 'Type here'
 			},
 			values: {}
+		} satisfies FormTranslation,
+		decryptContacts: {
+			name: 'Decrypt Contacts',
+			description: 'Fill in all the required information to be able to load your contacts list',
+			labels: {
+				publicKey: 'User private (asymmetric) key',
+				control: 'Submit'
+			},
+			descriptions: {
+				publicKey: 'The private (asymmetric) key able to decrypt the contacts list'
+			},
+			placeholders: {
+				publicKey: 'Type here'
+			},
+			values: {}
 		} satisfies FormTranslation
 	},
 	alert: {

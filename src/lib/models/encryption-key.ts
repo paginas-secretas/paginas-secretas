@@ -28,8 +28,10 @@ export class AsymmetricKey extends EncryptionKey {
 	 *
 	 * @param value the bit string that represents the key
 	 */
-	static public(value: ArrayBuffer) {
-		return new AsymmetricKey(value, true);
+	static public(value: ArrayBuffer | string) {
+		const buffer = typeof value === 'string' ? importPem(value) : value;
+
+		return new AsymmetricKey(buffer, true);
 	}
 
 	/**
@@ -37,8 +39,10 @@ export class AsymmetricKey extends EncryptionKey {
 	 *
 	 * @param value the bit string that represents the key
 	 */
-	static private(value: ArrayBuffer) {
-		return new AsymmetricKey(value, false);
+	static private(value: ArrayBuffer | string) {
+		const buffer = typeof value === 'string' ? importPem(value) : value;
+
+		return new AsymmetricKey(buffer, false);
 	}
 
 	/**
@@ -88,8 +92,10 @@ export class SymmetricKey extends EncryptionKey {
 	 *
 	 * @param value the bit string that represents the key
 	 */
-	static private(value: ArrayBuffer) {
-		return new SymmetricKey(value);
+	static private(value: ArrayBuffer | string) {
+		const buffer = typeof value === 'string' ? importPem(value) : value;
+
+		return new SymmetricKey(buffer);
 	}
 
 	/**
@@ -126,3 +132,19 @@ export interface AsymmetricKeyPair {
 }
 
 export type CryptographicKey = SymmetricKey | AsymmetricKeyPair;
+
+export function arrayBuffer(data: string) {
+	const bytes = new Uint8Array(data.length);
+
+	for (let i = 0; i < data.length; i++) {
+		bytes[i] = data.charCodeAt(i);
+	}
+
+	return bytes.buffer;
+}
+
+function importPem(pem: string): ArrayBufferLike {
+	const b64 = pem.replaceAll(/(-----([A-Z ]{14,21})-----)|\n/g, '');
+	const byteStr = atob(b64);
+	return arrayBuffer(byteStr);
+}

@@ -3,11 +3,13 @@ import {
 	SymmetricKey,
 	AsymmetricKey,
 	type AsymmetricKeyPair,
-	type CryptographicKey
+	type CryptographicKey,
+	arrayBuffer
 } from './encryption-key';
 
 export type AESGCMEncryptResult = { data: string; iv: ArrayBufferLike };
 type EncryptResult = string | AESGCMEncryptResult;
+type DecryptResult = string;
 
 /**
  * Abstracts the contract to generate a key pair for asymmetric encryption.
@@ -22,6 +24,7 @@ export abstract class CryptographicAlgorithm {
 	abstract generate(): Promise<CryptographicKey>;
 
 	abstract encrypt(key: EncryptionKey, data: string): Promise<EncryptResult>;
+	abstract decrypt(key: EncryptionKey, data: EncryptResult): Promise<DecryptResult>;
 
 	protected async encryptData(
 		key: EncryptionKey,
@@ -44,6 +47,25 @@ export abstract class CryptographicAlgorithm {
 		);
 
 		return Promise.resolve(String.fromCodePoint(...new Uint8Array(encrypted)));
+	}
+
+	protected async decryptData(
+		key: EncryptionKey,
+		data: string,
+		algorithm: Algorithm,
+		keyFormat: Exclude<KeyFormat, 'jwk'>
+	): Promise<DecryptResult> {
+		const cryptoKey: CryptoKey = await crypto.subtle.importKey(
+			keyFormat,
+			key.value,
+			algorithm,
+			true,
+			['decrypt']
+		);
+
+		const decrypted = await crypto.subtle.decrypt(algorithm, cryptoKey, arrayBuffer(data));
+
+		return Promise.resolve(String.fromCodePoint(...new Uint8Array(decrypted)));
 	}
 }
 
@@ -73,7 +95,7 @@ export abstract class SymmetricCryptographicAlgorithm extends CryptographicAlgor
 /**
  * Implements the contract defined in {@link CryptographicAlgorithm} to generate a key pair for asymmetric encryption.
  */
-export class AsymmetricCryptographicAlgorithm extends CryptographicAlgorithm {
+export abstract class AsymmetricCryptographicAlgorithm extends CryptographicAlgorithm {
 	private algorithm: RsaHashedKeyGenParams | EcKeyGenParams;
 
 	constructor(algorithm: RsaHashedKeyGenParams | EcKeyGenParams) {
@@ -96,5 +118,9 @@ export class AsymmetricCryptographicAlgorithm extends CryptographicAlgorithm {
 
 	override async encrypt(key: AsymmetricKey, data: string): Promise<string> {
 		return super.encryptData(key, data, this.algorithm, 'spki');
+	}
+
+	override async decrypt(key: AsymmetricKey, data: string): Promise<string> {
+		return super.decryptData(key, data, this.algorithm, 'pkcs8');
 	}
 }

@@ -38,13 +38,18 @@ function createContactsListStore(window: Window) {
 	return {
 		subscribe,
 		triggerCreateList: () =>
-			triggerCreateContactsList(
-				store,
-				storage,
-				asymmetricCryptoAlgorithm,
-				symmetricCryptoAlgorithm
-			),
+			triggerCreateContactsList(store, asymmetricCryptoAlgorithm, symmetricCryptoAlgorithm),
 		triggerAddContact: (submission: FormSubmission) => triggerAddContact(store, submission),
+		onContactsLoad: (
+			keyPair: AsymmetricKeyPair,
+			symmetricKey: SymmetricKey,
+			contactsList: ContactsList
+		) =>
+			setSuccess(store, {
+				keyPair: keyPair,
+				symmetricKey: symmetricKey,
+				value: contactsList
+			}),
 		triggerStoreContactsList: () =>
 			triggerStoreContactsList(
 				store,
@@ -58,12 +63,10 @@ function createContactsListStore(window: Window) {
 
 async function triggerCreateContactsList(
 	store: Store<ContactsListState>,
-	storage: BrowserStorage<string>,
 	asymmetricCryptoAlgorithm: AsymmetricCryptographicAlgorithm,
 	symmetricCryptoAlgorithm: SymmetricCryptographicAlgorithm
 ) {
 	const keyPair = await asymmetricCryptoAlgorithm.generate();
-
 	const symmetricKey = await symmetricCryptoAlgorithm.generate();
 
 	setSuccess(store, {
@@ -75,7 +78,6 @@ async function triggerCreateContactsList(
 
 async function triggerAddContact(store: Store<ContactsListState>, submission: FormSubmission) {
 	const arraySubmissions = [...submission.required, ...submission.additional];
-
 	const birthday = arraySubmissions.find((entry) => entry[0].id == 'birthday')?.[1];
 	const numbers = arraySubmissions.find((entry) => entry[0].id == 'phone-number')?.[1] ?? [];
 
@@ -134,6 +136,7 @@ async function triggerStoreContactsList(
 
 	const encryptedContacts = <EncryptedContactsInfo>{
 		key: btoa(symmetricKeyEncrypted),
+		// needs to be encrypted
 		iv: btoa(iv),
 		contacts: encryptedListBase64
 	};

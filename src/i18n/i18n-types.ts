@@ -214,6 +214,39 @@ type RootTranslation = {
 			};
 			values: {};
 		};
+		decryptContacts: {
+			/**
+			 * D​e​c​r​y​p​t​ ​C​o​n​t​a​c​t​s
+			 */
+			name: string;
+			/**
+			 * F​i​l​l​ ​i​n​ ​a​l​l​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​a​d​ ​y​o​u​r​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 */
+			description: string;
+			labels: {
+				/**
+				 * U​s​e​r​ ​p​r​i​v​a​t​e​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+				/**
+				 * S​u​b​m​i​t
+				 */
+				control: string;
+			};
+			descriptions: {
+				/**
+				 * T​h​e​ ​p​r​i​v​a​t​e​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y​ ​a​b​l​e​ ​t​o​ ​d​e​c​r​y​p​t​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+				 */
+				publicKey: string;
+			};
+			placeholders: {
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				publicKey: string;
+			};
+			values: {};
+		};
 	};
 	alert: {
 		generatePublicKey: {
@@ -461,6 +494,39 @@ export type TranslationFunctions = {
 			descriptions: {
 				/**
 				 * The user public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+			};
+			placeholders: {
+				/**
+				 * Type here
+				 */
+				publicKey: () => LocalizedString;
+			};
+			values: {};
+		};
+		decryptContacts: {
+			/**
+			 * Decrypt Contacts
+			 */
+			name: () => LocalizedString;
+			/**
+			 * Fill in all the required information to be able to load your contacts list
+			 */
+			description: () => LocalizedString;
+			labels: {
+				/**
+				 * User private (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+				/**
+				 * Submit
+				 */
+				control: () => LocalizedString;
+			};
+			descriptions: {
+				/**
+				 * The private (asymmetric) key able to decrypt the contacts list
 				 */
 				publicKey: () => LocalizedString;
 			};
