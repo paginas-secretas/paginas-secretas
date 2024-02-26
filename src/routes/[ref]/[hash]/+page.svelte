@@ -24,9 +24,7 @@
 		}}
 	/>
 {/if}
+
 {#if $loadSharedContactsListStore.value?.decrypted}
-	<ContactsViewer
-		contactsList={$loadSharedContactsListStore.value.decrypted}
-		onSaveContactsClick={console.log}
-	/>
+	<ContactsViewer contactsList={$loadSharedContactsListStore.value.decrypted} />
 {/if}

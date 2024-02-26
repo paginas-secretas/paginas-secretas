@@ -5,22 +5,11 @@
 
 	const contactsListStore = ContactsListStore;
 
-	const triggerCreateContactsList = function () {
-		contactsListStore.triggerCreateList();
-	};
-
-	const triggerStoreContactsList = function () {
-		contactsListStore.triggerStoreContactsList();
-	};
-
 	$: contactsList = $contactsListStore.value;
 
-	onMount(triggerCreateContactsList);
+	onMount(() => contactsListStore.triggerCreateList());
 </script>
 
 {#if $contactsListStore.success}
-	<ContactsViewer
-		contactsList={contactsList.value}
-		onSaveContactsClick={triggerStoreContactsList}
-	/>
+	<ContactsViewer contactsList={contactsList.value} />
 {/if}

@@ -14,7 +14,6 @@
 	} from '@stores';
 
 	export let contactsList: ContactsList;
-	export let onSaveContactsClick: () => void;
 
 	const shareContactsStore = createShareContactsStore($LL);
 	const newContactStore = createNewContactStore($LL);
@@ -122,7 +121,7 @@
 			}}
 		/>
 		{#if unsavedChanges}
-			<SaveContactsListButton onClick={onSaveContactsClick} />
+			<SaveContactsListButton onClick={() => contactsListStore.triggerStoreContactsList()} />
 		{/if}
 	</div>
 </div>
