@@ -16,7 +16,8 @@
 	]);
 
 	$: searchValue = '';
-	$: contacts = contactsList.filter((c) => c.name.includes(searchValue));
+	$: regex = new RegExp(searchValue, 'i');
+	$: contacts = contactsList.filter((c) => regex.test(c.name));
 </script>
 
 <div class="flex flex-col grow gap-4 my-4">
