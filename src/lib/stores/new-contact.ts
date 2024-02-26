@@ -1,6 +1,6 @@
-import type { Form, FormSubmission } from '@components';
-import { createStore, type Store } from './store';
+import type { Form } from '@components';
 import type { TranslationFunctions } from '@i18n';
+import { createStore } from './store';
 
 type NewContactState = Form;
 
@@ -78,11 +78,6 @@ export function createNewContactStore(ll: TranslationFunctions) {
 	const subscribe = store.subscribe;
 
 	return {
-		subscribe,
-		submit: (submission: FormSubmission) => triggerSaveContact(store, submission)
+		subscribe
 	};
-}
-
-function triggerSaveContact(store: Store<NewContactState>, submission: FormSubmission) {
-	console.log();
 }
