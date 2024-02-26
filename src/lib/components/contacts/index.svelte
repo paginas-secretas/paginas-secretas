@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ContactsList } from '@models';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
 	import { NewContactButton, SaveContactsListButton } from '../button';
