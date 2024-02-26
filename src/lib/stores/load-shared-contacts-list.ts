@@ -9,14 +9,19 @@ import {
 	AESGCMAlgorithm,
 	arrayBuffer,
 	type ContactsList,
-	type Contact
+	type Contact,
+	type AsymmetricKeyPair
 } from '@models';
 import type { Form, FormSubmission } from '@components';
 import type { TranslationFunctions } from '@i18n';
 
 type LoadSharedContactsListState = {
 	encrypted: EncryptedContactsList;
-	decrypted?: ContactsList;
+	decrypted?: {
+		keyPair: AsymmetricKeyPair;
+		symmetricKey: SymmetricKey;
+		contactsList: ContactsList;
+	};
 };
 
 export function createLoadSharedContactsListStore() {
@@ -96,12 +101,17 @@ async function triggerDecryptContactsList(
 	// hack
 	return setSuccess(store, {
 		encrypted: encrypted,
-		decrypted: [...JSON.parse(contacts)].map(
-			(x) =>
-				<Contact>{
-					...x,
-					birthDate: new Date(x.birthDate)
-				}
-		)
+		decrypted: {
+			// todo: we need public key
+			keyPair: { private: privateKey, public: privateKey },
+			symmetricKey: symmetricKey,
+			contactsList: [...JSON.parse(contacts)].map(
+				(x) =>
+					<Contact>{
+						...x,
+						birthDate: new Date(x.birthDate)
+					}
+			)
+		}
 	});
 }

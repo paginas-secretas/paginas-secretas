@@ -13,8 +13,6 @@
 		createShareContactsStore
 	} from '@stores';
 
-	export let contactsList: ContactsList;
-
 	const shareContactsStore = createShareContactsStore($LL);
 	const newContactStore = createNewContactStore($LL);
 	const generateKeyPairStore = createGenerateKeyPairStore();
@@ -22,12 +20,13 @@
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
-	$: unsavedChanges = true;
 	$: contactSelected = contactsList.at(-1);
+	$: unsavedChanges = true;
 	$: showShareModalForm = false;
 	$: showNewContactModalForm = false;
 	$: showSharedContactsListAlert = $shareContactsStore.success;
 	$: showGenerateKeyPairAlert = $generateKeyPairStore.success;
+	$: contactsList = $contactsListStore.value.value;
 </script>
 
 <div class="flex flex-row h-screen">

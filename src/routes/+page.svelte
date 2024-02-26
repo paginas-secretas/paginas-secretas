@@ -4,12 +4,9 @@
 	import { onMount } from 'svelte';
 
 	const contactsListStore = ContactsListStore;
-
-	$: contactsList = $contactsListStore.value;
-
 	onMount(() => contactsListStore.triggerCreateList());
 </script>
 
 {#if $contactsListStore.success}
-	<ContactsViewer contactsList={contactsList.value} />
+	<ContactsViewer />
 {/if}
