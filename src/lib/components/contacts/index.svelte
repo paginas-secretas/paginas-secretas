@@ -15,7 +15,7 @@
 	const shareContactsStore = createShareContactsStore($LL);
 	const newContactStore = createNewContactStore($LL);
 	const generateKeyPairStore = createGenerateKeyPairStore();
-	const contactsListStore = ContactsListStore;
+	const contactsListStore = ContactsListStore();
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 

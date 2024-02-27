@@ -11,7 +11,7 @@
 
 	const { ref, hash } = $page.params;
 
-	const contactsListStore = ContactsListStore;
+	const contactsListStore = ContactsListStore();
 	const loadSharedContactsListStore = createLoadSharedContactsListStore();
 
 	$: showDecryptContactsListForm =
