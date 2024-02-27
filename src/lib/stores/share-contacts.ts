@@ -1,18 +1,17 @@
 import type { Form, FormSubmission } from '@components';
-import { createStore, type Store } from './store';
+import { withVault } from '@core';
+import type { ContactsManager } from '@http';
 import type { TranslationFunctions } from '@i18n';
 import {
-	AESGCMAlgorithm,
 	AsymmetricCryptographicAlgorithm,
+	AsymmetricKey,
 	type AESGCMEncryptResult,
 	type ContactsList,
-	type SymmetricCryptographicAlgorithm,
-	RSAOAEPAlgorithm,
-	AsymmetricKey,
-	type EncryptedContactsInfo
+	type EncryptedContactsInfo,
+	type SymmetricCryptographicAlgorithm
 } from '@models';
-import { ContactsManager, ContactsManagerClient, type Manager } from '@http';
 import { State, from } from './state';
+import { createStore, type Store } from './store';
 
 type ShareContactsState = {
 	form: Form;
@@ -47,12 +46,13 @@ function createShareContactsForm(ll: TranslationFunctions) {
 }
 
 export function createShareContactsStore(ll: TranslationFunctions) {
+	const vault = withVault();
+
 	const form = createShareContactsForm(ll);
 	const store = createStore<ShareContactsState>(form);
-	const symmetricCryptoAlgorithm = new AESGCMAlgorithm();
-	const asymmetricCryptoAlgorithm = new RSAOAEPAlgorithm();
-	const client = new ContactsManagerClient();
-	const manager = new ContactsManager(client);
+	const symmetricCryptoAlgorithm = vault.symmetricCrypto;
+	const asymmetricCryptoAlgorithm = vault.asymmetricCrypto;
+	const manager = vault.contactsManager;
 	const subscribe = store.subscribe;
 
 	return {
@@ -73,7 +73,7 @@ async function triggerShareContacts(
 	store: Store<ShareContactsState>,
 	symmetricCryptoAlgorithm: SymmetricCryptographicAlgorithm,
 	asymmetricCryptoAlgorithm: AsymmetricCryptographicAlgorithm,
-	manager: Manager,
+	manager: ContactsManager,
 	submission: FormSubmission,
 	contactsList: ContactsList
 ) {
