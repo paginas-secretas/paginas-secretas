@@ -1,19 +1,20 @@
-import { ContactsManager, ContactsManagerClient, type Manager } from '@http';
-import { createStore, setSuccess, type Store } from './store';
-import {
-	AsymmetricKey,
-	RSAOAEPAlgorithm,
-	type EncryptedContactsList,
-	toEncryptedContactsInfo,
-	SymmetricKey,
-	AESGCMAlgorithm,
-	arrayBuffer,
-	type ContactsList,
-	type Contact,
-	type AsymmetricKeyPair
-} from '@models';
 import type { Form, FormSubmission } from '@components';
+import { withVault } from '@core';
+import type { ContactsManager } from '@http';
 import type { TranslationFunctions } from '@i18n';
+import {
+	arrayBuffer,
+	AsymmetricCryptographicAlgorithm,
+	AsymmetricKey,
+	SymmetricCryptographicAlgorithm,
+	SymmetricKey,
+	toEncryptedContactsInfo,
+	type AsymmetricKeyPair,
+	type Contact,
+	type ContactsList,
+	type EncryptedContactsList
+} from '@models';
+import { createStore, setSuccess, type Store } from './store';
 
 type LoadSharedContactsListState = {
 	encrypted: EncryptedContactsList;
@@ -25,9 +26,12 @@ type LoadSharedContactsListState = {
 };
 
 export function createLoadSharedContactsListStore() {
+	const vault = withVault();
+
 	const store = createStore<LoadSharedContactsListState>();
-	const client = new ContactsManagerClient();
-	const manager = new ContactsManager(client);
+	const asymmetricCryptoAlgorithm = vault.asymmetricCrypto;
+	const symmetricCryptoAlgorithm = vault.symmetricCrypto;
+	const manager = vault.contactsManager;
 	const subscribe = store.subscribe;
 
 	return {
@@ -35,7 +39,13 @@ export function createLoadSharedContactsListStore() {
 		load: (ref: string, hash: string) => triggerFetchContactsList(store, manager, ref, hash),
 		decrypt: (submission: FormSubmission) =>
 			store.update((state) => {
-				triggerDecryptContactsList(store, state.value.encrypted, submission);
+				triggerDecryptContactsList(
+					store,
+					asymmetricCryptoAlgorithm,
+					symmetricCryptoAlgorithm,
+					state.value.encrypted,
+					submission
+				);
 
 				return state;
 			})
@@ -67,7 +77,7 @@ export function createLoadSharedContactsForm(LL: TranslationFunctions) {
 
 async function triggerFetchContactsList(
 	store: Store<LoadSharedContactsListState>,
-	manager: Manager,
+	manager: ContactsManager,
 	ref: string,
 	hash: string
 ) {
@@ -80,20 +90,22 @@ async function triggerFetchContactsList(
 
 async function triggerDecryptContactsList(
 	store: Store<LoadSharedContactsListState>,
+	asymmetricCryptoAlgorithm: AsymmetricCryptographicAlgorithm,
+	symmetricCryptoAlgorithm: SymmetricCryptographicAlgorithm,
 	encrypted: EncryptedContactsList,
 	submission: FormSubmission
 ) {
 	const privatePem = [...submission.required].find((e) => e)?.[1] ?? '';
 	const privateKey = AsymmetricKey.private(privatePem.toString());
-	const algorithm = new RSAOAEPAlgorithm();
-	const symmetricAlgorithm = new AESGCMAlgorithm();
 
 	const info = toEncryptedContactsInfo(encrypted);
-	const symmetricKey = SymmetricKey.private(await algorithm.decrypt(privateKey, info.key));
+	const symmetricKey = SymmetricKey.private(
+		await asymmetricCryptoAlgorithm.decrypt(privateKey, info.key)
+	);
 	// needs to be decrypted
 	const iv = arrayBuffer(info.iv);
 
-	const contacts = await symmetricAlgorithm.decrypt(symmetricKey, {
+	const contacts = await symmetricCryptoAlgorithm.decrypt(symmetricKey, {
 		data: info.contacts,
 		iv: iv
 	});

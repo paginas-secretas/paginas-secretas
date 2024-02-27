@@ -3,7 +3,7 @@
 	import { ContactsListStore } from '@stores';
 	import { onMount } from 'svelte';
 
-	const contactsListStore = ContactsListStore;
+	const contactsListStore = ContactsListStore();
 	onMount(() => contactsListStore.triggerCreateList());
 </script>
 

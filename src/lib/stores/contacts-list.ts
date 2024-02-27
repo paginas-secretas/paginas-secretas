@@ -1,24 +1,27 @@
-import { LocalBrowserStorage, type BrowserStorage } from '@data';
-import {
-	RSAOAEPAlgorithm,
-	type ContactsList,
-	type AsymmetricKeyPair,
-	type Contact,
-	type PhoneNumber,
-	AESGCMAlgorithm,
-	SymmetricCryptographicAlgorithm,
-	AsymmetricCryptographicAlgorithm,
-	SymmetricKey,
-	type AESGCMEncryptResult,
-	type EncryptedContactsInfo,
-	type LocalContactsList
-} from '@models';
-import { createStore, setSuccess, type Store } from './store';
 import { isSingleValueWithMultipleValuesFormOutput, type FormSubmission } from '@components';
+import { withVault } from '@core';
 import { State, from } from './state';
-import { ContactsManager, ContactsManagerClient, type Manager } from '@http';
+import { createStore, setSuccess, type Store } from './store';
+import type {
+	AESGCMEncryptResult,
+	AsymmetricCryptographicAlgorithm,
+	AsymmetricKeyPair,
+	Contact,
+	ContactsList,
+	EncryptedContactsInfo,
+	LocalContactsList,
+	PhoneNumber,
+	SymmetricCryptographicAlgorithm,
+	SymmetricKey
+} from '@models';
+import type { BrowserStorage } from '@data';
+import type { ContactsManager } from '@http';
 
-export const ContactsListStore = createContactsListStore(globalThis.window);
+let cache: ReturnType<typeof createContactsListStore>;
+
+export const ContactsListStore = function () {
+	return cache ? cache : (cache = createContactsListStore());
+};
 
 type ContactsListState = {
 	keyPair: AsymmetricKeyPair;
@@ -26,12 +29,14 @@ type ContactsListState = {
 	value: ContactsList;
 };
 
-function createContactsListStore(window: Window) {
-	const asymmetricCryptoAlgorithm = new RSAOAEPAlgorithm();
-	const symmetricCryptoAlgorithm = new AESGCMAlgorithm();
-	const storage = new LocalBrowserStorage(window);
-	const client = new ContactsManagerClient();
-	const manager = new ContactsManager(client);
+function createContactsListStore() {
+	const vault = withVault();
+
+	const asymmetricCryptoAlgorithm = vault.asymmetricCrypto;
+	const symmetricCryptoAlgorithm = vault.symmetricCrypto;
+	const storage = vault.browserStorage;
+	const manager = vault.contactsManager;
+
 	const store = createStore<ContactsListState>();
 	const subscribe = store.subscribe;
 
@@ -102,7 +107,7 @@ async function triggerStoreContactsList(
 	storage: BrowserStorage<string>,
 	asymmetricCryptoAlgorithm: AsymmetricCryptographicAlgorithm,
 	symmetricCryptoAlgorithm: SymmetricCryptographicAlgorithm,
-	manager: Manager
+	manager: ContactsManager
 ) {
 	let keyPair: AsymmetricKeyPair = <AsymmetricKeyPair>{};
 	let symmetricKey: SymmetricKey = <SymmetricKey>{};

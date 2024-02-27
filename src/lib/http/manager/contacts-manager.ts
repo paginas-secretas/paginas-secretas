@@ -3,10 +3,10 @@ import type {
 	EncryptedContactsList,
 	PartialEncryptedContactsList
 } from '@models';
-import { contactsEndpoint, type Client, type Manager } from '@http';
+import { contactsEndpoint, ContactsManagerClient, type ContactsManager } from '@http';
 
-export class ContactsManager implements Manager {
-	constructor(private readonly client: Client) {}
+export class WorkerContactsManager implements ContactsManager {
+	constructor(private readonly client: ContactsManagerClient) {}
 
 	async add(encryptedContacts: EncryptedContacts): Promise<PartialEncryptedContactsList> {
 		try {
