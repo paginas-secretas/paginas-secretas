@@ -27,7 +27,8 @@ const config = {
 			'@stores': path.resolve('./src/lib/stores/index.ts'),
 			'@models': path.resolve('./src/lib/models/index.ts'),
 			'@data': path.resolve('./src/lib/data/index.ts'),
-			'@i18n': path.resolve('./src/i18n/index.ts')
+			'@i18n': path.resolve('./src/i18n/index.ts'),
+			'@core': path.resolve('./src/lib/core/index.ts')
 		}
 	}
 };
