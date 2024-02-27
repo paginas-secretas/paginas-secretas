@@ -4,7 +4,7 @@ import type {
 	PartialEncryptedContactsList
 } from '@models';
 
-export interface Manager {
+export interface ContactsManager {
 	add(encryptedContacts: EncryptedContacts): Promise<PartialEncryptedContactsList>;
 	fetch(ref: string, hash: string): Promise<EncryptedContactsList>;
 }
