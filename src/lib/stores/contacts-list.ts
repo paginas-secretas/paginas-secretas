@@ -17,7 +17,11 @@ import type {
 import type { BrowserStorage } from '@data';
 import type { ContactsManager } from '@http';
 
-export const ContactsListStore = createContactsListStore();
+let cache: ReturnType<typeof createContactsListStore>;
+
+export const ContactsListStore = function () {
+	return cache ? cache : (cache = createContactsListStore());
+};
 
 type ContactsListState = {
 	keyPair: AsymmetricKeyPair;
