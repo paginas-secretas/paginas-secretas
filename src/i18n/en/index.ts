@@ -92,7 +92,9 @@ const en = {
 		phoneNumbers: 'Phone Numbers',
 		addresses: 'Addresses'
 	},
-	searchBarPlaceholder: 'Search contact'
+	searchBarPlaceholder: 'Search contact',
+	copyAction: 'Copy to clipboard',
+	copiedAction: 'Copied!'
 } satisfies BaseTranslation;
 
 export default en;
