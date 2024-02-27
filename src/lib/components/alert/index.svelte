@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { Alert } from './alert';
 	import { isValidURL } from '../util';
+	import { CopyButton } from '../button';
 
 	export let value: Alert;
 	const id = `alert-${new Date().getMilliseconds()}`;
@@ -24,6 +25,10 @@
 		</div>
 
 		<section>
+			<div class="flex justify-end">
+				<CopyButton onCopy={() => value.message} />
+			</div>
+
 			{#if isURL}
 				<div class="text-wrap break-words">
 					<a class="link link-primary" href={value.message}>{value.message}</a>

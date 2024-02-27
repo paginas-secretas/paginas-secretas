@@ -300,6 +300,14 @@ type RootTranslation = {
 	 * S​e​a​r​c​h​ ​c​o​n​t​a​c​t
 	 */
 	searchBarPlaceholder: string;
+	/**
+	 * C​o​p​y​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+	 */
+	copyAction: string;
+	/**
+	 * C​o​p​i​e​d​!
+	 */
+	copiedAction: string;
 };
 
 export type TranslationFunctions = {
@@ -591,6 +599,14 @@ export type TranslationFunctions = {
 	 * Search contact
 	 */
 	searchBarPlaceholder: () => LocalizedString;
+	/**
+	 * Copy to clipboard
+	 */
+	copyAction: () => LocalizedString;
+	/**
+	 * Copied!
+	 */
+	copiedAction: () => LocalizedString;
 };
 
 export type Formatters = {};

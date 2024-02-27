@@ -94,7 +94,9 @@ const pt = {
 		phoneNumbers: 'Números de telefone',
 		addresses: 'Moradas'
 	},
-	searchBarPlaceholder: 'Procure contacto'
+	searchBarPlaceholder: 'Procure contacto',
+	copyAction: 'Copiar para a área de trabalho',
+	copiedAction: 'Copiado!'
 } satisfies Translation;
 
 export default pt;
