@@ -4,3 +4,4 @@ export { default as SaveContactsListButton } from './save-contacts-list-button.s
 export { default as PlusButton } from './plus-button.svelte';
 export { default as MinusButton } from './minus-button.svelte';
 export { default as OptionsButton } from './options-button.svelte';
+export { default as CopyButton } from './copy-button.svelte';
