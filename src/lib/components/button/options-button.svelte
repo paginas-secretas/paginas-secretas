@@ -1,11 +1,21 @@
 <script lang="ts">
 	export let values: string[];
 	export let onClick: (value: string) => void;
+	let container: HTMLElement;
 
 	$: active = false;
 </script>
 
+<svelte:window
+	on:click={(e) => {
+		if (e.target instanceof Node && container.contains(e.target) == false) {
+			active = false;
+		}
+	}}
+/>
+
 <div
+	bind:this={container}
 	class="flex items-center cursor-pointer"
 	on:click={() => (active = !active)}
 	aria-hidden="true"
