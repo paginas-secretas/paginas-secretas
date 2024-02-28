@@ -19,10 +19,8 @@
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
-	let previousContactsListSize = $contactsListStore.value.value.length;
-
 	$: contactSelected = contactsList.at(-1);
-	$: unsavedChanges = previousContactsListSize != $contactsListStore.value.value.length;
+	$: unsavedChanges = !$contactsListStore.value.isSaved;
 	$: showShareModalForm = false;
 	$: showNewContactModalForm = false;
 	$: showSharedContactsListAlert = $shareContactsStore.success;
@@ -121,12 +119,7 @@
 			}}
 		/>
 		{#if unsavedChanges}
-			<SaveContactsListButton
-				onClick={() => {
-					contactsListStore.triggerStoreContactsList();
-					previousContactsListSize = $contactsListStore.value.value.length;
-				}}
-			/>
+			<SaveContactsListButton onClick={() => contactsListStore.triggerStoreContactsList()} />
 		{/if}
 	</div>
 </div>

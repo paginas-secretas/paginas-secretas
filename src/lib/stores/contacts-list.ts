@@ -27,6 +27,7 @@ type ContactsListState = {
 	keyPair: AsymmetricKeyPair;
 	symmetricKey: SymmetricKey;
 	value: ContactsList;
+	isSaved: boolean;
 };
 
 function createContactsListStore() {
@@ -53,7 +54,8 @@ function createContactsListStore() {
 			setSuccess(store, {
 				keyPair: keyPair,
 				symmetricKey: symmetricKey,
-				value: contactsList
+				value: contactsList,
+				isSaved: false
 			}),
 		triggerStoreContactsList: () =>
 			triggerStoreContactsList(
@@ -77,7 +79,8 @@ async function triggerCreateContactsList(
 	setSuccess(store, {
 		keyPair: keyPair,
 		symmetricKey: symmetricKey,
-		value: []
+		value: [],
+		isSaved: true
 	});
 }
 
@@ -97,6 +100,7 @@ async function triggerAddContact(store: Store<ContactsListState>, submission: Fo
 	};
 
 	store.update((s) => {
+		s.value.isSaved = false;
 		s.value.value.push(contact);
 		return from(s.value, State.success);
 	});
@@ -147,6 +151,11 @@ async function triggerStoreContactsList(
 	};
 
 	const partialEncryptedContactsList = await manager.add(btoa(JSON.stringify(encryptedContacts)));
+
+	store.update((s) => {
+		s.value.isSaved = true;
+		return from(s.value, s.state);
+	});
 
 	storage.store(
 		`${partialEncryptedContactsList.ref}/${partialEncryptedContactsList.hash}`,
