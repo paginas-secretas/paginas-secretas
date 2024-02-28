@@ -13,6 +13,9 @@ module.exports = {
 			}
 		}
 	],
+	globals: {
+		globalThis: 'readonly'
+	},
 	settings: {
 		'svelte3/typescript': () => require('typescript')
 	},
