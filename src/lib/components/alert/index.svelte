@@ -30,13 +30,12 @@
 			</div>
 
 			{#if isURL}
-				<div class="text-wrap break-words">
+				<div class="break-all">
 					<a class="link link-primary" href={value.message}>{value.message}</a>
 				</div>
 			{:else}
-				<div class="text-wrap break-words">{value.message}</div>
+				<div class="break-words whitespace-pre-wrap">{value.message}</div>
 			{/if}
-
 			<div class="pt-5">
 				<div class="justify-between">
 					<button type="submit" class="btn btn-primary w-full" on:click={value.action[1]}
