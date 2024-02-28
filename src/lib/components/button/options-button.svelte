@@ -16,7 +16,7 @@
 
 <div
 	bind:this={container}
-	class="flex items-center"
+	class="flex items-center cursor-pointer"
 	on:click={() => (active = !active)}
 	aria-hidden="true"
 >
