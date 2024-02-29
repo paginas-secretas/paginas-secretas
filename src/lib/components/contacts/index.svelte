@@ -20,7 +20,7 @@
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
 	$: contactSelected = contactsList.at(-1);
-	$: unsavedChanges = true;
+	$: unsavedChanges = !$contactsListStore.value.isSaved;
 	$: showShareModalForm = false;
 	$: showNewContactModalForm = false;
 	$: showSharedContactsListAlert = $shareContactsStore.success;
