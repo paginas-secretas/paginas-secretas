@@ -1,12 +1,13 @@
 import { LocalBrowserStorage, type BrowserStorage } from '@data';
-import { ContactsManagerClient, type ContactsManager, WorkerContactsManager } from '@http';
+import { ContactsManagerClient, WorkerContactsManager, type ContactsManager } from '@http';
 import {
+	AESGCMAlgorithm,
 	RSAOAEPAlgorithm,
 	type AsymmetricCryptographicAlgorithm,
-	type SymmetricCryptographicAlgorithm,
-	AESGCMAlgorithm
+	type SymmetricCryptographicAlgorithm
 } from '@models';
-import { getContext, setContext } from 'svelte';
+
+let globalVault: VaultAccessor;
 
 type VaultAccessor = {
 	browserStorage: BrowserStorage<string>;
@@ -23,9 +24,9 @@ export function registerVault(window: Window) {
 		symmetricCrypto: new AESGCMAlgorithm()
 	};
 
-	return setContext<VaultAccessor>('vault', accessor);
+	globalVault = accessor;
 }
 
 export function withVault() {
-	return getContext<VaultAccessor>('vault');
+	return globalVault;
 }
