@@ -102,10 +102,12 @@
 						{:else}
 							<PlusButton
 								onClick={() => {
-									submissionValues = submissionValues.set(
-										input,
-										values.concat(initialSubmissionSingleValueWithMultipleValuesFormOutput())
-									);
+									if (isSingleValueWithMultipleValuesFormInput(input)) {
+										submissionValues = submissionValues.set(
+											input,
+											values.concat(initialSubmissionSingleValueWithMultipleValuesFormOutput(input))
+										);
+									}
 								}}
 							/>
 						{/if}
