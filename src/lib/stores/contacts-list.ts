@@ -93,7 +93,9 @@ async function triggerAddContact(store: Store<ContactsListState>, submission: Fo
 		name: arraySubmissions.find((entry) => entry[0].id == 'name')?.[1],
 		email: arraySubmissions.find((entry) => entry[0].id == 'email')?.[1],
 		phoneNumbers: isSingleValueWithMultipleValuesFormOutput(numbers)
-			? numbers.map((x) => <PhoneNumber>{ value: x.input, type: x.type })
+			? numbers
+					.filter((x) => !!x.input && x.input.trim().length > 0 && !!x.type)
+					.map((x) => <PhoneNumber>{ value: x.input, type: x.type })
 			: [],
 		birthDate: birthday ? new Date(birthday.toString()) : undefined,
 		gender: arraySubmissions.find((entry) => entry[0].id == 'gender')?.[1]

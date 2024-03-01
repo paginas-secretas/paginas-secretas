@@ -98,11 +98,13 @@ export function initialSubmissionOutput() {
 	return '';
 }
 
-export function initialSubmissionSingleValueWithMultipleValuesFormOutput() {
+export function initialSubmissionSingleValueWithMultipleValuesFormOutput(
+	formInput: SingleValueWithMultipleValuesFormInput
+) {
 	return {
 		id: `${new Date().getMilliseconds()}`,
 		input: '',
-		type: ''
+		type: formInput.types.values[0]
 	} satisfies SingleValueWithMultipleValuesFormOutput;
 }
 
@@ -115,7 +117,7 @@ export function initialSubmission(form: Form): FormSubmission {
 			additional.map((input) => [
 				input,
 				'count' in input
-					? Array(input.count).fill(initialSubmissionSingleValueWithMultipleValuesFormOutput())
+					? Array(input.count).fill(initialSubmissionSingleValueWithMultipleValuesFormOutput(input))
 					: initialSubmissionOutput()
 			])
 		),
@@ -123,7 +125,7 @@ export function initialSubmission(form: Form): FormSubmission {
 			required.map((input) => [
 				input,
 				'count' in input
-					? Array(input.count).fill(initialSubmissionSingleValueWithMultipleValuesFormOutput())
+					? Array(input.count).fill(initialSubmissionSingleValueWithMultipleValuesFormOutput(input))
 					: initialSubmissionOutput()
 			])
 		)
