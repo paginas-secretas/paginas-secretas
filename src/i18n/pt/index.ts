@@ -1,4 +1,5 @@
-import type { Translation } from '../i18n-types';
+import type { Translation } from '@i18n';
+import type { FormTranslation } from '../types';
 
 const pt = {
 	createList: 'Criar lista de contactos',
