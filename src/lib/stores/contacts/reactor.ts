@@ -119,7 +119,6 @@ async function storeContactsListInManager(
 ) {
 	const vault = withVault();
 
-	console.log('-------- encrypt --------');
 	const encrypted = await vault.symmetricCrypto.encrypt(symmetricKey, JSON.stringify(contacts));
 
 	if (typeof encrypted === 'string') {
@@ -128,7 +127,6 @@ async function storeContactsListInManager(
 
 	const encryptedList = encrypted.data;
 
-	console.log(`encrypted.iv: ${encrypted.iv}`);
 	const ivEncrypted = await vault.asymmetricCrypto.encrypt(publicKey, encrypted.iv);
 
 	const symmetricKeyEncrypted = await vault.asymmetricCrypto.encrypt(
@@ -136,8 +134,6 @@ async function storeContactsListInManager(
 		symmetricKey.toString()
 	);
 
-	console.log(`ivEncrypted: ${ivEncrypted}`);
-	console.log(`btoa(ivEncrypted): ${btoa(ivEncrypted)}`);
 	const encryptedContacts = <EncryptedContactsInfo>{
 		key: btoa(symmetricKeyEncrypted),
 		iv: btoa(ivEncrypted),
@@ -155,20 +151,12 @@ async function decryptContactsList(privateKey: AsymmetricKey, encrypted: Encrypt
 		await vault.asymmetricCrypto.decrypt(privateKey, info.key)
 	);
 
-	console.log('-------- decrypt --------');
-	console.log(info);
-	console.log(`info.iv: ${info.iv}`);
 	const iv = await vault.asymmetricCrypto.decrypt(privateKey, info.iv);
-	console.log(`iv: ${iv}`);
-	let contacts = '';
-	try {
-		contacts = await vault.symmetricCrypto.decrypt(symmetricKey, {
-			data: info.contacts,
-			iv: iv
-		});
-	} catch (error) {
-		console.error(error);
-	}
+	const contacts = await vault.symmetricCrypto.decrypt(symmetricKey, {
+		data: info.contacts,
+		iv: iv
+	});
+
 	return {
 		// todo: we need public key
 		keyPair: { private: privateKey, public: privateKey },

@@ -24,8 +24,6 @@ export class AESGCMAlgorithm extends SymmetricCryptographicAlgorithm {
 
 		const encrypted: string = await super.encryptData(key, data, encryptAlgorithm, 'raw');
 
-		console.log(`iv.buffer `);
-		console.log(iv.buffer);
 		return <AESGCMEncryptResult>{
 			data: encrypted,
 			iv: encoded(iv.buffer)
@@ -33,8 +31,6 @@ export class AESGCMAlgorithm extends SymmetricCryptographicAlgorithm {
 	}
 
 	override decrypt(key: EncryptionKey, data: AESGCMEncryptResult): Promise<string> {
-		console.log(`arrayBuffer(data.iv) ${arrayBuffer(data.iv)}`);
-		console.log(arrayBuffer(data.iv));
 		const encryptAlgorithm = <AesGcmParams>{
 			name: 'AES-GCM',
 			iv: arrayBuffer(data.iv)
