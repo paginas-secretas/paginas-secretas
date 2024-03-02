@@ -14,7 +14,7 @@
 	 */
 	export let listener: ((state: S) => void) | undefined = undefined;
 
-	// Subscrible only once after element is inserted in the DOM
+	// Subscribe only once after element is inserted in the DOM
 	if (listener !== undefined) {
 		const callback = listener;
 

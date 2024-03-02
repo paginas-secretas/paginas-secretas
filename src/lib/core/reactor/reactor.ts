@@ -31,7 +31,7 @@ class WritableEmitter<V> implements Emitter<V> {
 /**
  * An event stream like reaction engine that propagates events into 0 or more states (1 Event > * State).
  * The API is pretty straight forward:
- * 1. clients register event-state mappers using the {@link on} method inside the construstor
+ * 1. clients register event-state mappers using the {@link on} method inside the constructor
  * 2. clients publish an event using {@link add} method
  * 3. engine transforms these events using the available mappers for the specific event
  * 4. subscribes receive the created states using the {@link subscribe} method
@@ -68,14 +68,14 @@ class WritableEmitter<V> implements Emitter<V> {
  *
  */
 export abstract class Reactor<E, S> {
-	private states: Writable<S>;
+	private readonly states: Writable<S>;
 	private events: Writable<E>;
 	private emitter: WritableEmitter<S>;
 
 	/**
 	 * The initial reactor state.
 	 */
-	private initialState: S;
+	private readonly initialState: S;
 
 	/**
 	 * The current state value.
@@ -87,7 +87,7 @@ export abstract class Reactor<E, S> {
 	 */
 	subscribe: (this: void, run: Subscriber<S>, invalidate?: Invalidator<S>) => Unsubscriber;
 
-	constructor(initialState: S) {
+	protected constructor(initialState: S) {
 		this.initialState = initialState;
 		this.state = initialState;
 		this.states = writable(initialState);
