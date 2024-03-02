@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ModalForm, SimpleAlert, onNextTick } from '@components';
+	import { ModalForm, onNextTick, SimpleAlert } from '@components';
 	import { ReactorListener } from '@core';
 	import { LL } from '@i18n';
 	import {
@@ -7,7 +7,7 @@
 		ContactsReactor,
 		CryptoReactor,
 		FormStarted,
-		FormSubmitted,
+		FormSubmitted, isContactsSaved,
 		isContactsShared,
 		isFormFinish,
 		isFormInProgress,
@@ -32,10 +32,9 @@
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
-	$: contactSelected = contactsList.at(-1);
-	$: unsavedChanges = true;
-
 	$: contactsList = $contactsReactor.value;
+	$: contactSelected = contactsList.at(-1);
+	$: unsavedChanges = !isContactsSaved($contactsReactor);
 </script>
 
 <div class="flex flex-row h-screen">

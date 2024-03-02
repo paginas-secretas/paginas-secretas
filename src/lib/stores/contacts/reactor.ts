@@ -28,7 +28,7 @@ import {
 	type SaveContacts,
 	type ShareContacts
 } from './event';
-import { ContactsShared, type ContactsState, ContactsUpdated } from './state';
+import { ContactsSaved, ContactsShared, type ContactsState, ContactsUpdated } from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
@@ -62,7 +62,7 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 		super.on<SaveContacts>(async (_, emit) => {
 			await triggerStoreContactsList(this.state.value, this.symmetricKey, this.asymmetricKey);
 
-			emit(ContactsUpdated(this.state.value));
+			emit(ContactsSaved(this.state.value));
 		}, isSaveContacts);
 
 		super.on<ShareContacts>(async (event, emit) => {
@@ -104,7 +104,9 @@ function submissionToContact(submission: FormSubmission) {
 		name: arraySubmissions.find((entry) => entry[0].id == 'name')?.[1],
 		email: arraySubmissions.find((entry) => entry[0].id == 'email')?.[1],
 		phoneNumbers: isSingleValueWithMultipleValuesFormOutput(numbers)
-			? numbers.map((x) => <PhoneNumber>{ value: x.input, type: x.type })
+			? numbers
+					.filter((x) => !!x.input && x.input.trim().length > 0 && !!x.type)
+					.map((x) => <PhoneNumber>{ value: x.input, type: x.type })
 			: [],
 		birthDate: birthday ? new Date(birthday.toString()) : undefined,
 		gender: arraySubmissions.find((entry) => entry[0].id == 'gender')?.[1]
