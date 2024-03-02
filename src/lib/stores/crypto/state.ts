@@ -1,6 +1,29 @@
 import type { AsymmetricKeyPair } from '@models';
+import { isTypedOf } from '@core';
 
-export type GenerationSuccess = AsymmetricKeyPair;
-export type GenerationFailure = { message: string };
+export function CryptoInitialized() {
+	return { type: 'crypto-initialized' as const };
+}
 
-export type CryptoState = GenerationSuccess | GenerationFailure | {};
+export function GenerationSuccess(value: AsymmetricKeyPair) {
+	return {
+		value: value,
+		type: 'generation-success' as const
+	};
+}
+
+export function GenerationFailure(value: string) {
+	return {
+		value: value,
+		type: 'generation-failure' as const
+	};
+}
+
+export type CryptoInitialized = ReturnType<typeof CryptoInitialized>;
+export type GenerationSuccess = ReturnType<typeof GenerationSuccess>;
+export type GenerationFailure = ReturnType<typeof GenerationFailure>;
+
+export type CryptoState = CryptoInitialized | GenerationSuccess | GenerationFailure;
+
+export const isGenerationSuccess = (state: CryptoState): state is GenerationSuccess =>
+	isTypedOf<GenerationSuccess>(state, 'generation-success');

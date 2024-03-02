@@ -1,8 +1,8 @@
-import { isSingleValueWithMultipleValuesFormOutput, type FormSubmission } from '@components';
+import { type FormSubmission, isSingleValueWithMultipleValuesFormOutput } from '@components';
 import { Reactor, withVault } from '@core';
 import {
+	arrayBuffer,
 	AsymmetricKey,
-	toEncryptedContactsInfo,
 	type AsymmetricKeyPair,
 	type Contact,
 	type ContactsList,
@@ -11,93 +11,87 @@ import {
 	type LocalContactsList,
 	type PhoneNumber,
 	SymmetricKey,
-	arrayBuffer
+	toEncryptedContactsInfo
 } from '@models';
-import type {
-	AddContact,
-	ContactsEvent,
-	DecryptContacts,
-	NewContactsList,
-	SaveContacts,
-	ShareContacts
+import {
+	type AddContact,
+	type ContactsEvent,
+	type DecryptContacts,
+	type ImportContacts,
+	isAddContact,
+	isDecryptContacts,
+	isImportContacts,
+	isNewContactsList,
+	isSaveContacts,
+	isShareContacts,
+	type NewContactsList,
+	type SaveContacts,
+	type ShareContacts
 } from './event';
-import type { ContactsState } from './state';
+import { ContactsShared, type ContactsState, ContactsUpdated } from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
 	private asymmetricKey!: AsymmetricKeyPair;
 
 	constructor() {
-		super({ value: [] });
+		super(ContactsUpdated([]));
 
-		super.on<AddContact>(
-			(event, emit) => {
-				const contact = submissionToContact(event);
+		super.on<AddContact>((event, emit) => {
+			const contact = submissionToContact(event.submission);
 
-				emit({ value: [...this.state.value, contact] });
-			},
-			(event) => 'required' in event
-		);
+			emit(ContactsUpdated([...this.state.value, contact]));
+		}, isAddContact);
 
-		super.on<NewContactsList>(
-			async (event, emit) => {
-				const vault = withVault();
+		super.on<NewContactsList>(async (_, emit) => {
+			const vault = withVault();
 
-				if (!event.value) {
-					this.asymmetricKey = await vault.asymmetricCrypto.generate();
-					this.symmetricKey = await vault.symmetricCrypto.generate();
+			this.asymmetricKey = await vault.asymmetricCrypto.generate();
+			this.symmetricKey = await vault.symmetricCrypto.generate();
 
-					emit({ value: [] });
-				} else {
-					this.asymmetricKey = event.value.asymmetricKeyPair;
-					this.symmetricKey = event.value.symmetricKey;
+			emit(ContactsUpdated(this.state.value));
+		}, isNewContactsList);
 
-					emit({ value: event.value.contacts });
-				}
-			},
-			(event) => 'value' in event
-		);
+		super.on<ImportContacts>(async (event, emit) => {
+			this.asymmetricKey = event.asymmetricKeyPair;
+			this.symmetricKey = event.symmetricKey;
 
-		super.on<SaveContacts>(
-			async (_, emit) => {
-				await triggerStoreContactsList(this.state.value, this.symmetricKey, this.asymmetricKey);
+			emit(ContactsUpdated(event.contacts));
+		}, isImportContacts);
 
-				emit({ value: this.state.value });
-			},
-			(event) => Object.keys(event).length === 0
-		);
+		super.on<SaveContacts>(async (_, emit) => {
+			await triggerStoreContactsList(this.state.value, this.symmetricKey, this.asymmetricKey);
 
-		super.on<ShareContacts>(
-			async (event, emit) => {
-				const vault = withVault();
+			emit(ContactsUpdated(this.state.value));
+		}, isSaveContacts);
 
-				const publicKey = submissionToPublicKey(event);
-				const symmetricKey = await vault.symmetricCrypto.generate();
-				const result = await storeContactsListInManager(symmetricKey, publicKey, this.state.value);
+		super.on<ShareContacts>(async (event, emit) => {
+			const vault = withVault();
 
-				emit({
-					value: this.state.value,
-					url: new URL(`${window.location.origin}/${result.ref}/${result.hash}`)
-				});
-			},
-			(event) => 'required' in event && event.required.size === 1
-		);
+			const publicKey = submissionToPublicKey(event.submission);
+			const symmetricKey = await vault.symmetricCrypto.generate();
+			const result = await storeContactsListInManager(symmetricKey, publicKey, this.state.value);
 
-		super.on<DecryptContacts>(
-			async (event, emit) => {
-				const vault = withVault();
+			emit(
+				ContactsShared(
+					this.state.value,
+					new URL(`${window.location.origin}/${result.ref}/${result.hash}`)
+				)
+			);
+		}, isShareContacts);
 
-				const privateKey = submissionToPrivateKey(event.submission);
-				const result = await vault.contactsManager.fetch(event.ref, event.hash);
-				const decrypted = await decryptContactsList(privateKey, result);
+		super.on<DecryptContacts>(async (event, emit) => {
+			const vault = withVault();
 
-				this.asymmetricKey = decrypted.keyPair;
-				this.symmetricKey = decrypted.symmetricKey;
+			const privateKey = submissionToPrivateKey(event.submission);
+			const result = await vault.contactsManager.fetch(event.ref, event.hash);
+			const decrypted = await decryptContactsList(privateKey, result);
 
-				emit({ value: decrypted.contactsList });
-			},
-			(event) => 'ref' in event
-		);
+			this.asymmetricKey = decrypted.keyPair;
+			this.symmetricKey = decrypted.symmetricKey;
+
+			emit(ContactsUpdated(decrypted.contactsList));
+		}, isDecryptContacts);
 	}
 }
 

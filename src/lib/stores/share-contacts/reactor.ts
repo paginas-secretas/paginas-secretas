@@ -1,5 +1,5 @@
 import type { Form, FormSubmission } from '@components';
-import { FormReactor, type InvalidForm } from '../form';
+import { FormReactor, type FormValidation } from '../form';
 import type { TranslationFunctions } from '@i18n';
 
 export class ShareContactsFormReactor extends FormReactor {
@@ -7,7 +7,7 @@ export class ShareContactsFormReactor extends FormReactor {
 		super(createForm(ll));
 	}
 
-	protected validate(form: FormSubmission): Pick<InvalidForm, 'required' | 'additional'> {
+	protected validate(form: FormSubmission): Pick<FormValidation, 'required' | 'additional'> {
 		console.info(`validation form... ${form}`);
 
 		return { additional: new Map(), required: new Map() };
