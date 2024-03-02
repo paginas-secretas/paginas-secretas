@@ -7,7 +7,8 @@
 		ContactsReactor,
 		CryptoReactor,
 		FormStarted,
-		FormSubmitted, isContactsSaved,
+		FormSubmitted,
+		isContactsSaved,
 		isContactsShared,
 		isFormFinish,
 		isFormInProgress,
@@ -34,7 +35,10 @@
 
 	$: contactsList = $contactsReactor.value;
 	$: contactSelected = contactsList.at(-1);
-	$: unsavedChanges = !isContactsSaved($contactsReactor);
+	$: unsavedChanges =
+		!isContactsSaved($contactsReactor) &&
+		!isContactsShared($contactsReactor) &&
+		$contactsReactor.value.length > 0;
 </script>
 
 <div class="flex flex-row h-screen">

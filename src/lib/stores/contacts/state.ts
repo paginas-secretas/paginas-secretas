@@ -15,7 +15,6 @@ export function ContactsSaved(value: ContactsList) {
 	};
 }
 
-
 export function ContactsShared(value: ContactsList, url: URL) {
 	return {
 		value: value,
@@ -29,7 +28,6 @@ export type ContactsSaved = ReturnType<typeof ContactsSaved>;
 export type ContactsShared = ReturnType<typeof ContactsShared>;
 
 export type ContactsState = ContactsUpdated | ContactsSaved | ContactsShared;
-
 
 export const isContactsSaved = (state: ContactsState): state is ContactsSaved =>
 	isTypedOf<ContactsSaved>(state, 'contacts-saved');
