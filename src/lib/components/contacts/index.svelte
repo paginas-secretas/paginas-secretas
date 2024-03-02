@@ -3,9 +3,19 @@
 	import { ReactorListener } from '@core';
 	import { LL } from '@i18n';
 	import {
+		AddContact,
 		ContactsReactor,
 		CryptoReactor,
+		FormStarted,
+		FormSubmitted,
+		isContactsShared,
+		isFormFinish,
+		isFormInProgress,
+		isGenerationSuccess,
 		NewContactFormReactor,
+		NewKeyPair,
+		SaveContacts,
+		ShareContacts,
 		ShareContactsFormReactor
 	} from '@stores';
 	import { NewContactButton, SaveContactsListButton } from '../button';
@@ -36,12 +46,12 @@
 			onShareSelected={() => {
 				shareContactsReactor.reset();
 
-				onNextTick(() => shareContactsReactor.add({}));
+				onNextTick(() => shareContactsReactor.add(FormStarted()));
 			}}
 			onGenerateKeyPairSelected={() => {
 				cryptoReactor.reset();
 
-				onNextTick(() => cryptoReactor.add({}));
+				onNextTick(() => cryptoReactor.add(NewKeyPair()));
 			}}
 		/>
 	</div>
@@ -55,19 +65,19 @@
 	<ReactorListener
 		reactor={shareContactsReactor}
 		listener={(state) => {
-			if ('submission' in state) {
-				contactsReactor.add(state.submission);
+			if (isFormFinish(state)) {
+				contactsReactor.add(ShareContacts(state.submission));
 			}
 		}}
 	>
-		{#if $shareContactsReactor.status === 'in progress'}
+		{#if isFormInProgress($shareContactsReactor)}
 			<ModalForm
 				form={$shareContactsReactor.value}
 				onSubmit={(result) => {
-					shareContactsReactor.add(result);
+					shareContactsReactor.add(FormSubmitted(result));
 				}}
 			/>
-		{:else if $shareContactsReactor.status === 'finished' && 'url' in $contactsReactor}
+		{:else if isFormFinish($shareContactsReactor) && isContactsShared($contactsReactor)}
 			<SimpleAlert
 				value={{
 					title: sharedContactsListTranslations.title(),
@@ -85,12 +95,12 @@
 	</ReactorListener>
 
 	<ReactorListener reactor={cryptoReactor}>
-		{#if 'public' in $cryptoReactor}
+		{#if isGenerationSuccess($cryptoReactor)}
 			<SimpleAlert
 				value={{
 					title: generateKeyPairTranslations.title(),
 					subtitle: generateKeyPairTranslations.subtitle(),
-					message: $cryptoReactor.public.toString(),
+					message: $cryptoReactor.value.public.toString(),
 					action: [
 						generateKeyPairTranslations.action(),
 						() => {
@@ -105,16 +115,16 @@
 	<ReactorListener
 		reactor={newContactReactor}
 		listener={(state) => {
-			if ('submission' in state) {
-				contactsReactor.add(state.submission);
+			if (isFormFinish(state)) {
+				contactsReactor.add(AddContact(state.submission));
 			}
 		}}
 	>
-		{#if $newContactReactor.status === 'in progress'}
+		{#if isFormInProgress($newContactReactor)}
 			<ModalForm
 				form={$newContactReactor.value}
 				onSubmit={(result) => {
-					newContactReactor.add(result);
+					newContactReactor.add(FormSubmitted(result));
 				}}
 			/>
 		{/if}
@@ -123,11 +133,11 @@
 	<div class="flex flex-col fixed bottom-10 right-8 gap-3">
 		<NewContactButton
 			onClick={() => {
-				newContactReactor.add({});
+				newContactReactor.add(FormStarted());
 			}}
 		/>
 		{#if unsavedChanges}
-			<SaveContactsListButton onClick={() => contactsReactor.add({})} />
+			<SaveContactsListButton onClick={() => contactsReactor.add(SaveContacts())} />
 		{/if}
 	</div>
 </div>
