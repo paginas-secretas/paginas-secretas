@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { ContactsViewer } from '@components';
-	import { ContactsListStore } from '@stores';
-	import { onMount } from 'svelte';
+	import { ContactsReactor, NewContactsList } from '@stores';
 
-	const contactsListStore = ContactsListStore();
-	onMount(() => contactsListStore.triggerCreateList());
+	const contactsReactor = new ContactsReactor();
+	contactsReactor.add(NewContactsList());
 </script>
 
-{#if $contactsListStore.success}
-	<ContactsViewer />
+{#if $contactsReactor}
+	<ContactsViewer {contactsReactor} />
 {/if}

@@ -1,10 +1,20 @@
-import type { Form } from '@components';
+import type { Form, FormSubmission } from '@components';
+import { FormReactor, type FormValidation } from '../form';
 import type { TranslationFunctions } from '@i18n';
-import { createStore } from './store';
 
-type NewContactState = Form;
+export class NewContactFormReactor extends FormReactor {
+	constructor(ll: TranslationFunctions) {
+		super(createForm(ll));
+	}
 
-function createNewContactForm(ll: TranslationFunctions) {
+	protected validate(form: FormSubmission): Pick<FormValidation, 'required' | 'additional'> {
+		console.info(`validation form... ${form}`);
+
+		return { additional: new Map(), required: new Map() };
+	}
+}
+
+function createForm(ll: TranslationFunctions): Form {
 	const formLL = ll.form.newContact;
 
 	return {
@@ -69,15 +79,5 @@ function createNewContactForm(ll: TranslationFunctions) {
 			label: formLL.labels.control(),
 			type: 'button'
 		}
-	} satisfies Form;
-}
-
-export function createNewContactStore(ll: TranslationFunctions) {
-	const form = createNewContactForm(ll);
-	const store = createStore<NewContactState>(form);
-	const subscribe = store.subscribe;
-
-	return {
-		subscribe
 	};
 }
