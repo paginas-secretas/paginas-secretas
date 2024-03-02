@@ -7,6 +7,9 @@ const pt = {
 	saveList: 'Guardar',
 	share: 'Partilhar',
 	generateKeyPair: 'Gerar chaves',
+	states: {
+		emptyContactList: 'Ainda não adicionaste contactos.'
+	},
 	form: {
 		newContact: {
 			name: 'Detalhes do Contacto',

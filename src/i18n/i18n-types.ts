@@ -32,6 +32,12 @@ type RootTranslation = {
 	 * G​e​n​e​r​a​t​e​ ​k​e​y​s
 	 */
 	generateKeyPair: string;
+	states: {
+		/**
+		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​a​d​d​e​d​ ​a​ ​c​o​n​t​a​c​t​ ​r​e​c​o​r​d​ ​y​e​t​.
+		 */
+		emptyContactList: string;
+	};
 	form: {
 		newContact: {
 			/**
@@ -331,6 +337,12 @@ export type TranslationFunctions = {
 	 * Generate keys
 	 */
 	generateKeyPair: () => LocalizedString;
+	states: {
+		/**
+		 * You haven't added a contact record yet.
+		 */
+		emptyContactList: () => LocalizedString;
+	};
 	form: {
 		newContact: {
 			/**

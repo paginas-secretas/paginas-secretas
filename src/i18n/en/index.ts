@@ -1,5 +1,5 @@
 import type { AlertTranslation, FormTranslation } from '../types';
-import type { BaseTranslation } from '../i18n-types';
+import type { BaseTranslation } from '@i18n';
 
 const en = {
 	createList: 'Create contacts list',
@@ -7,6 +7,9 @@ const en = {
 	saveList: 'Save',
 	share: 'Share',
 	generateKeyPair: 'Generate keys',
+	states: {
+		emptyContactList: "You haven't added a contact record yet."
+	},
 	form: {
 		newContact: {
 			name: 'Contact Details',

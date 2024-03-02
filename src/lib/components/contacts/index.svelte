@@ -62,7 +62,9 @@
 	{#if contactSelected}
 		<ContactInformation contact={contactSelected} />
 	{:else}
-		<NoContactRecords />
+		<div class="flex grow items-center justify-center">
+			<NoContactRecords />
+		</div>
 	{/if}
 
 	<ReactorListener
