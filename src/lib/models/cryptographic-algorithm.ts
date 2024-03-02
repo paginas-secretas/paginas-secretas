@@ -41,11 +41,7 @@ export abstract class CryptographicAlgorithm {
 			['encrypt']
 		);
 
-		const encrypted = await crypto.subtle.encrypt(
-			algorithm,
-			cryptoKey,
-			new TextEncoder().encode(data)
-		);
+		const encrypted = await crypto.subtle.encrypt(algorithm, cryptoKey, arrayBuffer(data));
 
 		return Promise.resolve(encoded(encrypted));
 	}
