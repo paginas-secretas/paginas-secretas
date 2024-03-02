@@ -2,7 +2,7 @@ import {
 	SymmetricCryptographicAlgorithm,
 	type AESGCMEncryptResult
 } from './cryptographic-algorithm';
-import type { EncryptionKey, SymmetricKey } from './encryption-key';
+import { arrayBuffer, encoded, type EncryptionKey, type SymmetricKey } from './encryption-key';
 
 /**
  * A {@link SymmetricCryptographicAlgorithm} that uses `AES-GCM` with length 256.
@@ -24,16 +24,20 @@ export class AESGCMAlgorithm extends SymmetricCryptographicAlgorithm {
 
 		const encrypted: string = await super.encryptData(key, data, encryptAlgorithm, 'raw');
 
+		console.log(`iv.buffer `);
+		console.log(iv.buffer);
 		return <AESGCMEncryptResult>{
 			data: encrypted,
-			iv: iv.buffer
+			iv: encoded(iv.buffer)
 		};
 	}
 
 	override decrypt(key: EncryptionKey, data: AESGCMEncryptResult): Promise<string> {
+		console.log(`arrayBuffer(data.iv) ${arrayBuffer(data.iv)}`);
+		console.log(arrayBuffer(data.iv));
 		const encryptAlgorithm = <AesGcmParams>{
 			name: 'AES-GCM',
-			iv: data.iv
+			iv: arrayBuffer(data.iv)
 		};
 
 		return super.decryptData(key, data.data, encryptAlgorithm, 'raw');

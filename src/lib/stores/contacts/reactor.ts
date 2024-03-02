@@ -1,7 +1,6 @@
 import { type FormSubmission, isSingleValueWithMultipleValuesFormOutput } from '@components';
 import { Reactor, withVault } from '@core';
 import {
-	arrayBuffer,
 	AsymmetricKey,
 	type AsymmetricKeyPair,
 	type Contact,
@@ -120,6 +119,7 @@ async function storeContactsListInManager(
 ) {
 	const vault = withVault();
 
+	console.log('-------- encrypt --------');
 	const encrypted = await vault.symmetricCrypto.encrypt(symmetricKey, JSON.stringify(contacts));
 
 	if (typeof encrypted === 'string') {
@@ -127,18 +127,20 @@ async function storeContactsListInManager(
 	}
 
 	const encryptedList = encrypted.data;
-	// maybe move this to encrypt()?
-	const iv = String.fromCodePoint(...new Uint8Array(encrypted.iv));
+
+	console.log(`encrypted.iv: ${encrypted.iv}`);
+	const ivEncrypted = await vault.asymmetricCrypto.encrypt(publicKey, encrypted.iv);
 
 	const symmetricKeyEncrypted = await vault.asymmetricCrypto.encrypt(
 		publicKey,
 		symmetricKey.toString()
 	);
 
+	console.log(`ivEncrypted: ${ivEncrypted}`);
+	console.log(`btoa(ivEncrypted): ${btoa(ivEncrypted)}`);
 	const encryptedContacts = <EncryptedContactsInfo>{
 		key: btoa(symmetricKeyEncrypted),
-		// needs to be encrypted
-		iv: btoa(iv),
+		iv: btoa(ivEncrypted),
 		contacts: btoa(encryptedList)
 	};
 
@@ -152,14 +154,21 @@ async function decryptContactsList(privateKey: AsymmetricKey, encrypted: Encrypt
 	const symmetricKey = SymmetricKey.private(
 		await vault.asymmetricCrypto.decrypt(privateKey, info.key)
 	);
-	// needs to be decrypted
-	const iv = arrayBuffer(info.iv);
 
-	const contacts = await vault.symmetricCrypto.decrypt(symmetricKey, {
-		data: info.contacts,
-		iv: iv
-	});
-
+	console.log('-------- decrypt --------');
+	console.log(info);
+	console.log(`info.iv: ${info.iv}`);
+	const iv = await vault.asymmetricCrypto.decrypt(privateKey, info.iv);
+	console.log(`iv: ${iv}`);
+	let contacts = '';
+	try {
+		contacts = await vault.symmetricCrypto.decrypt(symmetricKey, {
+			data: info.contacts,
+			iv: iv
+		});
+	} catch (error) {
+		console.error(error);
+	}
 	return {
 		// todo: we need public key
 		keyPair: { private: privateKey, public: privateKey },
