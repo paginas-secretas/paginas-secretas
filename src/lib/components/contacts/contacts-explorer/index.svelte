@@ -2,7 +2,7 @@
 	import type { Contact, ContactsList } from '@models';
 	import { SearchBar } from './search-bar';
 	import { ContactList } from './contact-list';
-	import { OptionsButton } from '@components';
+	import { NoContactsFound, OptionsButton } from '@components';
 	import { LL } from '@i18n';
 
 	export let contactsList: ContactsList;
@@ -37,7 +37,13 @@
 			values={options.filter((x) => !x.disabled).map((x) => x.option) }
 			onClick={(value) => options.find((x) => x.option === value)?.callback()} />
 	</div>
-	<ContactList contactsList={contacts} {onContactSelected} />
+	{#if contacts.length > 0 || contactsList.length === 0}
+		<ContactList contactsList={contacts} {onContactSelected} />
+	{:else}
+		<div class="flex grow items-center justify-center">
+			<NoContactsFound />
+		</div>
+	{/if}
 </div>
 
 <div class="divider divider-vertical w-min" />
