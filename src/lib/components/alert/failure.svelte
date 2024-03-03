@@ -15,12 +15,8 @@
 
 	{#if value.error}
 		<details>
-			<summary>
-				Stack-trace
-
-			</summary>
+			<summary> Stack-trace </summary>
 			<div class="break-words whitespace-pre-wrap">{value.error.stack}</div>
 		</details>
 	{/if}
-
 </SimpleAlert>
