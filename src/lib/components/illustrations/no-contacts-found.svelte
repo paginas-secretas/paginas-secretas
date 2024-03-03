@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Search from './search.svelte';
+	import { Search } from './images';
 </script>
 
 <div class="flex flex-col items-center gap-4">

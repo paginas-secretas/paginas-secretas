@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Logo } from '@components';
+	import { Logo } from './images';
 	import { LL } from '@i18n';
 </script>
 

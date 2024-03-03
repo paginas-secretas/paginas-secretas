@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Bug from './bug.svelte';
+	import { Bug } from './images';
 </script>
 
 <div class="flex flex-col items-center gap-4">

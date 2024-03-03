@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Keys from './keys.svelte';
+	import { Keys } from './images';
 </script>
 
 <div class="flex flex-col items-center">
