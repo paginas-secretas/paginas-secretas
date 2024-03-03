@@ -34,8 +34,9 @@
 			<SearchBar bind:value={searchValue} {disabled} />
 		</div>
 		<OptionsButton
-			values={options.filter((x) => !x.disabled).map((x) => x.option) }
-			onClick={(value) => options.find((x) => x.option === value)?.callback()} />
+			values={options.filter((x) => !x.disabled).map((x) => x.option)}
+			onClick={(value) => options.find((x) => x.option === value)?.callback()}
+		/>
 	</div>
 	{#if contacts.length > 0 || contactsList.length === 0}
 		<ContactList contactsList={contacts} {onContactSelected} />

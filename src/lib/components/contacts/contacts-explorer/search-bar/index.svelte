@@ -24,7 +24,7 @@
 			id="contacts-search-bar"
 			placeholder={$LL.searchBarPlaceholder()}
 			bind:value
-			disabled="{disabled}"
+			{disabled}
 		/>
 	</div>
 </div>

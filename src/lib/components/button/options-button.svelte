@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let values: string[];
 	export let onClick: (value: string) => void;
-	export let disabled = false
+	export let disabled = false;
 
 	let container: HTMLElement;
 
