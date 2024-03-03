@@ -28,7 +28,13 @@ import {
 	type SaveContacts,
 	type ShareContacts
 } from './event';
-import { ContactsSaved, ContactsShared, type ContactsState, ContactsUpdated } from './state';
+import {
+	ContactsSaved,
+	ContactsShared,
+	type ContactsState,
+	ContactsUpdated,
+	DecryptContactsFailed
+} from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
@@ -83,14 +89,18 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 		super.on<DecryptContacts>(async (event, emit) => {
 			const vault = withVault();
 
-			const privateKey = submissionToPrivateKey(event.submission);
-			const result = await vault.contactsManager.fetch(event.ref, event.hash);
-			const decrypted = await decryptContactsList(privateKey, result);
+			try {
+				const privateKey = submissionToPrivateKey(event.submission);
+				const result = await vault.contactsManager.fetch(event.ref, event.hash);
+				const decrypted = await decryptContactsList(privateKey, result);
 
-			this.asymmetricKey = decrypted.keyPair;
-			this.symmetricKey = decrypted.symmetricKey;
+				this.asymmetricKey = decrypted.keyPair;
+				this.symmetricKey = decrypted.symmetricKey;
 
-			emit(ContactsUpdated(decrypted.contactsList));
+				emit(ContactsUpdated(decrypted.contactsList));
+			} catch (error) {
+				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
+			}
 		}, isDecryptContacts);
 	}
 }
