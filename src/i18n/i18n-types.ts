@@ -37,6 +37,10 @@ type RootTranslation = {
 		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​a​d​d​e​d​ ​a​ ​c​o​n​t​a​c​t​ ​r​e​c​o​r​d​ ​y​e​t​.
 		 */
 		emptyContactList: string;
+		/**
+		 * Y​o​u​ ​n​e​e​d​ ​a​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​t​o​ ​l​o​a​d​ ​t​h​i​s​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+		 */
+		encryptedContacts: string;
 	};
 	form: {
 		newContact: {
@@ -356,6 +360,10 @@ export type TranslationFunctions = {
 		 * You haven't added a contact record yet.
 		 */
 		emptyContactList: () => LocalizedString;
+		/**
+		 * You need a private key to load this contacts list.
+		 */
+		encryptedContacts: () => LocalizedString;
 	};
 	form: {
 		newContact: {

@@ -8,7 +8,8 @@ const en = {
 	share: 'Share',
 	generateKeyPair: 'Generate keys',
 	states: {
-		emptyContactList: "You haven't added a contact record yet."
+		emptyContactList: "You haven't added a contact record yet.",
+		encryptedContacts: 'You need a private key to load this contacts list.'
 	},
 	form: {
 		newContact: {

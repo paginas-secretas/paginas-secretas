@@ -8,7 +8,8 @@ const pt = {
 	share: 'Partilhar',
 	generateKeyPair: 'Gerar chaves',
 	states: {
-		emptyContactList: 'Ainda não adicionaste contactos.'
+		emptyContactList: 'Ainda não adicionaste contactos.',
+		encryptedContacts: 'Precisas de uma chave privada para aceder a esta lista de contactos.'
 	},
 	form: {
 		newContact: {
