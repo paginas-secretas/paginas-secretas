@@ -1,4 +1,4 @@
-import type { AlertTranslation, FormTranslation } from '../types';
+import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
 import type { BaseTranslation } from '@i18n';
 
 const en = {
@@ -94,6 +94,12 @@ const en = {
 			subtitle: 'An unexpected error has occurred when generating your public key.',
 			action: 'Confirm'
 		} satisfies AlertTranslation
+	},
+	notification: {
+		decryptFailed: {
+			title: 'Invalid Key',
+			message: "The provided key couldn't be used to decrypt the contacts list."
+		} satisfies NotificationTranslation
 	},
 	contactInformation: {
 		personalInformation: 'Personal Information',

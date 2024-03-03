@@ -1,5 +1,5 @@
 import type { Translation } from '@i18n';
-import type { AlertTranslation, FormTranslation } from '../types';
+import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
 
 const pt = {
 	createList: 'Criar lista de contactos',
@@ -97,6 +97,12 @@ const pt = {
 			subtitle: 'An unexpected error has occurred when generating your public key.',
 			action: 'Confirm'
 		} satisfies AlertTranslation
+	},
+	notification: {
+		decryptFailed: {
+			title: 'Chave Incorreta',
+			message: 'A chave fornecida não pode ser usada para decifrar a lista de contactos.'
+		} satisfies NotificationTranslation
 	},
 	contactInformation: {
 		personalInformation: 'Informação Pessoal',

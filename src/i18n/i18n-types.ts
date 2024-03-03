@@ -302,6 +302,18 @@ type RootTranslation = {
 			action: string;
 		};
 	};
+	notification: {
+		decryptFailed: {
+			/**
+			 * I​n​v​a​l​i​d​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * T​h​e​ ​p​r​o​v​i​d​e​d​ ​k​e​y​ ​c​o​u​l​d​n​'​t​ ​b​e​ ​u​s​e​d​ ​t​o​ ​d​e​c​r​y​p​t​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 */
+			message: string;
+		};
+	};
 	contactInformation: {
 		/**
 		 * P​e​r​s​o​n​a​l​ ​I​n​f​o​r​m​a​t​i​o​n
@@ -623,6 +635,18 @@ export type TranslationFunctions = {
 			 * Confirm
 			 */
 			action: () => LocalizedString;
+		};
+	};
+	notification: {
+		decryptFailed: {
+			/**
+			 * Invalid Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * The provided key couldn't be used to decrypt the contacts list.
+			 */
+			message: () => LocalizedString;
 		};
 	};
 	contactInformation: {
