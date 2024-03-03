@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ModalForm, onNextTick, SimpleAlert } from '@components';
+	import { FailureAlert, MessageAlert, ModalForm, onNextTick } from '@components';
 	import { ReactorListener } from '@core';
 	import { LL } from '@i18n';
 	import {
@@ -12,6 +12,7 @@
 		isContactsShared,
 		isFormFinish,
 		isFormInProgress,
+		isGenerationFailure,
 		isGenerationSuccess,
 		NewContactFormReactor,
 		NewKeyPair,
@@ -23,6 +24,7 @@
 	import { NoContactRecords } from '../illustrations';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
+	import { KeyGenerationFailure } from '$lib/components/index.js';
 
 	export let contactsReactor: ContactsReactor;
 
@@ -31,6 +33,7 @@
 	const cryptoReactor = new CryptoReactor();
 
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
+	const generateKeyPairFailureTranslation = $LL.alert.generatePublicKeyFailure;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 
 	$: contactsList = $contactsReactor.value;
@@ -83,7 +86,7 @@
 				}}
 			/>
 		{:else if isFormFinish($shareContactsReactor) && isContactsShared($contactsReactor)}
-			<SimpleAlert
+			<MessageAlert
 				value={{
 					title: sharedContactsListTranslations.title(),
 					subtitle: sharedContactsListTranslations.subtitle(),
@@ -101,7 +104,7 @@
 
 	<ReactorListener reactor={cryptoReactor}>
 		{#if isGenerationSuccess($cryptoReactor)}
-			<SimpleAlert
+			<MessageAlert
 				value={{
 					title: generateKeyPairTranslations.title(),
 					subtitle: generateKeyPairTranslations.subtitle(),
@@ -114,6 +117,22 @@
 					]
 				}}
 			/>
+		{:else if isGenerationFailure($cryptoReactor)}
+			<FailureAlert
+				value={{
+					title: generateKeyPairFailureTranslation.title(),
+					subtitle: generateKeyPairFailureTranslation.subtitle(),
+					action: [
+						generateKeyPairFailureTranslation.action(),
+						() => {
+							cryptoReactor.reset();
+						}
+					],
+					error: $cryptoReactor.value
+				}}
+			>
+				<KeyGenerationFailure />
+			</FailureAlert>
 		{/if}
 	</ReactorListener>
 
