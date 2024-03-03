@@ -283,6 +283,20 @@ type RootTranslation = {
 			 */
 			action: string;
 		};
+		generatePublicKeyFailure: {
+			/**
+			 * G​e​n​e​r​a​t​i​o​n​ ​F​a​i​l​u​r​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​ ​w​h​e​n​ ​g​e​n​e​r​a​t​i​n​g​ ​y​o​u​r​ ​p​u​b​l​i​c​ ​k​e​y​.
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -581,6 +595,20 @@ export type TranslationFunctions = {
 			title: () => LocalizedString;
 			/**
 			 * Here's the URL for accessing the shared contacts list. Share it with the public key owner.
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
+		generatePublicKeyFailure: {
+			/**
+			 * Generation Failure
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An unexpected error has occurred when generating your public key.
 			 */
 			subtitle: () => LocalizedString;
 			/**

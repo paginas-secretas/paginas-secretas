@@ -87,6 +87,11 @@ const en = {
 			subtitle:
 				"Here's the URL for accessing the shared contacts list. Share it with the public key owner.",
 			action: 'Confirm'
+		} satisfies AlertTranslation,
+		generatePublicKeyFailure: {
+			title: 'Generation Failure',
+			subtitle: 'An unexpected error has occurred when generating your public key.',
+			action: 'Confirm'
 		} satisfies AlertTranslation
 	},
 	contactInformation: {

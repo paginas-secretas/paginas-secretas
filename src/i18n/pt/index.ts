@@ -1,5 +1,5 @@
 import type { Translation } from '@i18n';
-import type { FormTranslation } from '../types';
+import type { AlertTranslation, FormTranslation } from '../types';
 
 const pt = {
 	createList: 'Criar lista de contactos',
@@ -90,7 +90,12 @@ const pt = {
 			subtitle:
 				'Aqui está o URL para aceder à lista de contactos. Envia este link a quem te partilhou a chave pública.',
 			action: 'Confirmar'
-		}
+		},
+		generatePublicKeyFailure: {
+			title: '',
+			subtitle: 'An unexpected error has occurred when generating your public key.',
+			action: 'Confirm'
+		} satisfies AlertTranslation
 	},
 	contactInformation: {
 		personalInformation: 'Informação Pessoal',
