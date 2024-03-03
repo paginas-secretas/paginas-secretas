@@ -14,7 +14,7 @@ export class CryptoReactor extends Reactor<CryptoEvent, CryptoState> {
 
 				emit(GenerationSuccess(keyPair));
 			} catch (error) {
-				emit(GenerationFailure(`${error}`));
+				emit(GenerationFailure(error instanceof Error ? error : new Error(`${error}`)));
 			}
 		}, isNewKeyPair);
 	}
