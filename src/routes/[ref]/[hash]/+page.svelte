@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { ContactsViewer, ModalForm } from '@components';
+	import { ContactsViewer, EncryptedContacts, ModalForm } from '@components';
 	import { onMount } from 'svelte';
 	import { LL } from '@i18n';
 	import {
@@ -39,6 +39,10 @@
 		/>
 	{/if}
 </ReactorListener>
+
+<div class="flex flex-col justify-center h-screen">
+	<EncryptedContacts />
+</div>
 
 {#if $contactsReactor.value.length > 0}
 	<ContactsViewer {contactsReactor} />
