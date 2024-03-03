@@ -64,12 +64,12 @@ export class AsymmetricKey extends EncryptionKey {
 	 * ```
 	 */
 	toString(): string {
-		const encoded = btoa(String.fromCodePoint(...new Uint8Array(this.value)));
+		const encodedBase64 = btoa(encoded(this.value));
 
 		if (this.isPublic) {
-			return `-----BEGIN PUBLIC KEY-----\n${encoded}\n-----END PUBLIC KEY-----`;
+			return `-----BEGIN PUBLIC KEY-----\n${encodedBase64}\n-----END PUBLIC KEY-----`;
 		} else {
-			return `-----BEGIN PRIVATE KEY-----\n${encoded}\n-----END PRIVATE KEY-----`;
+			return `-----BEGIN PRIVATE KEY-----\n${encodedBase64}\n-----END PRIVATE KEY-----`;
 		}
 	}
 }
@@ -117,9 +117,9 @@ export class SymmetricKey extends EncryptionKey {
 	 * ```
 	 */
 	toString(): string {
-		const encoded = btoa(String.fromCodePoint(...new Uint8Array(this.value)));
+		const encodedBase64 = btoa(encoded(this.value));
 
-		return `-----BEGIN PRIVATE KEY-----\n${encoded}\n-----END PRIVATE KEY-----`;
+		return `-----BEGIN PRIVATE KEY-----\n${encodedBase64}\n-----END PRIVATE KEY-----`;
 	}
 }
 
@@ -133,7 +133,7 @@ export interface AsymmetricKeyPair {
 
 export type CryptographicKey = SymmetricKey | AsymmetricKeyPair;
 
-export function arrayBuffer(data: string) {
+export function arrayBuffer(data: string): ArrayBufferLike {
 	const bytes = new Uint8Array(data.length);
 
 	for (let i = 0; i < data.length; i++) {
@@ -141,6 +141,10 @@ export function arrayBuffer(data: string) {
 	}
 
 	return bytes.buffer;
+}
+
+export function encoded(data: ArrayBufferLike): string {
+	return String.fromCodePoint(...new Uint8Array(data));
 }
 
 function importPem(pem: string): ArrayBufferLike {

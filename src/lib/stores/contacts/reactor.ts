@@ -1,7 +1,6 @@
 import { type FormSubmission, isSingleValueWithMultipleValuesFormOutput } from '@components';
 import { Reactor, withVault } from '@core';
 import {
-	arrayBuffer,
 	AsymmetricKey,
 	type AsymmetricKeyPair,
 	type Contact,
@@ -127,8 +126,8 @@ async function storeContactsListInManager(
 	}
 
 	const encryptedList = encrypted.data;
-	// maybe move this to encrypt()?
-	const iv = String.fromCodePoint(...new Uint8Array(encrypted.iv));
+
+	const ivEncrypted = await vault.asymmetricCrypto.encrypt(publicKey, encrypted.iv);
 
 	const symmetricKeyEncrypted = await vault.asymmetricCrypto.encrypt(
 		publicKey,
@@ -137,8 +136,7 @@ async function storeContactsListInManager(
 
 	const encryptedContacts = <EncryptedContactsInfo>{
 		key: btoa(symmetricKeyEncrypted),
-		// needs to be encrypted
-		iv: btoa(iv),
+		iv: btoa(ivEncrypted),
 		contacts: btoa(encryptedList)
 	};
 
@@ -152,9 +150,8 @@ async function decryptContactsList(privateKey: AsymmetricKey, encrypted: Encrypt
 	const symmetricKey = SymmetricKey.private(
 		await vault.asymmetricCrypto.decrypt(privateKey, info.key)
 	);
-	// needs to be decrypted
-	const iv = arrayBuffer(info.iv);
 
+	const iv = await vault.asymmetricCrypto.decrypt(privateKey, info.iv);
 	const contacts = await vault.symmetricCrypto.decrypt(symmetricKey, {
 		data: info.contacts,
 		iv: iv

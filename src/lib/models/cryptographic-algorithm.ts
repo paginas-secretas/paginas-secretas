@@ -4,10 +4,11 @@ import {
 	AsymmetricKey,
 	type AsymmetricKeyPair,
 	type CryptographicKey,
-	arrayBuffer
+	arrayBuffer,
+	encoded
 } from './encryption-key';
 
-export type AESGCMEncryptResult = { data: string; iv: ArrayBufferLike };
+export type AESGCMEncryptResult = { data: string; iv: string };
 type EncryptResult = string | AESGCMEncryptResult;
 type DecryptResult = string;
 
@@ -40,13 +41,9 @@ export abstract class CryptographicAlgorithm {
 			['encrypt']
 		);
 
-		const encrypted = await crypto.subtle.encrypt(
-			algorithm,
-			cryptoKey,
-			new TextEncoder().encode(data)
-		);
+		const encrypted = await crypto.subtle.encrypt(algorithm, cryptoKey, arrayBuffer(data));
 
-		return Promise.resolve(String.fromCodePoint(...new Uint8Array(encrypted)));
+		return Promise.resolve(encoded(encrypted));
 	}
 
 	protected async decryptData(
@@ -65,7 +62,7 @@ export abstract class CryptographicAlgorithm {
 
 		const decrypted = await crypto.subtle.decrypt(algorithm, cryptoKey, arrayBuffer(data));
 
-		return Promise.resolve(String.fromCodePoint(...new Uint8Array(decrypted)));
+		return Promise.resolve(encoded(decrypted));
 	}
 }
 
