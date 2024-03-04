@@ -301,6 +301,20 @@ type RootTranslation = {
 			 */
 			action: string;
 		};
+		initializationFailure: {
+			/**
+			 * I​n​i​t​i​a​l​i​z​a​t​i​o​n​ ​F​a​i​l​u​r​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​w​h​i​l​e​ ​i​n​i​t​i​a​l​i​z​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
 	};
 	notification: {
 		decryptFailed: {
@@ -310,6 +324,26 @@ type RootTranslation = {
 			title: string;
 			/**
 			 * T​h​e​ ​p​r​o​v​i​d​e​d​ ​k​e​y​ ​c​o​u​l​d​n​'​t​ ​b​e​ ​u​s​e​d​ ​t​o​ ​d​e​c​r​y​p​t​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 */
+			message: string;
+		};
+		saveFailed: {
+			/**
+			 * C​o​n​t​a​c​t​s​ ​S​a​v​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​s​a​v​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
+			 */
+			message: string;
+		};
+		shareFailed: {
+			/**
+			 * C​o​n​t​a​c​t​s​ ​S​h​a​r​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​s​h​a​r​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 			 */
 			message: string;
 		};
@@ -636,6 +670,20 @@ export type TranslationFunctions = {
 			 */
 			action: () => LocalizedString;
 		};
+		initializationFailure: {
+			/**
+			 * Initialization Failure
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An unexpected error has while initializing the contacts list
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
 	};
 	notification: {
 		decryptFailed: {
@@ -645,6 +693,26 @@ export type TranslationFunctions = {
 			title: () => LocalizedString;
 			/**
 			 * The provided key couldn't be used to decrypt the contacts list.
+			 */
+			message: () => LocalizedString;
+		};
+		saveFailed: {
+			/**
+			 * Contacts Save
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An error has occurred while saving the contacts list. Please try again.
+			 */
+			message: () => LocalizedString;
+		};
+		shareFailed: {
+			/**
+			 * Contacts Share
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An error has occurred while sharing the contacts list. Please try again.
 			 */
 			message: () => LocalizedString;
 		};

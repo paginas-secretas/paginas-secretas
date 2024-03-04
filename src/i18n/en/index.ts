@@ -93,12 +93,25 @@ const en = {
 			title: 'Generation Failure',
 			subtitle: 'An unexpected error has occurred when generating your public key.',
 			action: 'Confirm'
+		} satisfies AlertTranslation,
+		initializationFailure: {
+			title: 'Initialization Failure',
+			subtitle: 'An unexpected error has while initializing the contacts list',
+			action: 'Confirm'
 		} satisfies AlertTranslation
 	},
 	notification: {
 		decryptFailed: {
 			title: 'Invalid Key',
 			message: "The provided key couldn't be used to decrypt the contacts list."
+		} satisfies NotificationTranslation,
+		saveFailed: {
+			title: 'Contacts Save',
+			message: 'An error has occurred while saving the contacts list. Please try again.'
+		} satisfies NotificationTranslation,
+		shareFailed: {
+			title: 'Contacts Share',
+			message: 'An error has occurred while sharing the contacts list. Please try again.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {
