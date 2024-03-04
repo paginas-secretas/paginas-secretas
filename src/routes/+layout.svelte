@@ -1,8 +1,14 @@
 <script>
-	import { registerVault } from '@core';
+	import { ReactorListener, registerVault, withVault } from '@core';
 	import '../app.css';
+	import { NotificationsReactor } from '@stores';
+	import { VerticalNotificationGroup } from '@components';
 
-	registerVault(globalThis.window);
+	registerVault(globalThis.window, new NotificationsReactor());
+	const notificationsReactor = withVault().notificationsReactor;
 </script>
 
-<slot />
+<ReactorListener reactor={notificationsReactor}>
+	<slot />
+	<VerticalNotificationGroup values={$notificationsReactor.value} />
+</ReactorListener>

@@ -6,6 +6,7 @@ import {
 	RSAOAEPAlgorithm,
 	type SymmetricCryptographicAlgorithm
 } from '@models';
+import type { NotificationsReactor } from '@stores';
 
 let globalVault: VaultAccessor;
 
@@ -14,14 +15,16 @@ type VaultAccessor = {
 	contactsManager: ContactsManager;
 	asymmetricCrypto: AsymmetricCryptographicAlgorithm;
 	symmetricCrypto: SymmetricCryptographicAlgorithm;
+	notificationsReactor: NotificationsReactor;
 };
 
-export function registerVault(window: Window) {
+export function registerVault(window: Window, notificationsReactor: NotificationsReactor) {
 	globalVault = <VaultAccessor>{
 		browserStorage: new LocalBrowserStorage(window),
 		contactsManager: new WorkerContactsManager(new ContactsManagerClient()),
 		asymmetricCrypto: new RSAOAEPAlgorithm(),
-		symmetricCrypto: new AESGCMAlgorithm()
+		symmetricCrypto: new AESGCMAlgorithm(),
+		notificationsReactor: notificationsReactor
 	};
 }
 

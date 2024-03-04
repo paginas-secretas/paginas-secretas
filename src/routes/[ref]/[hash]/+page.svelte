@@ -1,11 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import {
-		ContactsViewer,
-		EncryptedContacts,
-		ModalForm,
-		VerticalNotificationGroup
-	} from '@components';
+	import { ContactsViewer, EncryptedContacts, ModalForm } from '@components';
 	import { onMount } from 'svelte';
 	import { LL } from '@i18n';
 	import {
@@ -17,16 +12,17 @@
 		isDecryptContactsFailed,
 		isFormFinish,
 		isFormInProgress,
-		NotificationsReactor,
 		ShowErrorNotification
 	} from '@stores';
-	import { ReactorListener } from '@core';
+	import { ReactorListener, withVault } from '@core';
 
 	const { ref, hash } = $page.params;
 
+	const vault = withVault();
+
 	const contactsReactor = new ContactsReactor();
 	const importContactsReactor = new ImportContactsFormReactor($LL);
-	const notificationsReactor = new NotificationsReactor();
+	const notificationsReactor = vault.notificationsReactor;
 
 	const decryptFailedTranslations = $LL.notification.decryptFailed;
 
@@ -72,7 +68,3 @@
 <div class="flex flex-col justify-center h-screen">
 	<EncryptedContacts />
 </div>
-
-<ReactorListener reactor={notificationsReactor}>
-	<VerticalNotificationGroup values={$notificationsReactor.value} />
-</ReactorListener>
