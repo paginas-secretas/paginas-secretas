@@ -99,7 +99,7 @@
 					action: [
 						initializeContactsFailureTranslations.action(),
 						() => {
-							cryptoReactor.reset();
+							contactsReactor.reset();
 						}
 					],
 					error: $contactsReactor.error
