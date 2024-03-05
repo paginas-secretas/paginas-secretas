@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { FailureAlert, MessageAlert, ModalForm, onNextTick } from '@components';
-	import { ReactorListener, withVault } from '@core';
+	import { ReactorListener, resolve } from '@core';
 	import { LL } from '@i18n';
 	import {
 		AddContact,
@@ -19,6 +19,7 @@
 		isShareContactsFailed,
 		NewContactFormReactor,
 		NewKeyPair,
+		NotificationsReactor,
 		SaveContacts,
 		ShareContacts,
 		ShareContactsFormReactor,
@@ -32,12 +33,10 @@
 
 	export let contactsReactor: ContactsReactor;
 
-	const vault = withVault();
-
 	const shareContactsReactor = new ShareContactsFormReactor($LL);
 	const newContactReactor = new NewContactFormReactor($LL);
 	const cryptoReactor = new CryptoReactor();
-	const notificationsReactor = vault.notificationsReactor;
+	const notificationsReactor = resolve(NotificationsReactor);
 
 	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
 	const generateKeyPairFailureTranslation = $LL.alert.generatePublicKeyFailure;

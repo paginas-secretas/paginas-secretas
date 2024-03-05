@@ -12,17 +12,16 @@
 		isDecryptContactsFailed,
 		isFormFinish,
 		isFormInProgress,
+		NotificationsReactor,
 		ShowErrorNotification
 	} from '@stores';
-	import { ReactorListener, withVault } from '@core';
+	import { ReactorListener, resolve } from '@core';
 
 	const { ref, hash } = $page.params;
 
-	const vault = withVault();
-
 	const contactsReactor = new ContactsReactor();
 	const importContactsReactor = new ImportContactsFormReactor($LL);
-	const notificationsReactor = vault.notificationsReactor;
+	const notificationsReactor = resolve(NotificationsReactor);
 
 	const decryptFailedTranslations = $LL.notification.decryptFailed;
 
