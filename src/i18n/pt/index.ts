@@ -1,5 +1,10 @@
 import type { Translation } from '@i18n';
-import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
+import type {
+	AlertTranslation,
+	FormTranslation,
+	NotificationTranslation,
+	TabbedAlertTranslation
+} from '../types';
 
 const pt = {
 	createList: 'Criar lista de contactos',
@@ -80,12 +85,16 @@ const pt = {
 		} satisfies FormTranslation
 	},
 	alert: {
-		generatePublicKey: {
-			title: 'Chave Pública',
+		generateKeyPair: {
+			title: 'Par de Chaves',
 			subtitle:
-				'Aqui tens uma nova chave pública. Partilha-a apenas com quem te vai partilhar a lista de contactos.',
+				'Aqui tens um novo par de chaves. Partilha apenas a chave pública com quem te vai partilhar a lista de contactos',
+			tabs: {
+				public: 'Pública',
+				private: 'Privada'
+			},
 			action: 'Confirmar'
-		},
+		} satisfies TabbedAlertTranslation,
 		sharedContactsList: {
 			title: 'Lista de Contactos',
 			subtitle:
@@ -125,7 +134,9 @@ const pt = {
 	},
 	searchBarPlaceholder: 'Procure contacto',
 	copyAction: 'Copiar para a área de trabalho',
-	copiedAction: 'Copiado!'
+	copiedAction: 'Copiado!',
+	downloadAction: 'Transferir',
+	downloadedAction: 'Transferido!'
 } satisfies Translation;
 
 export default pt;

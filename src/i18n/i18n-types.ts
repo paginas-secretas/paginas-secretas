@@ -259,15 +259,25 @@ type RootTranslation = {
 		};
 	};
 	alert: {
-		generatePublicKey: {
+		generateKeyPair: {
 			/**
-			 * P​u​b​l​i​c​ ​K​e​y
+			 * K​e​y​ ​P​a​i​r
 			 */
 			title: string;
 			/**
-			 * H​e​r​e​'​s​ ​y​o​u​r​ ​n​e​w​l​y​ ​p​u​b​l​i​c​ ​k​e​y​.​ ​S​h​a​r​e​ ​i​t​ ​o​n​l​y​ ​w​i​t​h​ ​t​h​e​ ​o​w​n​e​r​ ​o​f​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 * H​e​r​e​'​s​ ​y​o​u​r​ ​n​e​w​l​y​ ​g​e​n​e​r​a​t​e​d​ ​k​e​y​ ​p​a​i​r​.​ ​O​n​l​y​ ​s​h​a​r​e​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​w​i​t​h​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​ ​o​w​n​e​r​.
 			 */
 			subtitle: string;
+			tabs: {
+				/**
+				 * P​u​b​l​i​c
+				 */
+				public: string;
+				/**
+				 * P​r​i​v​a​t​e
+				 */
+				private: string;
+			};
 			/**
 			 * C​o​n​f​i​r​m
 			 */
@@ -307,7 +317,7 @@ type RootTranslation = {
 			 */
 			title: string;
 			/**
-			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​w​h​i​l​e​ ​i​n​i​t​i​a​l​i​z​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​i​n​i​t​i​a​l​i​z​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
 			 */
 			subtitle: string;
 			/**
@@ -378,6 +388,14 @@ type RootTranslation = {
 	 * C​o​p​i​e​d​!
 	 */
 	copiedAction: string;
+	/**
+	 * D​o​w​n​l​o​a​d
+	 */
+	downloadAction: string;
+	/**
+	 * D​o​w​n​l​o​a​d​e​d​!
+	 */
+	downloadedAction: string;
 };
 
 export type TranslationFunctions = {
@@ -628,15 +646,25 @@ export type TranslationFunctions = {
 		};
 	};
 	alert: {
-		generatePublicKey: {
+		generateKeyPair: {
 			/**
-			 * Public Key
+			 * Key Pair
 			 */
 			title: () => LocalizedString;
 			/**
-			 * Here's your newly public key. Share it only with the owner of the contacts list.
+			 * Here's your newly generated key pair. Only share the public key with the contacts list owner.
 			 */
 			subtitle: () => LocalizedString;
+			tabs: {
+				/**
+				 * Public
+				 */
+				public: () => LocalizedString;
+				/**
+				 * Private
+				 */
+				private: () => LocalizedString;
+			};
 			/**
 			 * Confirm
 			 */
@@ -676,7 +704,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString;
 			/**
-			 * An unexpected error has while initializing the contacts list
+			 * An unexpected error occurred while initializing the contacts list
 			 */
 			subtitle: () => LocalizedString;
 			/**
@@ -747,6 +775,14 @@ export type TranslationFunctions = {
 	 * Copied!
 	 */
 	copiedAction: () => LocalizedString;
+	/**
+	 * Download
+	 */
+	downloadAction: () => LocalizedString;
+	/**
+	 * Downloaded!
+	 */
+	downloadedAction: () => LocalizedString;
 };
 
 export type Formatters = {};

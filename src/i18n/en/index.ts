@@ -1,4 +1,9 @@
-import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
+import type {
+	AlertTranslation,
+	FormTranslation,
+	NotificationTranslation,
+	TabbedAlertTranslation
+} from '../types';
 import type { BaseTranslation } from '@i18n';
 
 const en = {
@@ -78,11 +83,16 @@ const en = {
 		} satisfies FormTranslation
 	},
 	alert: {
-		generatePublicKey: {
-			title: 'Public Key',
-			subtitle: "Here's your newly public key. Share it only with the owner of the contacts list.",
+		generateKeyPair: {
+			title: 'Key Pair',
+			subtitle:
+				"Here's your newly generated key pair. Only share the public key with the contacts list owner.",
+			tabs: {
+				public: 'Public',
+				private: 'Private'
+			},
 			action: 'Confirm'
-		} satisfies AlertTranslation,
+		} satisfies TabbedAlertTranslation,
 		sharedContactsList: {
 			title: 'Shared Contacts List',
 			subtitle:
@@ -122,7 +132,9 @@ const en = {
 	},
 	searchBarPlaceholder: 'Search contact',
 	copyAction: 'Copy to clipboard',
-	copiedAction: 'Copied!'
+	copiedAction: 'Copied!',
+	downloadAction: 'Download',
+	downloadedAction: 'Downloaded!'
 } satisfies BaseTranslation;
 
 export default en;
