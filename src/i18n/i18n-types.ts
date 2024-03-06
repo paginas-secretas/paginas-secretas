@@ -32,6 +32,16 @@ type RootTranslation = {
 	 * G​e​n​e​r​a​t​e​ ​k​e​y​s
 	 */
 	generateKeyPair: string;
+	states: {
+		/**
+		 * Y​o​u​ ​h​a​v​e​n​'​t​ ​a​d​d​e​d​ ​a​ ​c​o​n​t​a​c​t​ ​r​e​c​o​r​d​ ​y​e​t​.
+		 */
+		emptyContactList: string;
+		/**
+		 * Y​o​u​ ​n​e​e​d​ ​a​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​t​o​ ​l​o​a​d​ ​t​h​i​s​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+		 */
+		encryptedContacts: string;
+	};
 	form: {
 		newContact: {
 			/**
@@ -277,6 +287,66 @@ type RootTranslation = {
 			 */
 			action: string;
 		};
+		generatePublicKeyFailure: {
+			/**
+			 * G​e​n​e​r​a​t​i​o​n​ ​F​a​i​l​u​r​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​ ​w​h​e​n​ ​g​e​n​e​r​a​t​i​n​g​ ​y​o​u​r​ ​p​u​b​l​i​c​ ​k​e​y​.
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
+		initializationFailure: {
+			/**
+			 * I​n​i​t​i​a​l​i​z​a​t​i​o​n​ ​F​a​i​l​u​r​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​w​h​i​l​e​ ​i​n​i​t​i​a​l​i​z​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 */
+			subtitle: string;
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			action: string;
+		};
+	};
+	notification: {
+		decryptFailed: {
+			/**
+			 * I​n​v​a​l​i​d​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * T​h​e​ ​p​r​o​v​i​d​e​d​ ​k​e​y​ ​c​o​u​l​d​n​'​t​ ​b​e​ ​u​s​e​d​ ​t​o​ ​d​e​c​r​y​p​t​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 */
+			message: string;
+		};
+		saveFailed: {
+			/**
+			 * C​o​n​t​a​c​t​s​ ​S​a​v​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​s​a​v​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
+			 */
+			message: string;
+		};
+		shareFailed: {
+			/**
+			 * C​o​n​t​a​c​t​s​ ​S​h​a​r​e
+			 */
+			title: string;
+			/**
+			 * A​n​ ​e​r​r​o​r​ ​h​a​s​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​s​h​a​r​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.​ ​P​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
+			 */
+			message: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -331,6 +401,16 @@ export type TranslationFunctions = {
 	 * Generate keys
 	 */
 	generateKeyPair: () => LocalizedString;
+	states: {
+		/**
+		 * You haven't added a contact record yet.
+		 */
+		emptyContactList: () => LocalizedString;
+		/**
+		 * You need a private key to load this contacts list.
+		 */
+		encryptedContacts: () => LocalizedString;
+	};
 	form: {
 		newContact: {
 			/**
@@ -575,6 +655,66 @@ export type TranslationFunctions = {
 			 * Confirm
 			 */
 			action: () => LocalizedString;
+		};
+		generatePublicKeyFailure: {
+			/**
+			 * Generation Failure
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An unexpected error has occurred when generating your public key.
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
+		initializationFailure: {
+			/**
+			 * Initialization Failure
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An unexpected error has while initializing the contacts list
+			 */
+			subtitle: () => LocalizedString;
+			/**
+			 * Confirm
+			 */
+			action: () => LocalizedString;
+		};
+	};
+	notification: {
+		decryptFailed: {
+			/**
+			 * Invalid Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * The provided key couldn't be used to decrypt the contacts list.
+			 */
+			message: () => LocalizedString;
+		};
+		saveFailed: {
+			/**
+			 * Contacts Save
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An error has occurred while saving the contacts list. Please try again.
+			 */
+			message: () => LocalizedString;
+		};
+		shareFailed: {
+			/**
+			 * Contacts Share
+			 */
+			title: () => LocalizedString;
+			/**
+			 * An error has occurred while sharing the contacts list. Please try again.
+			 */
+			message: () => LocalizedString;
 		};
 	};
 	contactInformation: {

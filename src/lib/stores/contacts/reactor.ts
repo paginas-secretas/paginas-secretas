@@ -1,4 +1,8 @@
-import { type FormSubmission, isSingleValueWithMultipleValuesFormOutput } from '@components';
+import {
+	type FormSubmission,
+	isSingleValueWithMultipleValuesFormOutput,
+	wrapError
+} from '@components';
 import { Reactor, withVault } from '@core';
 import {
 	AsymmetricKey,
@@ -27,7 +31,16 @@ import {
 	type SaveContacts,
 	type ShareContacts
 } from './event';
-import { ContactsSaved, ContactsShared, type ContactsState, ContactsUpdated } from './state';
+import {
+	ContactsInitializationFailed,
+	ContactsSaved,
+	ContactsShared,
+	type ContactsState,
+	ContactsUpdated,
+	DecryptContactsFailed,
+	SaveContactsFailed,
+	ShareContactsFailed
+} from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
@@ -43,12 +56,16 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 		}, isAddContact);
 
 		super.on<NewContactsList>(async (_, emit) => {
-			const vault = withVault();
+			try {
+				const vault = withVault();
 
-			this.asymmetricKey = await vault.asymmetricCrypto.generate();
-			this.symmetricKey = await vault.symmetricCrypto.generate();
+				this.asymmetricKey = await vault.asymmetricCrypto.generate();
+				this.symmetricKey = await vault.symmetricCrypto.generate();
 
-			emit(ContactsUpdated(this.state.value));
+				emit(ContactsUpdated(this.state.value));
+			} catch (error) {
+				emit(ContactsInitializationFailed(wrapError(error)));
+			}
 		}, isNewContactsList);
 
 		super.on<ImportContacts>(async (event, emit) => {
@@ -59,37 +76,49 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 		}, isImportContacts);
 
 		super.on<SaveContacts>(async (_, emit) => {
-			await triggerStoreContactsList(this.state.value, this.symmetricKey, this.asymmetricKey);
+			try {
+				await triggerStoreContactsList(this.state.value, this.symmetricKey, this.asymmetricKey);
 
-			emit(ContactsSaved(this.state.value));
+				emit(ContactsSaved(this.state.value));
+			} catch (error) {
+				emit(SaveContactsFailed(this.state.value, wrapError(error)));
+			}
 		}, isSaveContacts);
 
 		super.on<ShareContacts>(async (event, emit) => {
-			const vault = withVault();
+			try {
+				const vault = withVault();
 
-			const publicKey = submissionToPublicKey(event.submission);
-			const symmetricKey = await vault.symmetricCrypto.generate();
-			const result = await storeContactsListInManager(symmetricKey, publicKey, this.state.value);
+				const publicKey = submissionToPublicKey(event.submission);
+				const symmetricKey = await vault.symmetricCrypto.generate();
+				const result = await storeContactsListInManager(symmetricKey, publicKey, this.state.value);
 
-			emit(
-				ContactsShared(
-					this.state.value,
-					new URL(`${window.location.origin}/${result.ref}/${result.hash}`)
-				)
-			);
+				emit(
+					ContactsShared(
+						this.state.value,
+						new URL(`${window.location.origin}/${result.ref}/${result.hash}`)
+					)
+				);
+			} catch (error) {
+				emit(ShareContactsFailed(this.state.value, wrapError(error)));
+			}
 		}, isShareContacts);
 
 		super.on<DecryptContacts>(async (event, emit) => {
 			const vault = withVault();
 
-			const privateKey = submissionToPrivateKey(event.submission);
-			const result = await vault.contactsManager.fetch(event.ref, event.hash);
-			const decrypted = await decryptContactsList(privateKey, result);
+			try {
+				const privateKey = submissionToPrivateKey(event.submission);
+				const result = await vault.contactsManager.fetch(event.ref, event.hash);
+				const decrypted = await decryptContactsList(privateKey, result);
 
-			this.asymmetricKey = decrypted.keyPair;
-			this.symmetricKey = decrypted.symmetricKey;
+				this.asymmetricKey = decrypted.keyPair;
+				this.symmetricKey = decrypted.symmetricKey;
 
-			emit(ContactsUpdated(decrypted.contactsList));
+				emit(ContactsUpdated(decrypted.contactsList));
+			} catch (error) {
+				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
+			}
 		}, isDecryptContacts);
 	}
 }

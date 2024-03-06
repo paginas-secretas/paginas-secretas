@@ -1,5 +1,5 @@
-import type { AlertTranslation, FormTranslation } from '../types';
-import type { BaseTranslation } from '../i18n-types';
+import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
+import type { BaseTranslation } from '@i18n';
 
 const en = {
 	createList: 'Create contacts list',
@@ -7,6 +7,10 @@ const en = {
 	saveList: 'Save',
 	share: 'Share',
 	generateKeyPair: 'Generate keys',
+	states: {
+		emptyContactList: "You haven't added a contact record yet.",
+		encryptedContacts: 'You need a private key to load this contacts list.'
+	},
 	form: {
 		newContact: {
 			name: 'Contact Details',
@@ -84,7 +88,31 @@ const en = {
 			subtitle:
 				"Here's the URL for accessing the shared contacts list. Share it with the public key owner.",
 			action: 'Confirm'
+		} satisfies AlertTranslation,
+		generatePublicKeyFailure: {
+			title: 'Generation Failure',
+			subtitle: 'An unexpected error has occurred when generating your public key.',
+			action: 'Confirm'
+		} satisfies AlertTranslation,
+		initializationFailure: {
+			title: 'Initialization Failure',
+			subtitle: 'An unexpected error has while initializing the contacts list',
+			action: 'Confirm'
 		} satisfies AlertTranslation
+	},
+	notification: {
+		decryptFailed: {
+			title: 'Invalid Key',
+			message: "The provided key couldn't be used to decrypt the contacts list."
+		} satisfies NotificationTranslation,
+		saveFailed: {
+			title: 'Contacts Save',
+			message: 'An error has occurred while saving the contacts list. Please try again.'
+		} satisfies NotificationTranslation,
+		shareFailed: {
+			title: 'Contacts Share',
+			message: 'An error has occurred while sharing the contacts list. Please try again.'
+		} satisfies NotificationTranslation
 	},
 	contactInformation: {
 		personalInformation: 'Personal Information',

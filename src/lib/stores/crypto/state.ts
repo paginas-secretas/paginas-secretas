@@ -12,7 +12,7 @@ export function GenerationSuccess(value: AsymmetricKeyPair) {
 	};
 }
 
-export function GenerationFailure(value: string) {
+export function GenerationFailure(value: Error) {
 	return {
 		value: value,
 		type: 'generation-failure' as const
@@ -27,3 +27,6 @@ export type CryptoState = CryptoInitialized | GenerationSuccess | GenerationFail
 
 export const isGenerationSuccess = (state: CryptoState): state is GenerationSuccess =>
 	isTypedOf<GenerationSuccess>(state, 'generation-success');
+
+export const isGenerationFailure = (state: CryptoState): state is GenerationFailure =>
+	isTypedOf<GenerationFailure>(state, 'generation-failure');

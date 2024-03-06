@@ -16,4 +16,9 @@ export type AlertTranslation = {
 	action: string;
 };
 
+export type NotificationTranslation = {
+	title: string;
+	message: string;
+};
+
 type FormValuesTranslation = { [key: string]: string[] };

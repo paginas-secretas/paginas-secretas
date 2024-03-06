@@ -4,3 +4,4 @@ export * from './contacts';
 export * from './form';
 export * from './illustrations';
 export * from './util';
+export * from './notification';

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { LL } from '@i18n';
+
 	export let value: string;
+	export let disabled = false;
 </script>
 
 <div class="max-w-md">
@@ -22,6 +24,7 @@
 			id="contacts-search-bar"
 			placeholder={$LL.searchBarPlaceholder()}
 			bind:value
+			{disabled}
 		/>
 	</div>
 </div>
