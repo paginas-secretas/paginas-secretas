@@ -1,6 +1,8 @@
 <script lang="ts">
 	export let values: string[];
 	export let onClick: (value: string) => void;
+	export let disabled = false;
+
 	let container: HTMLElement;
 
 	$: active = false;
@@ -16,8 +18,8 @@
 
 <div
 	bind:this={container}
-	class="flex items-center cursor-pointer"
-	on:click={() => (active = !active)}
+	class="flex items-center {disabled ? 'cursor-default' : 'cursor-pointer'}"
+	on:click={() => (active = !active && !disabled)}
 	aria-hidden="true"
 >
 	<div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { ContactsViewer, ModalForm } from '@components';
+	import { ContactsViewer, EncryptedContacts, ModalForm } from '@components';
 	import { onMount } from 'svelte';
 	import { LL } from '@i18n';
 	import {
@@ -9,15 +9,21 @@
 		FormStarted,
 		FormSubmitted,
 		ImportContactsFormReactor,
+		isDecryptContactsFailed,
 		isFormFinish,
-		isFormInProgress
+		isFormInProgress,
+		NotificationsReactor,
+		ShowErrorNotification
 	} from '@stores';
-	import { ReactorListener } from '@core';
+	import { ReactorListener, resolve } from '@core';
 
 	const { ref, hash } = $page.params;
 
 	const contactsReactor = new ContactsReactor();
 	const importContactsReactor = new ImportContactsFormReactor($LL);
+	const notificationsReactor = resolve(NotificationsReactor);
+
+	const decryptFailedTranslations = $LL.notification.decryptFailed;
 
 	onMount(() => importContactsReactor.add(FormStarted()));
 </script>
@@ -40,6 +46,24 @@
 	{/if}
 </ReactorListener>
 
-{#if $contactsReactor.value.length > 0}
-	<ContactsViewer {contactsReactor} />
-{/if}
+<ReactorListener
+	reactor={contactsReactor}
+	listener={(state) => {
+		if (isDecryptContactsFailed(state)) {
+			notificationsReactor.add(
+				ShowErrorNotification(
+					decryptFailedTranslations.title(),
+					decryptFailedTranslations.message()
+				)
+			);
+		}
+	}}
+>
+	{#if $contactsReactor.value.length > 0}
+		<ContactsViewer {contactsReactor} />
+	{/if}
+</ReactorListener>
+
+<div class="flex flex-col justify-center h-screen">
+	<EncryptedContacts />
+</div>

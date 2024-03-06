@@ -1,9 +1,9 @@
-import { LocalBrowserStorage, type BrowserStorage } from '@data';
-import { ContactsManagerClient, WorkerContactsManager, type ContactsManager } from '@http';
+import { type BrowserStorage, LocalBrowserStorage } from '@data';
+import { type ContactsManager, ContactsManagerClient, WorkerContactsManager } from '@http';
 import {
 	AESGCMAlgorithm,
-	RSAOAEPAlgorithm,
 	type AsymmetricCryptographicAlgorithm,
+	RSAOAEPAlgorithm,
 	type SymmetricCryptographicAlgorithm
 } from '@models';
 
@@ -17,14 +17,12 @@ type VaultAccessor = {
 };
 
 export function registerVault(window: Window) {
-	const accessor = <VaultAccessor>{
+	globalVault = <VaultAccessor>{
 		browserStorage: new LocalBrowserStorage(window),
 		contactsManager: new WorkerContactsManager(new ContactsManagerClient()),
 		asymmetricCrypto: new RSAOAEPAlgorithm(),
 		symmetricCrypto: new AESGCMAlgorithm()
 	};
-
-	globalVault = accessor;
 }
 
 export function withVault() {
