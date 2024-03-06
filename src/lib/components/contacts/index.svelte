@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { FailureAlert, MessageAlert, ModalForm, onNextTick } from '@components';
+	import {
+		FailureAlert,
+		KeyGenerationFailure,
+		MessageAlert,
+		ModalForm,
+		onNextTick,
+		TabbedAlert
+	} from '@components';
 	import { ReactorListener, resolve } from '@core';
 	import { LL } from '@i18n';
 	import {
@@ -29,7 +36,6 @@
 	import { NoContactRecords } from '../illustrations';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
-	import { KeyGenerationFailure } from '$lib/components/index.js';
 
 	export let contactsReactor: ContactsReactor;
 
@@ -38,7 +44,7 @@
 	const cryptoReactor = new CryptoReactor();
 	const notificationsReactor = resolve(NotificationsReactor);
 
-	const generateKeyPairTranslations = $LL.alert.generatePublicKey;
+	const generateKeyPairTranslations = $LL.alert.generateKeyPair;
 	const generateKeyPairFailureTranslation = $LL.alert.generatePublicKeyFailure;
 	const sharedContactsListTranslations = $LL.alert.sharedContactsList;
 	const initializeContactsFailureTranslations = $LL.alert.initializationFailure;
@@ -149,11 +155,20 @@
 
 		<ReactorListener reactor={cryptoReactor}>
 			{#if isGenerationSuccess($cryptoReactor)}
-				<MessageAlert
+				<TabbedAlert
 					value={{
 						title: generateKeyPairTranslations.title(),
 						subtitle: generateKeyPairTranslations.subtitle(),
-						message: $cryptoReactor.value.public.toString(),
+						tabs: [
+							{
+								tab: generateKeyPairTranslations.tabs.public(),
+								value: $cryptoReactor.value.public.toString()
+							},
+							{
+								tab: generateKeyPairTranslations.tabs.private(),
+								value: $cryptoReactor.value.private.toString()
+							}
+						],
 						action: [
 							generateKeyPairTranslations.action(),
 							() => {
