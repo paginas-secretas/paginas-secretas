@@ -12,4 +12,8 @@ export type FailureAlert = Alert & {
 	error?: Error;
 };
 
+export type TabbedAlert = Alert & {
+	tabs: { tab: string; value: string }[];
+};
+
 export type Action = [string, () => void];
