@@ -96,7 +96,7 @@ const en = {
 		} satisfies AlertTranslation,
 		initializationFailure: {
 			title: 'Initialization Failure',
-			subtitle: 'An unexpected error has while initializing the contacts list',
+			subtitle: 'An unexpected error occurred while initializing the contacts list',
 			action: 'Confirm'
 		} satisfies AlertTranslation
 	},
