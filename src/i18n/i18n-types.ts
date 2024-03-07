@@ -25,6 +25,10 @@ type RootTranslation = {
 	 */
 	saveList: string;
 	/**
+	 * P​r​o​v​i​d​e​ ​P​u​b​l​i​c​ ​K​e​y
+	 */
+	addPublicKey: string;
+	/**
 	 * S​h​a​r​e
 	 */
 	share: string;
@@ -421,6 +425,10 @@ export type TranslationFunctions = {
 	 * Save
 	 */
 	saveList: () => LocalizedString;
+	/**
+	 * Provide Public Key
+	 */
+	addPublicKey: () => LocalizedString;
 	/**
 	 * Share
 	 */

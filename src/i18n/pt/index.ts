@@ -10,6 +10,7 @@ const pt = {
 	createList: 'Criar lista de contactos',
 	new: 'Novo',
 	saveList: 'Guardar',
+	addPublicKey: 'Adicionar Chave Pública',
 	share: 'Partilhar',
 	generateKeyPair: 'Gerar chaves',
 	states: {

@@ -10,6 +10,7 @@ const en = {
 	createList: 'Create contacts list',
 	new: 'New',
 	saveList: 'Save',
+	addPublicKey: 'Provide Public Key',
 	share: 'Share',
 	generateKeyPair: 'Generate keys',
 	states: {
