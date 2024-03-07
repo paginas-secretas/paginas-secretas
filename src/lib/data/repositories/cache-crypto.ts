@@ -45,7 +45,7 @@ export class LocalStorageCryptoCacheRepository implements CryptoCacheRepository 
 		}
 	}
 
-	private async lookupAll(key: CryptoStorageKey): Promise<Object[]> {
+	private async lookupAll(key: CryptoStorageKey): Promise<object[]> {
 		const lookup = (await this.storage.lookup(key)) ?? '[]';
 
 		return JSON.parse(lookup);
