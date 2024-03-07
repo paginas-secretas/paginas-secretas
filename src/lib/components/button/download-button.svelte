@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { LL } from '@i18n';
+	import { onNextTick } from '../util';
 
 	export let onDownload: () => { name: string; content: string; type: 'text/plain' };
 
@@ -18,8 +19,8 @@
 		downloadElement.href = url;
 		downloadElement.click();
 
-		window.URL.revokeObjectURL(url);
-		downloaded = true;
+		// Release object URL after download has started, otherwise Chrome will fail to download
+		onNextTick(() => window.URL.revokeObjectURL(url));
 	}}
 >
 	<span class="tooltip-primary tooltip tooltip-left" data-tooltip={tooltip}>
