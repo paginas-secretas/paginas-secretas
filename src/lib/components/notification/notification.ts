@@ -1,4 +1,4 @@
-export type NotificationType = 'info' | 'error';
+export type NotificationType = 'info' | 'warning' | 'error';
 
 export type Notification = {
 	type: NotificationType;
