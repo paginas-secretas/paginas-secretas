@@ -15,6 +15,7 @@
 		CryptoReactor,
 		FormStarted,
 		FormSubmitted,
+		isContactsDecrypted,
 		isContactsInitializationFailed,
 		isContactsSaved,
 		isContactsShared,
@@ -30,7 +31,8 @@
 		SaveContacts,
 		ShareContacts,
 		ShareContactsFormReactor,
-		ShowErrorNotification
+		ShowErrorNotification,
+		ShowWarningNotification
 	} from '@stores';
 	import { NewContactButton, SaveContactsListButton } from '../button';
 	import { NoContactRecords } from '../illustrations';
@@ -50,6 +52,7 @@
 	const initializeContactsFailureTranslations = $LL.alert.initializationFailure;
 	const saveContactsFailureTranslations = $LL.notification.saveFailed;
 	const shareContactsFailureTranslations = $LL.notification.shareFailed;
+	const missingPublicKeyTranslations = $LL.notification.missingPublicKey;
 
 	$: contactsList = $contactsReactor.value;
 	$: contactSelected = contactsList.at(-1);
@@ -74,6 +77,13 @@
 				ShowErrorNotification(
 					shareContactsFailureTranslations.title(),
 					shareContactsFailureTranslations.message()
+				)
+			);
+		} else if (isContactsDecrypted(state) && state.isMissingPublicKey) {
+			notificationsReactor.add(
+				ShowWarningNotification(
+					missingPublicKeyTranslations.title(),
+					missingPublicKeyTranslations.message()
 				)
 			);
 		}
