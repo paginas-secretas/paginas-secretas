@@ -261,6 +261,39 @@ type RootTranslation = {
 			};
 			values: {};
 		};
+		importPublicKey: {
+			/**
+			 * I​m​p​o​r​t​ ​P​u​b​l​i​c​ ​K​e​y
+			 */
+			name: string;
+			/**
+			 * F​i​l​l​ ​i​n​ ​a​l​l​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​i​m​p​o​r​t​ ​y​o​u​r​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​ ​p​u​b​l​i​c​ ​k​e​y
+			 */
+			description: string;
+			labels: {
+				/**
+				 * U​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+				/**
+				 * S​u​b​m​i​t
+				 */
+				control: string;
+			};
+			descriptions: {
+				/**
+				 * T​h​e​ ​u​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+			};
+			placeholders: {
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				publicKey: string;
+			};
+			values: {};
+		};
 	};
 	alert: {
 		generateKeyPair: {
@@ -651,6 +684,39 @@ export type TranslationFunctions = {
 			descriptions: {
 				/**
 				 * The private (asymmetric) key able to decrypt the contacts list
+				 */
+				publicKey: () => LocalizedString;
+			};
+			placeholders: {
+				/**
+				 * Type here
+				 */
+				publicKey: () => LocalizedString;
+			};
+			values: {};
+		};
+		importPublicKey: {
+			/**
+			 * Import Public Key
+			 */
+			name: () => LocalizedString;
+			/**
+			 * Fill in all the required information to be able to import your contacts list public key
+			 */
+			description: () => LocalizedString;
+			labels: {
+				/**
+				 * User public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+				/**
+				 * Submit
+				 */
+				control: () => LocalizedString;
+			};
+			descriptions: {
+				/**
+				 * The user public (asymmetric) key
 				 */
 				publicKey: () => LocalizedString;
 			};

@@ -81,6 +81,22 @@ const en = {
 				publicKey: 'Type here'
 			},
 			values: {}
+		} satisfies FormTranslation,
+		importPublicKey: {
+			name: 'Import Public Key',
+			description:
+				'Fill in all the required information to be able to import your contacts list public key',
+			labels: {
+				publicKey: 'User public (asymmetric) key',
+				control: 'Submit'
+			},
+			descriptions: {
+				publicKey: 'The user public (asymmetric) key'
+			},
+			placeholders: {
+				publicKey: 'Type here'
+			},
+			values: {}
 		} satisfies FormTranslation
 	},
 	alert: {

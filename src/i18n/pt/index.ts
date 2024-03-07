@@ -83,6 +83,22 @@ const pt = {
 				publicKey: 'Preenche aqui'
 			},
 			values: {}
+		} satisfies FormTranslation,
+		importPublicKey: {
+			name: 'Import Chave Pública',
+			description:
+				'Preenche toda a informação necessária para poder importar a chave pública da lista de contactos',
+			labels: {
+				publicKey: 'Chave pública (assimétrica) do utilizador',
+				control: 'Submeter'
+			},
+			descriptions: {
+				publicKey: 'A chave pública (assimétrica) do utilizador'
+			},
+			placeholders: {
+				publicKey: 'Preenche aqui'
+			},
+			values: {}
 		} satisfies FormTranslation
 	},
 	alert: {
