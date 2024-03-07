@@ -15,6 +15,8 @@
 		CryptoReactor,
 		FormStarted,
 		FormSubmitted,
+		ImportPublicKey,
+		ImportPublicKeyFormReactor,
 		isContactsDecrypted,
 		isContactsInitializationFailed,
 		isContactsSaved,
@@ -23,6 +25,7 @@
 		isFormInProgress,
 		isGenerationFailure,
 		isGenerationSuccess,
+		isImportPublicKeyFailed,
 		isSaveContactsFailed,
 		isShareContactsFailed,
 		NewContactFormReactor,
@@ -43,6 +46,7 @@
 
 	const shareContactsReactor = new ShareContactsFormReactor($LL);
 	const newContactReactor = new NewContactFormReactor($LL);
+	const importPublicKeyReactor = new ImportPublicKeyFormReactor($LL);
 	const cryptoReactor = new CryptoReactor();
 	const notificationsReactor = resolve(NotificationsReactor);
 
@@ -53,6 +57,7 @@
 	const saveContactsFailureTranslations = $LL.notification.saveFailed;
 	const shareContactsFailureTranslations = $LL.notification.shareFailed;
 	const missingPublicKeyTranslations = $LL.notification.missingPublicKey;
+	const importPublicKeyFailureTranslations = $LL.notification.importPublicKeyFailed;
 
 	$: contactsList = $contactsReactor.value;
 	$: contactSelected = contactsList.at(-1);
@@ -77,6 +82,13 @@
 				ShowErrorNotification(
 					shareContactsFailureTranslations.title(),
 					shareContactsFailureTranslations.message()
+				)
+			);
+		} else if (isImportPublicKeyFailed(state)) {
+			notificationsReactor.add(
+				ShowErrorNotification(
+					importPublicKeyFailureTranslations.title(),
+					importPublicKeyFailureTranslations.message()
 				)
 			);
 		} else if (isContactsDecrypted(state) && state.isMissingPublicKey) {
@@ -164,6 +176,24 @@
 			{/if}
 		</ReactorListener>
 
+		<ReactorListener
+			reactor={importPublicKeyReactor}
+			listener={(state) => {
+				if (isFormFinish(state)) {
+					contactsReactor.add(ImportPublicKey(state.submission));
+				}
+			}}
+		>
+			{#if isFormInProgress($importPublicKeyReactor)}
+				<ModalForm
+					form={$importPublicKeyReactor.value}
+					onSubmit={(result) => {
+						importPublicKeyReactor.add(FormSubmitted(result));
+					}}
+				/>
+			{/if}
+		</ReactorListener>
+
 		<ReactorListener reactor={cryptoReactor}>
 			{#if isGenerationSuccess($cryptoReactor)}
 				<TabbedAlert
@@ -238,7 +268,7 @@
 			{:else}
 				<AddPublicKeyButton
 					onClick={() => {
-						newContactReactor.add(FormStarted());
+						importPublicKeyReactor.add(FormStarted());
 					}}
 				/>
 			{/if}
