@@ -4,6 +4,7 @@ import { isTypedOf } from '@core';
 export function ContactsUpdated(value: ContactsList) {
 	return {
 		value: value,
+		readonly: false,
 		type: 'contacts-updated' as const
 	};
 }
@@ -11,6 +12,7 @@ export function ContactsUpdated(value: ContactsList) {
 export function ContactsSaved(value: ContactsList) {
 	return {
 		value: value,
+		readonly: false,
 		type: 'contacts-saved' as const
 	};
 }
@@ -19,6 +21,7 @@ export function ContactsShared(value: ContactsList, url: URL) {
 	return {
 		value: value,
 		url: url,
+		readonly: false,
 		type: 'contacts-shared' as const
 	};
 }
@@ -27,6 +30,7 @@ export function ContactsDecrypted(value: ContactsList, isMissingPublicKey: boole
 	return {
 		value: value,
 		isMissingPublicKey: isMissingPublicKey,
+		readonly: isMissingPublicKey,
 		type: 'contacts-decrypted' as const
 	};
 }
@@ -35,6 +39,7 @@ export function DecryptContactsFailed(error: Error) {
 	return {
 		value: [] as ContactsList,
 		error: error,
+		readonly: false,
 		type: 'decrypt-contacts-failed' as const
 	};
 }
@@ -43,6 +48,7 @@ export function ContactsInitializationFailed(error: Error) {
 	return {
 		value: [] as ContactsList,
 		error: error,
+		readonly: false,
 		type: 'contacts-initialization-failed' as const
 	};
 }
@@ -51,6 +57,7 @@ export function SaveContactsFailed(value: ContactsList, error: Error) {
 	return {
 		value: value,
 		error: error,
+		readonly: false,
 		type: 'save-contacts-failed' as const
 	};
 }
@@ -59,6 +66,7 @@ export function ShareContactsFailed(value: ContactsList, error: Error) {
 	return {
 		value: value,
 		error: error,
+		readonly: false,
 		type: 'share-contacts-failed' as const
 	};
 }
