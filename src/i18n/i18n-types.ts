@@ -404,6 +404,16 @@ type RootTranslation = {
 			 */
 			message: string;
 		};
+		importPublicKeyFailed: {
+			/**
+			 * I​m​p​o​r​t​ ​P​u​b​l​i​c​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * T​h​e​ ​p​r​o​v​i​d​e​d​ ​p​u​b​l​i​c​ ​k​e​y​ ​d​o​e​s​ ​n​o​t​ ​m​a​t​c​h​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​.
+			 */
+			message: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -835,6 +845,16 @@ export type TranslationFunctions = {
 			title: () => LocalizedString;
 			/**
 			 * The contacts list will remain readonly until the public key is provided.
+			 */
+			message: () => LocalizedString;
+		};
+		importPublicKeyFailed: {
+			/**
+			 * Import Public Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * The provided public key does not match the private key.
 			 */
 			message: () => LocalizedString;
 		};

@@ -143,6 +143,10 @@ const en = {
 		missingPublicKey: {
 			title: 'Missing Public Key',
 			message: 'The contacts list will remain readonly until the public key is provided.'
+		} satisfies NotificationTranslation,
+		importPublicKeyFailed: {
+			title: 'Import Public Key',
+			message: 'The provided public key does not match the private key.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {

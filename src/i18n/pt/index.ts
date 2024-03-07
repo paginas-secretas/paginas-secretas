@@ -145,6 +145,10 @@ const pt = {
 		missingPublicKey: {
 			title: 'Chave Pública Indisponível',
 			message: 'Não é possível atualizar a lista de contactos até a chave pública ser fornecida.'
+		} satisfies NotificationTranslation,
+		importPublicKeyFailed: {
+			title: 'Importar Chave Pública',
+			message: 'A chave pública fornecida não corresponde à chave privada.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {
