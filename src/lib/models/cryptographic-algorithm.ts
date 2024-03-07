@@ -120,4 +120,23 @@ export abstract class AsymmetricCryptographicAlgorithm extends CryptographicAlgo
 	override async decrypt(key: AsymmetricKey, data: string): Promise<string> {
 		return super.decryptData(key, data, this.algorithm, 'pkcs8');
 	}
+
+	/**
+	 * Checis if a key pair matches.
+	 *
+	 * @param pair - the asymmetric key pair to check
+	 * @returns true if the key pair matches, false otherwise
+	 */
+	async match(pair: AsymmetricKeyPair): Promise<boolean> {
+		const test = 'valid';
+
+		try {
+			const encrypted = await this.encrypt(pair.public, test);
+			const decrypted = await this.decrypt(pair.private, encrypted);
+
+			return test === decrypted;
+		} catch (error) {
+			return false;
+		}
+	}
 }
