@@ -124,6 +124,10 @@ const pt = {
 		shareFailed: {
 			title: 'Partilha de Contactos',
 			message: 'Ocorreu um erro ao partilhar a lista de contactos. Por favor tenta de novo.'
+		} satisfies NotificationTranslation,
+		missingPublicKey: {
+			title: 'Chave Pública Indisponível',
+			message: 'Não é possível atualizar a lista de contactos até a chave pública ser fornecida.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {

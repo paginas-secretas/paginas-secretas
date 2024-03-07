@@ -357,6 +357,16 @@ type RootTranslation = {
 			 */
 			message: string;
 		};
+		missingPublicKey: {
+			/**
+			 * M​i​s​s​i​n​g​ ​P​u​b​l​i​c​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * T​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​ ​w​i​l​l​ ​r​e​m​a​i​n​ ​r​e​a​d​o​n​l​y​ ​u​n​t​i​l​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​s​ ​p​r​o​v​i​d​e​d​.
+			 */
+			message: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -741,6 +751,16 @@ export type TranslationFunctions = {
 			title: () => LocalizedString;
 			/**
 			 * An error has occurred while sharing the contacts list. Please try again.
+			 */
+			message: () => LocalizedString;
+		};
+		missingPublicKey: {
+			/**
+			 * Missing Public Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * The contacts list will remain readonly until the public key is provided.
 			 */
 			message: () => LocalizedString;
 		};

@@ -122,6 +122,10 @@ const en = {
 		shareFailed: {
 			title: 'Contacts Share',
 			message: 'An error has occurred while sharing the contacts list. Please try again.'
+		} satisfies NotificationTranslation,
+		missingPublicKey: {
+			title: 'Missing Public Key',
+			message: 'The contacts list will remain readonly until the public key is provided.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {
