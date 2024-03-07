@@ -25,6 +25,10 @@ type RootTranslation = {
 	 */
 	saveList: string;
 	/**
+	 * P​r​o​v​i​d​e​ ​P​u​b​l​i​c​ ​K​e​y
+	 */
+	addPublicKey: string;
+	/**
 	 * S​h​a​r​e
 	 */
 	share: string;
@@ -257,17 +261,60 @@ type RootTranslation = {
 			};
 			values: {};
 		};
+		importPublicKey: {
+			/**
+			 * I​m​p​o​r​t​ ​P​u​b​l​i​c​ ​K​e​y
+			 */
+			name: string;
+			/**
+			 * F​i​l​l​ ​i​n​ ​a​l​l​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​i​m​p​o​r​t​ ​y​o​u​r​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​ ​p​u​b​l​i​c​ ​k​e​y
+			 */
+			description: string;
+			labels: {
+				/**
+				 * U​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+				/**
+				 * S​u​b​m​i​t
+				 */
+				control: string;
+			};
+			descriptions: {
+				/**
+				 * T​h​e​ ​u​s​e​r​ ​p​u​b​l​i​c​ ​(​a​s​y​m​m​e​t​r​i​c​)​ ​k​e​y
+				 */
+				publicKey: string;
+			};
+			placeholders: {
+				/**
+				 * T​y​p​e​ ​h​e​r​e
+				 */
+				publicKey: string;
+			};
+			values: {};
+		};
 	};
 	alert: {
-		generatePublicKey: {
+		generateKeyPair: {
 			/**
-			 * P​u​b​l​i​c​ ​K​e​y
+			 * K​e​y​ ​P​a​i​r
 			 */
 			title: string;
 			/**
-			 * H​e​r​e​'​s​ ​y​o​u​r​ ​n​e​w​l​y​ ​p​u​b​l​i​c​ ​k​e​y​.​ ​S​h​a​r​e​ ​i​t​ ​o​n​l​y​ ​w​i​t​h​ ​t​h​e​ ​o​w​n​e​r​ ​o​f​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
+			 * H​e​r​e​'​s​ ​y​o​u​r​ ​n​e​w​l​y​ ​g​e​n​e​r​a​t​e​d​ ​k​e​y​ ​p​a​i​r​.​ ​O​n​l​y​ ​s​h​a​r​e​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​w​i​t​h​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​ ​o​w​n​e​r​.
 			 */
 			subtitle: string;
+			tabs: {
+				/**
+				 * P​u​b​l​i​c
+				 */
+				public: string;
+				/**
+				 * P​r​i​v​a​t​e
+				 */
+				private: string;
+			};
 			/**
 			 * C​o​n​f​i​r​m
 			 */
@@ -307,7 +354,7 @@ type RootTranslation = {
 			 */
 			title: string;
 			/**
-			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​h​a​s​ ​w​h​i​l​e​ ​i​n​i​t​i​a​l​i​z​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
+			 * A​n​ ​u​n​e​x​p​e​c​t​e​d​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​i​n​i​t​i​a​l​i​z​i​n​g​ ​t​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t
 			 */
 			subtitle: string;
 			/**
@@ -347,6 +394,26 @@ type RootTranslation = {
 			 */
 			message: string;
 		};
+		missingPublicKey: {
+			/**
+			 * M​i​s​s​i​n​g​ ​P​u​b​l​i​c​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * T​h​e​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​ ​w​i​l​l​ ​r​e​m​a​i​n​ ​r​e​a​d​o​n​l​y​ ​u​n​t​i​l​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​s​ ​p​r​o​v​i​d​e​d​.
+			 */
+			message: string;
+		};
+		importPublicKeyFailed: {
+			/**
+			 * I​m​p​o​r​t​ ​P​u​b​l​i​c​ ​K​e​y
+			 */
+			title: string;
+			/**
+			 * T​h​e​ ​p​r​o​v​i​d​e​d​ ​p​u​b​l​i​c​ ​k​e​y​ ​d​o​e​s​ ​n​o​t​ ​m​a​t​c​h​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​.
+			 */
+			message: string;
+		};
 	};
 	contactInformation: {
 		/**
@@ -378,6 +445,14 @@ type RootTranslation = {
 	 * C​o​p​i​e​d​!
 	 */
 	copiedAction: string;
+	/**
+	 * D​o​w​n​l​o​a​d
+	 */
+	downloadAction: string;
+	/**
+	 * D​o​w​n​l​o​a​d​e​d​!
+	 */
+	downloadedAction: string;
 };
 
 export type TranslationFunctions = {
@@ -393,6 +468,10 @@ export type TranslationFunctions = {
 	 * Save
 	 */
 	saveList: () => LocalizedString;
+	/**
+	 * Provide Public Key
+	 */
+	addPublicKey: () => LocalizedString;
 	/**
 	 * Share
 	 */
@@ -626,17 +705,60 @@ export type TranslationFunctions = {
 			};
 			values: {};
 		};
+		importPublicKey: {
+			/**
+			 * Import Public Key
+			 */
+			name: () => LocalizedString;
+			/**
+			 * Fill in all the required information to be able to import your contacts list public key
+			 */
+			description: () => LocalizedString;
+			labels: {
+				/**
+				 * User public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+				/**
+				 * Submit
+				 */
+				control: () => LocalizedString;
+			};
+			descriptions: {
+				/**
+				 * The user public (asymmetric) key
+				 */
+				publicKey: () => LocalizedString;
+			};
+			placeholders: {
+				/**
+				 * Type here
+				 */
+				publicKey: () => LocalizedString;
+			};
+			values: {};
+		};
 	};
 	alert: {
-		generatePublicKey: {
+		generateKeyPair: {
 			/**
-			 * Public Key
+			 * Key Pair
 			 */
 			title: () => LocalizedString;
 			/**
-			 * Here's your newly public key. Share it only with the owner of the contacts list.
+			 * Here's your newly generated key pair. Only share the public key with the contacts list owner.
 			 */
 			subtitle: () => LocalizedString;
+			tabs: {
+				/**
+				 * Public
+				 */
+				public: () => LocalizedString;
+				/**
+				 * Private
+				 */
+				private: () => LocalizedString;
+			};
 			/**
 			 * Confirm
 			 */
@@ -676,7 +798,7 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString;
 			/**
-			 * An unexpected error has while initializing the contacts list
+			 * An unexpected error occurred while initializing the contacts list
 			 */
 			subtitle: () => LocalizedString;
 			/**
@@ -716,6 +838,26 @@ export type TranslationFunctions = {
 			 */
 			message: () => LocalizedString;
 		};
+		missingPublicKey: {
+			/**
+			 * Missing Public Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * The contacts list will remain readonly until the public key is provided.
+			 */
+			message: () => LocalizedString;
+		};
+		importPublicKeyFailed: {
+			/**
+			 * Import Public Key
+			 */
+			title: () => LocalizedString;
+			/**
+			 * The provided public key does not match the private key.
+			 */
+			message: () => LocalizedString;
+		};
 	};
 	contactInformation: {
 		/**
@@ -747,6 +889,14 @@ export type TranslationFunctions = {
 	 * Copied!
 	 */
 	copiedAction: () => LocalizedString;
+	/**
+	 * Download
+	 */
+	downloadAction: () => LocalizedString;
+	/**
+	 * Downloaded!
+	 */
+	downloadedAction: () => LocalizedString;
 };
 
 export type Formatters = {};

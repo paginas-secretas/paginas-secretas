@@ -1,5 +1,5 @@
 import { Reactor } from '@core';
-import { isShowInfoNotification, type NotificationEvent } from './event';
+import { isShowInfoNotification, isShowWarningNotification, type NotificationEvent } from './event';
 import { type NotificationState, NotificationUpdate } from './state';
 import type { Notification, NotificationType } from '@components';
 
@@ -30,6 +30,8 @@ export class NotificationsReactor extends Reactor<NotificationEvent, Notificatio
 function eventToType(event: NotificationEvent): NotificationType {
 	if (isShowInfoNotification(event)) {
 		return 'info';
+	} else if (isShowWarningNotification(event)) {
+		return 'warning';
 	} else {
 		return 'error';
 	}

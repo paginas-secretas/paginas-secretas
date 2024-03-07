@@ -29,7 +29,9 @@ import {
 	isShareContacts,
 	type NewContactsList,
 	type SaveContacts,
-	type ShareContacts
+	type ShareContacts,
+	ImportPublicKey,
+	isImportPublicKey
 } from './event';
 import {
 	ContactsInitializationFailed,
@@ -39,7 +41,9 @@ import {
 	ContactsUpdated,
 	DecryptContactsFailed,
 	SaveContactsFailed,
-	ShareContactsFailed
+	ShareContactsFailed,
+	ContactsDecrypted,
+	ImportPublicKeyFailed
 } from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
@@ -115,11 +119,30 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 				this.asymmetricKey = decrypted.keyPair;
 				this.symmetricKey = decrypted.symmetricKey;
 
-				emit(ContactsUpdated(decrypted.contactsList));
+				emit(
+					ContactsDecrypted(
+						decrypted.contactsList,
+						this.asymmetricKey.private == this.asymmetricKey.public
+					)
+				);
 			} catch (error) {
 				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
 			}
 		}, isDecryptContacts);
+
+		super.on<ImportPublicKey>(async (event, emit) => {
+			const vault = withVault();
+			const publicKey = submissionToPublicKey(event.submission);
+			const pair = <AsymmetricKeyPair>{ public: publicKey, private: this.asymmetricKey.private };
+
+			if (await vault.asymmetricCrypto.match(pair)) {
+				this.asymmetricKey.public = publicKey;
+
+				emit(ContactsUpdated(this.state.value));
+			} else {
+				emit(ImportPublicKeyFailed(this.state.value));
+			}
+		}, isImportPublicKey);
 	}
 }
 
@@ -186,9 +209,10 @@ async function decryptContactsList(privateKey: AsymmetricKey, encrypted: Encrypt
 		iv: iv
 	});
 
+	const keyPair = await vault.cryptoCache.pair(privateKey);
+
 	return {
-		// todo: we need public key
-		keyPair: { private: privateKey, public: privateKey },
+		keyPair: keyPair ? keyPair : { private: privateKey, public: privateKey },
 		symmetricKey: symmetricKey,
 		contactsList: [...JSON.parse(contacts)].map(
 			(x) =>

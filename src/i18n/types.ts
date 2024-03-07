@@ -16,6 +16,13 @@ export type AlertTranslation = {
 	action: string;
 };
 
+export type TabbedAlertTranslation = {
+	title: string;
+	subtitle: string;
+	tabs: { [key: string]: string };
+	action: string;
+};
+
 export type NotificationTranslation = {
 	title: string;
 	message: string;

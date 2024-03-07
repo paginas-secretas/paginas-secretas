@@ -1,10 +1,16 @@
-import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
+import type {
+	AlertTranslation,
+	FormTranslation,
+	NotificationTranslation,
+	TabbedAlertTranslation
+} from '../types';
 import type { BaseTranslation } from '@i18n';
 
 const en = {
 	createList: 'Create contacts list',
 	new: 'New',
 	saveList: 'Save',
+	addPublicKey: 'Provide Public Key',
 	share: 'Share',
 	generateKeyPair: 'Generate keys',
 	states: {
@@ -75,14 +81,35 @@ const en = {
 				publicKey: 'Type here'
 			},
 			values: {}
+		} satisfies FormTranslation,
+		importPublicKey: {
+			name: 'Import Public Key',
+			description:
+				'Fill in all the required information to be able to import your contacts list public key',
+			labels: {
+				publicKey: 'User public (asymmetric) key',
+				control: 'Submit'
+			},
+			descriptions: {
+				publicKey: 'The user public (asymmetric) key'
+			},
+			placeholders: {
+				publicKey: 'Type here'
+			},
+			values: {}
 		} satisfies FormTranslation
 	},
 	alert: {
-		generatePublicKey: {
-			title: 'Public Key',
-			subtitle: "Here's your newly public key. Share it only with the owner of the contacts list.",
+		generateKeyPair: {
+			title: 'Key Pair',
+			subtitle:
+				"Here's your newly generated key pair. Only share the public key with the contacts list owner.",
+			tabs: {
+				public: 'Public',
+				private: 'Private'
+			},
 			action: 'Confirm'
-		} satisfies AlertTranslation,
+		} satisfies TabbedAlertTranslation,
 		sharedContactsList: {
 			title: 'Shared Contacts List',
 			subtitle:
@@ -112,6 +139,14 @@ const en = {
 		shareFailed: {
 			title: 'Contacts Share',
 			message: 'An error has occurred while sharing the contacts list. Please try again.'
+		} satisfies NotificationTranslation,
+		missingPublicKey: {
+			title: 'Missing Public Key',
+			message: 'The contacts list will remain readonly until the public key is provided.'
+		} satisfies NotificationTranslation,
+		importPublicKeyFailed: {
+			title: 'Import Public Key',
+			message: 'The provided public key does not match the private key.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {
@@ -122,7 +157,9 @@ const en = {
 	},
 	searchBarPlaceholder: 'Search contact',
 	copyAction: 'Copy to clipboard',
-	copiedAction: 'Copied!'
+	copiedAction: 'Copied!',
+	downloadAction: 'Download',
+	downloadedAction: 'Downloaded!'
 } satisfies BaseTranslation;
 
 export default en;

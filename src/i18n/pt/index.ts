@@ -1,10 +1,16 @@
 import type { Translation } from '@i18n';
-import type { AlertTranslation, FormTranslation, NotificationTranslation } from '../types';
+import type {
+	AlertTranslation,
+	FormTranslation,
+	NotificationTranslation,
+	TabbedAlertTranslation
+} from '../types';
 
 const pt = {
 	createList: 'Criar lista de contactos',
 	new: 'Novo',
 	saveList: 'Guardar',
+	addPublicKey: 'Adicionar Chave Pública',
 	share: 'Partilhar',
 	generateKeyPair: 'Gerar chaves',
 	states: {
@@ -77,15 +83,35 @@ const pt = {
 				publicKey: 'Preenche aqui'
 			},
 			values: {}
+		} satisfies FormTranslation,
+		importPublicKey: {
+			name: 'Import Chave Pública',
+			description:
+				'Preenche toda a informação necessária para poder importar a chave pública da lista de contactos',
+			labels: {
+				publicKey: 'Chave pública (assimétrica) do utilizador',
+				control: 'Submeter'
+			},
+			descriptions: {
+				publicKey: 'A chave pública (assimétrica) do utilizador'
+			},
+			placeholders: {
+				publicKey: 'Preenche aqui'
+			},
+			values: {}
 		} satisfies FormTranslation
 	},
 	alert: {
-		generatePublicKey: {
-			title: 'Chave Pública',
+		generateKeyPair: {
+			title: 'Par de Chaves',
 			subtitle:
-				'Aqui tens uma nova chave pública. Partilha-a apenas com quem te vai partilhar a lista de contactos.',
+				'Aqui tens um novo par de chaves. Partilha apenas a chave pública com quem te vai partilhar a lista de contactos',
+			tabs: {
+				public: 'Pública',
+				private: 'Privada'
+			},
 			action: 'Confirmar'
-		},
+		} satisfies TabbedAlertTranslation,
 		sharedContactsList: {
 			title: 'Lista de Contactos',
 			subtitle:
@@ -115,6 +141,14 @@ const pt = {
 		shareFailed: {
 			title: 'Partilha de Contactos',
 			message: 'Ocorreu um erro ao partilhar a lista de contactos. Por favor tenta de novo.'
+		} satisfies NotificationTranslation,
+		missingPublicKey: {
+			title: 'Chave Pública Indisponível',
+			message: 'Não é possível atualizar a lista de contactos até a chave pública ser fornecida.'
+		} satisfies NotificationTranslation,
+		importPublicKeyFailed: {
+			title: 'Importar Chave Pública',
+			message: 'A chave pública fornecida não corresponde à chave privada.'
 		} satisfies NotificationTranslation
 	},
 	contactInformation: {
@@ -125,7 +159,9 @@ const pt = {
 	},
 	searchBarPlaceholder: 'Procure contacto',
 	copyAction: 'Copiar para a área de trabalho',
-	copiedAction: 'Copiado!'
+	copiedAction: 'Copiado!',
+	downloadAction: 'Transferir',
+	downloadedAction: 'Transferido!'
 } satisfies Translation;
 
 export default pt;

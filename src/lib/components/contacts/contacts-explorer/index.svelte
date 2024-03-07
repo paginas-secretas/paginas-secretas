@@ -6,6 +6,7 @@
 	import { LL } from '@i18n';
 
 	export let contactsList: ContactsList;
+	export let readonly: boolean;
 	export let onContactSelected: (contact: Contact) => void;
 	export let onShareSelected: () => void;
 	export let onGenerateKeyPairSelected: () => void;
@@ -18,7 +19,7 @@
 		{
 			option: $LL.share().toString(),
 			callback: onShareSelected,
-			disabled: disabled
+			disabled: disabled || readonly
 		},
 		{
 			option: $LL.generateKeyPair().toString(),
