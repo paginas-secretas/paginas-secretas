@@ -122,7 +122,7 @@ export abstract class AsymmetricCryptographicAlgorithm extends CryptographicAlgo
 	}
 
 	/**
-	 * Checis if a key pair matches.
+	 * Checks if a key pair matches.
 	 *
 	 * @param pair - the asymmetric key pair to check
 	 * @returns true if the key pair matches, false otherwise
