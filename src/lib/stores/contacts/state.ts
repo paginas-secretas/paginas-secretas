@@ -23,6 +23,14 @@ export function ContactsShared(value: ContactsList, url: URL) {
 	};
 }
 
+export function ContactsDecrypted(value: ContactsList, isMissingPublicKey: boolean) {
+	return {
+		value: value,
+		isMissingPublicKey: isMissingPublicKey,
+		type: 'contacts-decrypted' as const
+	};
+}
+
 export function DecryptContactsFailed(error: Error) {
 	return {
 		value: [] as ContactsList,
@@ -58,6 +66,7 @@ export function ShareContactsFailed(value: ContactsList, error: Error) {
 export type ContactsUpdated = ReturnType<typeof ContactsUpdated>;
 export type ContactsSaved = ReturnType<typeof ContactsSaved>;
 export type ContactsShared = ReturnType<typeof ContactsShared>;
+export type ContactsDecrypted = ReturnType<typeof ContactsDecrypted>;
 export type DecryptContactsFailed = ReturnType<typeof DecryptContactsFailed>;
 export type ContactsInitializationFailed = ReturnType<typeof ContactsInitializationFailed>;
 export type SaveContactsFailed = ReturnType<typeof SaveContactsFailed>;
@@ -67,6 +76,7 @@ export type ContactsState =
 	| ContactsUpdated
 	| ContactsSaved
 	| ContactsShared
+	| ContactsDecrypted
 	| DecryptContactsFailed
 	| ContactsInitializationFailed
 	| SaveContactsFailed
@@ -77,6 +87,9 @@ export const isContactsSaved = (state: ContactsState): state is ContactsSaved =>
 
 export const isContactsShared = (state: ContactsState): state is ContactsShared =>
 	isTypedOf<ContactsShared>(state, 'contacts-shared');
+
+export const isContactsDecrypted = (state: ContactsState): state is ContactsDecrypted =>
+	isTypedOf<ContactsDecrypted>(state, 'contacts-decrypted');
 
 export const isDecryptContactsFailed = (state: ContactsState): state is DecryptContactsFailed =>
 	isTypedOf<DecryptContactsFailed>(state, 'decrypt-contacts-failed');

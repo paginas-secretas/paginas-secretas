@@ -39,7 +39,8 @@ import {
 	ContactsUpdated,
 	DecryptContactsFailed,
 	SaveContactsFailed,
-	ShareContactsFailed
+	ShareContactsFailed,
+	ContactsDecrypted
 } from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
@@ -115,7 +116,12 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 				this.asymmetricKey = decrypted.keyPair;
 				this.symmetricKey = decrypted.symmetricKey;
 
-				emit(ContactsUpdated(decrypted.contactsList));
+				emit(
+					ContactsDecrypted(
+						decrypted.contactsList,
+						this.asymmetricKey.private == this.asymmetricKey.public
+					)
+				);
 			} catch (error) {
 				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
 			}
@@ -186,9 +192,10 @@ async function decryptContactsList(privateKey: AsymmetricKey, encrypted: Encrypt
 		iv: iv
 	});
 
+	const keyPair = await vault.cryptoCache.pair(privateKey);
+
 	return {
-		// todo: we need public key
-		keyPair: { private: privateKey, public: privateKey },
+		keyPair: keyPair ? keyPair : { private: privateKey, public: privateKey },
 		symmetricKey: symmetricKey,
 		contactsList: [...JSON.parse(contacts)].map(
 			(x) =>
