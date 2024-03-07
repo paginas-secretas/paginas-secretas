@@ -34,7 +34,7 @@
 		ShowErrorNotification,
 		ShowWarningNotification
 	} from '@stores';
-	import { NewContactButton, SaveContactsListButton } from '../button';
+	import { AddPublicKeyButton, NewContactButton, SaveContactsListButton } from '../button';
 	import { NoContactRecords } from '../illustrations';
 	import { ContactInformation } from './contact-information';
 	import { ContactsExplorer } from './contacts-explorer';
@@ -93,6 +93,7 @@
 		<div class="flex w-1/4">
 			<ContactsExplorer
 				{contactsList}
+				readonly={$contactsReactor.readonly}
 				onContactSelected={(contact) => (contactSelected = contact)}
 				onShareSelected={() => {
 					shareContactsReactor.reset();
@@ -225,13 +226,21 @@
 		</ReactorListener>
 
 		<div class="flex flex-col fixed bottom-10 right-8 gap-3">
-			<NewContactButton
-				onClick={() => {
-					newContactReactor.add(FormStarted());
-				}}
-			/>
-			{#if unsavedChanges}
-				<SaveContactsListButton onClick={() => contactsReactor.add(SaveContacts())} />
+			{#if !$contactsReactor.readonly}
+				<NewContactButton
+					onClick={() => {
+						newContactReactor.add(FormStarted());
+					}}
+				/>
+				{#if unsavedChanges}
+					<SaveContactsListButton onClick={() => contactsReactor.add(SaveContacts())} />
+				{/if}
+			{:else}
+				<AddPublicKeyButton
+					onClick={() => {
+						newContactReactor.add(FormStarted());
+					}}
+				/>
 			{/if}
 		</div>
 	</div>
