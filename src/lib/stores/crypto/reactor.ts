@@ -11,8 +11,9 @@ export class CryptoReactor extends Reactor<CryptoEvent, CryptoState> {
 
 			try {
 				const keyPair = await vault.asymmetricCrypto.generate();
-
 				emit(GenerationSuccess(keyPair));
+
+				vault.cryptoCache.cache(keyPair);
 			} catch (error) {
 				emit(GenerationFailure(error instanceof Error ? error : new Error(`${error}`)));
 			}
