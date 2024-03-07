@@ -29,7 +29,9 @@ import {
 	isShareContacts,
 	type NewContactsList,
 	type SaveContacts,
-	type ShareContacts
+	type ShareContacts,
+	ImportPublicKey,
+	isImportPublicKey
 } from './event';
 import {
 	ContactsInitializationFailed,
@@ -40,7 +42,8 @@ import {
 	DecryptContactsFailed,
 	SaveContactsFailed,
 	ShareContactsFailed,
-	ContactsDecrypted
+	ContactsDecrypted,
+	ImportPublicKeyFailed
 } from './state';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
@@ -126,6 +129,20 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
 			}
 		}, isDecryptContacts);
+
+		super.on<ImportPublicKey>(async (event, emit) => {
+			const vault = withVault();
+			const publicKey = submissionToPublicKey(event.submission);
+			const pair = <AsymmetricKeyPair>{ public: publicKey, private: this.asymmetricKey.private };
+
+			if (await vault.asymmetricCrypto.match(pair)) {
+				this.asymmetricKey.public = publicKey;
+
+				emit(ContactsUpdated(this.state.value));
+			} else {
+				emit(ImportPublicKeyFailed(this.state.value));
+			}
+		}, isImportPublicKey);
 	}
 }
 

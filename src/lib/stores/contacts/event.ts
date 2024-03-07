@@ -16,6 +16,13 @@ export function ShareContacts(submission: FormSubmission) {
 	};
 }
 
+export function ImportPublicKey(submission: FormSubmission) {
+	return {
+		type: 'import-public-key' as const,
+		submission: submission
+	};
+}
+
 export function DecryptContacts(ref: string, hash: string, submission: FormSubmission) {
 	return {
 		type: 'decrypt-contacts' as const,
@@ -54,6 +61,7 @@ export type AddContact = ReturnType<typeof AddContact>;
 export type ShareContacts = ReturnType<typeof ShareContacts>;
 export type DecryptContacts = ReturnType<typeof DecryptContacts>;
 export type ImportContacts = ReturnType<typeof ImportContacts>;
+export type ImportPublicKey = ReturnType<typeof ImportPublicKey>;
 export type NewContactsList = ReturnType<typeof NewContactsList>;
 export type SaveContacts = ReturnType<typeof SaveContacts>;
 
@@ -63,6 +71,7 @@ export type ContactsEvent =
 	| SaveContacts
 	| ShareContacts
 	| ImportContacts
+	| ImportPublicKey
 	| DecryptContacts;
 
 export const isNewContactsList = (event: ContactsEvent) =>
@@ -74,5 +83,7 @@ export const isShareContacts = (event: ContactsEvent) =>
 	isTypedOf<ShareContacts>(event, 'share-contacts');
 export const isImportContacts = (event: ContactsEvent) =>
 	isTypedOf<ImportContacts>(event, 'import-contacts');
+export const isImportPublicKey = (event: ContactsEvent) =>
+	isTypedOf<ImportPublicKey>(event, 'import-public-key');
 export const isDecryptContacts = (event: ContactsEvent) =>
 	isTypedOf<DecryptContacts>(event, 'decrypt-contacts');

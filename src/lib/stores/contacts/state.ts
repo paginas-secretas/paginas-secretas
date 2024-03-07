@@ -71,6 +71,14 @@ export function ShareContactsFailed(value: ContactsList, error: Error) {
 	};
 }
 
+export function ImportPublicKeyFailed(value: ContactsList) {
+	return {
+		value: value,
+		readonly: true,
+		type: 'import-public-key-failed' as const
+	};
+}
+
 export type ContactsUpdated = ReturnType<typeof ContactsUpdated>;
 export type ContactsSaved = ReturnType<typeof ContactsSaved>;
 export type ContactsShared = ReturnType<typeof ContactsShared>;
@@ -79,6 +87,7 @@ export type DecryptContactsFailed = ReturnType<typeof DecryptContactsFailed>;
 export type ContactsInitializationFailed = ReturnType<typeof ContactsInitializationFailed>;
 export type SaveContactsFailed = ReturnType<typeof SaveContactsFailed>;
 export type ShareContactsFailed = ReturnType<typeof ShareContactsFailed>;
+export type ImportPublicKeyFailed = ReturnType<typeof ImportPublicKeyFailed>;
 
 export type ContactsState =
 	| ContactsUpdated
@@ -88,7 +97,8 @@ export type ContactsState =
 	| DecryptContactsFailed
 	| ContactsInitializationFailed
 	| SaveContactsFailed
-	| ShareContactsFailed;
+	| ShareContactsFailed
+	| ImportPublicKeyFailed;
 
 export const isContactsSaved = (state: ContactsState): state is ContactsSaved =>
 	isTypedOf<ContactsSaved>(state, 'contacts-saved');
@@ -112,3 +122,6 @@ export const isSaveContactsFailed = (state: ContactsState): state is SaveContact
 
 export const isShareContactsFailed = (state: ContactsState): state is ShareContactsFailed =>
 	isTypedOf<ShareContactsFailed>(state, 'share-contacts-failed');
+
+export const isImportPublicKeyFailed = (state: ContactsState): state is ImportPublicKeyFailed =>
+	isTypedOf<ImportPublicKeyFailed>(state, 'import-public-key-failed');
