@@ -38,7 +38,8 @@
 	"type": "module",
 	"dependencies": {
 		"rippleui": "^1.9.2",
-		"typesafe-i18n": "^5.24.2"
+		"typesafe-i18n": "^5.24.2",
+		"@web-pacotes/lumberdash": "0.0.1"
 	},
 	"keywords": [
 		"typescript",
