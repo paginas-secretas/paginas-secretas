@@ -5,3 +5,4 @@ export * from './form';
 export * from './illustrations';
 export * from './util';
 export * from './notification';
+export * from './global';

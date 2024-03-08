@@ -45,9 +45,9 @@ export function ImportContacts(
 	};
 }
 
-export function NewContactsList() {
+export function LoadContactsList() {
 	return {
-		type: 'new-contacts-list' as const
+		type: 'load-contacts-list' as const
 	};
 }
 
@@ -62,11 +62,11 @@ export type ShareContacts = ReturnType<typeof ShareContacts>;
 export type DecryptContacts = ReturnType<typeof DecryptContacts>;
 export type ImportContacts = ReturnType<typeof ImportContacts>;
 export type ImportPublicKey = ReturnType<typeof ImportPublicKey>;
-export type NewContactsList = ReturnType<typeof NewContactsList>;
+export type LoadContactsList = ReturnType<typeof LoadContactsList>;
 export type SaveContacts = ReturnType<typeof SaveContacts>;
 
 export type ContactsEvent =
-	| NewContactsList
+	| LoadContactsList
 	| AddContact
 	| SaveContacts
 	| ShareContacts
@@ -74,8 +74,8 @@ export type ContactsEvent =
 	| ImportPublicKey
 	| DecryptContacts;
 
-export const isNewContactsList = (event: ContactsEvent) =>
-	isTypedOf<NewContactsList>(event, 'new-contacts-list');
+export const isLoadContactsList = (event: ContactsEvent) =>
+	isTypedOf<LoadContactsList>(event, 'load-contacts-list');
 export const isAddContact = (event: ContactsEvent) => isTypedOf<AddContact>(event, 'add-contact');
 export const isSaveContacts = (event: ContactsEvent) =>
 	isTypedOf<SaveContacts>(event, 'save-contacts');

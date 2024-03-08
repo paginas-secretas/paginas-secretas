@@ -8,6 +8,7 @@ import {
 	type EncryptedContactsInfo,
 	type EncryptedContactsList,
 	type LocalContactsList,
+	type ParsedLocalContactsList,
 	type PhoneNumber,
 	SymmetricKey,
 	toEncryptedContactsInfo
@@ -17,29 +18,29 @@ import {
 	type ContactsEvent,
 	type DecryptContacts,
 	type ImportContacts,
+	ImportPublicKey,
 	isAddContact,
 	isDecryptContacts,
 	isImportContacts,
-	isNewContactsList,
+	isImportPublicKey,
+	isLoadContactsList,
 	isSaveContacts,
 	isShareContacts,
-	type NewContactsList,
+	LoadContactsList,
 	type SaveContacts,
-	type ShareContacts,
-	ImportPublicKey,
-	isImportPublicKey
+	type ShareContacts
 } from './event';
 import {
+	ContactsDecrypted,
 	ContactsInitializationFailed,
 	ContactsSaved,
 	ContactsShared,
 	type ContactsState,
 	ContactsUpdated,
 	DecryptContactsFailed,
+	ImportPublicKeyFailed,
 	SaveContactsFailed,
-	ShareContactsFailed,
-	ContactsDecrypted,
-	ImportPublicKeyFailed
+	ShareContactsFailed
 } from './state';
 import { logError } from '@web-pacotes/lumberdash';
 
@@ -56,9 +57,24 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 			emit(ContactsUpdated([...this.state.value, contact]));
 		}, isAddContact);
 
-		super.on<NewContactsList>(async (_, emit) => {
+		super.on<LoadContactsList>(async (_, emit) => {
 			try {
 				const vault = withVault();
+
+				try {
+					const cached = await loadLocalContactsList();
+
+					if (cached) {
+						this.symmetricKey = cached.symmetric;
+						this.asymmetricKey = cached.asymmetric;
+
+						emit(ContactsUpdated(cached.contactsList));
+
+						return;
+					}
+				} catch (error) {
+					console.error(error);
+				}
 
 				this.asymmetricKey = await vault.asymmetricCrypto.generate();
 				this.symmetricKey = await vault.symmetricCrypto.generate();
@@ -70,7 +86,7 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 
 				emit(ContactsInitializationFailed(wrapped));
 			}
-		}, isNewContactsList);
+		}, isLoadContactsList);
 
 		super.on<ImportContacts>(async (event, emit) => {
 			this.asymmetricKey = event.asymmetricKeyPair;
@@ -246,16 +262,51 @@ async function triggerStoreContactsList(
 	);
 
 	await vault.browserStorage.store(
-		`${result.ref}/${result.hash}`,
+		'local-contacts-list',
 		JSON.stringify(<LocalContactsList>{
 			asymmetric: {
-				public: asymmetricKeyPair.public.toString(),
-				private: asymmetricKeyPair.private.toString()
+				public: btoa(asymmetricKeyPair.public.toString()),
+				private: btoa(asymmetricKeyPair.private.toString())
 			},
-			symmetric: symmetricKey.toString(),
-			contactsList: contactsList
+			symmetric: btoa(symmetricKey.toString()),
+			contactsList: contactsList,
+			hash: result.hash,
+			ref: result.ref
 		})
 	);
+}
+
+async function loadLocalContactsList() {
+	const vault = withVault();
+	const result = await vault.browserStorage.lookup('local-contacts-list');
+
+	if (!result) {
+		return;
+	}
+
+	const parsed = JSON.parse(result, (key, value) => {
+		switch (key) {
+			case 'symmetric':
+				return SymmetricKey.private(atob(value));
+			case 'asymmetric':
+				return <AsymmetricKeyPair>{
+					public: AsymmetricKey.public(atob(value.public)),
+					private: AsymmetricKey.private(atob(value.private))
+				};
+			case 'contactsList':
+				return [...value].map(
+					(x) =>
+						<Contact>{
+							...x,
+							birthDate: new Date(x.birthDate)
+						}
+				);
+			default:
+				return value;
+		}
+	});
+
+	return parsed as ParsedLocalContactsList;
 }
 
 function submissionToPublicKey(submission: FormSubmission) {
