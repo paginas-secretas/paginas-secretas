@@ -1,6 +1,7 @@
-import { Reactor, withVault } from '@core';
+import { Reactor, withVault, wrapError } from '@core';
 import { type CryptoEvent, isNewKeyPair, type NewKeyPair } from './event';
 import { CryptoInitialized, type CryptoState, GenerationFailure, GenerationSuccess } from './state';
+import { logError } from '@web-pacotes/lumberdash';
 
 export class CryptoReactor extends Reactor<CryptoEvent, CryptoState> {
 	constructor() {
@@ -15,7 +16,10 @@ export class CryptoReactor extends Reactor<CryptoEvent, CryptoState> {
 
 				vault.cryptoCache.cache(keyPair);
 			} catch (error) {
-				emit(GenerationFailure(error instanceof Error ? error : new Error(`${error}`)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(GenerationFailure(wrapped));
 			}
 		}, isNewKeyPair);
 	}

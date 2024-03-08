@@ -1,3 +1,4 @@
+import { logError } from '@web-pacotes/lumberdash';
 import {
 	type EncryptionKey,
 	SymmetricKey,
@@ -7,6 +8,7 @@ import {
 	arrayBuffer,
 	encoded
 } from './encryption-key';
+import { wrapError } from '@core';
 
 export type AESGCMEncryptResult = { data: string; iv: string };
 type EncryptResult = string | AESGCMEncryptResult;
@@ -136,6 +138,8 @@ export abstract class AsymmetricCryptographicAlgorithm extends CryptographicAlgo
 
 			return test === decrypted;
 		} catch (error) {
+			logError(wrapError(error));
+
 			return false;
 		}
 	}

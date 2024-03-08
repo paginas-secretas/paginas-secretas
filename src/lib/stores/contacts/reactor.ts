@@ -1,51 +1,48 @@
-import {
-	isSingleValueWithMultipleValuesFormOutput,
-	wrapError,
-	type FormSubmission
-} from '@components';
-import { Reactor, withVault } from '@core';
+import { type FormSubmission, isSingleValueWithMultipleValuesFormOutput } from '@components';
+import { Reactor, withVault, wrapError } from '@core';
 import {
 	AsymmetricKey,
-	SymmetricKey,
-	toEncryptedContactsInfo,
 	type AsymmetricKeyPair,
 	type Contact,
 	type ContactsList,
 	type EncryptedContactsInfo,
 	type EncryptedContactsList,
 	type LocalContactsList,
+	type ParsedLocalContactsList,
 	type PhoneNumber,
-	type ParsedLocalContactsList
+	SymmetricKey,
+	toEncryptedContactsInfo
 } from '@models';
 import {
+	type AddContact,
+	type ContactsEvent,
+	type DecryptContacts,
+	type ImportContacts,
 	ImportPublicKey,
 	isAddContact,
 	isDecryptContacts,
 	isImportContacts,
 	isImportPublicKey,
+	isLoadContactsList,
 	isSaveContacts,
 	isShareContacts,
-	type AddContact,
-	type ContactsEvent,
-	type DecryptContacts,
-	type ImportContacts,
-	type SaveContacts,
-	type ShareContacts,
 	LoadContactsList,
-	isLoadContactsList
+	type SaveContacts,
+	type ShareContacts
 } from './event';
 import {
 	ContactsDecrypted,
 	ContactsInitializationFailed,
 	ContactsSaved,
 	ContactsShared,
+	type ContactsState,
 	ContactsUpdated,
 	DecryptContactsFailed,
 	ImportPublicKeyFailed,
 	SaveContactsFailed,
-	ShareContactsFailed,
-	type ContactsState
+	ShareContactsFailed
 } from './state';
+import { logError } from '@web-pacotes/lumberdash';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
@@ -84,7 +81,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 
 				emit(ContactsUpdated(this.state.value));
 			} catch (error) {
-				emit(ContactsInitializationFailed(wrapError(error)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(ContactsInitializationFailed(wrapped));
 			}
 		}, isLoadContactsList);
 
@@ -101,7 +101,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 
 				emit(ContactsSaved(this.state.value));
 			} catch (error) {
-				emit(SaveContactsFailed(this.state.value, wrapError(error)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(SaveContactsFailed(this.state.value, wrapped));
 			}
 		}, isSaveContacts);
 
@@ -120,7 +123,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 					)
 				);
 			} catch (error) {
-				emit(ShareContactsFailed(this.state.value, wrapError(error)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(ShareContactsFailed(this.state.value, wrapped));
 			}
 		}, isShareContacts);
 
@@ -142,7 +148,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 					)
 				);
 			} catch (error) {
-				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(DecryptContactsFailed(wrapped));
 			}
 		}, isDecryptContacts);
 
