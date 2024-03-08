@@ -1,9 +1,5 @@
-import {
-	type FormSubmission,
-	isSingleValueWithMultipleValuesFormOutput,
-	wrapError
-} from '@components';
-import { Reactor, withVault } from '@core';
+import { type FormSubmission, isSingleValueWithMultipleValuesFormOutput } from '@components';
+import { Reactor, withVault, wrapError } from '@core';
 import {
 	AsymmetricKey,
 	type AsymmetricKeyPair,
@@ -45,6 +41,7 @@ import {
 	ContactsDecrypted,
 	ImportPublicKeyFailed
 } from './state';
+import { logError } from '@web-pacotes/lumberdash';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
@@ -68,7 +65,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 
 				emit(ContactsUpdated(this.state.value));
 			} catch (error) {
-				emit(ContactsInitializationFailed(wrapError(error)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(ContactsInitializationFailed(wrapped));
 			}
 		}, isNewContactsList);
 
@@ -85,7 +85,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 
 				emit(ContactsSaved(this.state.value));
 			} catch (error) {
-				emit(SaveContactsFailed(this.state.value, wrapError(error)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(SaveContactsFailed(this.state.value, wrapped));
 			}
 		}, isSaveContacts);
 
@@ -104,7 +107,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 					)
 				);
 			} catch (error) {
-				emit(ShareContactsFailed(this.state.value, wrapError(error)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(ShareContactsFailed(this.state.value, wrapped));
 			}
 		}, isShareContacts);
 
@@ -126,7 +132,10 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 					)
 				);
 			} catch (error) {
-				emit(DecryptContactsFailed(error instanceof Error ? error : new Error(`${error}`)));
+				const wrapped = wrapError(error);
+				logError(wrapped);
+
+				emit(DecryptContactsFailed(wrapped));
 			}
 		}, isDecryptContacts);
 

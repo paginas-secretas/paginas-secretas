@@ -4,6 +4,8 @@ import type {
 	PartialEncryptedContactsList
 } from '@models';
 import { contactsEndpoint, ContactsManagerClient, type ContactsManager } from '@http';
+import { logError } from '@web-pacotes/lumberdash';
+import { wrapError } from '@core';
 
 export class WorkerContactsManager implements ContactsManager {
 	constructor(private readonly client: ContactsManagerClient) {}
@@ -20,7 +22,8 @@ export class WorkerContactsManager implements ContactsManager {
 
 			return response.status == 200 ? response.json() : Promise.resolve(response.status);
 		} catch (err) {
-			console.error(err);
+			logError(wrapError(err));
+
 			throw 'Could not upload encrypted contacts list';
 		}
 	}
@@ -36,7 +39,8 @@ export class WorkerContactsManager implements ContactsManager {
 
 			return response.status == 200 ? response.json() : Promise.resolve(response.status);
 		} catch (err) {
-			console.error(err);
+			logError(wrapError(err));
+
 			throw 'Could not fetch encrypted contacts list';
 		}
 	}

@@ -1,6 +1,7 @@
 import type { Form, FormSubmission } from '@components';
 import { FormReactor, type FormValidation } from '../form';
 import type { TranslationFunctions } from '@i18n';
+import { logMessage } from '@web-pacotes/lumberdash';
 
 export class ImportPublicKeyFormReactor extends FormReactor {
 	constructor(ll: TranslationFunctions) {
@@ -8,7 +9,7 @@ export class ImportPublicKeyFormReactor extends FormReactor {
 	}
 
 	protected validate(form: FormSubmission): Pick<FormValidation, 'required' | 'additional'> {
-		console.info(`validation form... ${form}`);
+		logMessage(`validation form... ${form}`);
 
 		return { additional: new Map(), required: new Map() };
 	}
