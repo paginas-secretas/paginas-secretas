@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ContactsViewer, onNextTick } from '@components';
+	import { ContactsViewer } from '@components';
 	import { ContactsReactor, LoadContactsList } from '@stores';
 	import { onMount } from 'svelte';
 
