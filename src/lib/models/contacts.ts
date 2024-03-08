@@ -1,3 +1,5 @@
+import type { AsymmetricKeyPair, SymmetricKey } from './encryption-key';
+
 export type ContactsList = Array<Contact>;
 
 export interface Contact {
@@ -47,7 +49,17 @@ export interface LocalContactsList {
 		private: string;
 	};
 	symmetric: string;
+	ref: string;
+	hash: string;
 	contactsList: ContactsList;
+}
+
+export interface ParsedLocalContactsList {
+	symmetric: SymmetricKey;
+	asymmetric: AsymmetricKeyPair;
+	contactsList: ContactsList;
+	hash: string;
+	ref: string;
 }
 
 export function toEncryptedContactsInfo(contacts: EncryptedContactsList): EncryptedContactsInfo {
