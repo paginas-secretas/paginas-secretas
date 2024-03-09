@@ -15,7 +15,9 @@ const pt = {
 	generateKeyPair: 'Gerar chaves',
 	states: {
 		emptyContactList: 'Ainda não adicionaste contactos.',
-		encryptedContacts: 'Precisas de uma chave privada para aceder a esta lista de contactos.'
+		encryptedContacts: 'Precisas de uma chave privada para aceder a esta lista de contactos.',
+		mobileLayoutNotSupported:
+			'Pedimos desculpa, mas a aplicação ainda não está disponível em versão mobile.'
 	},
 	form: {
 		newContact: {
