@@ -259,7 +259,9 @@
 			{#if !$contactsReactor.readonly}
 				<NewContactButton
 					onClick={() => {
-						newContactReactor.add(FormStarted());
+						newContactReactor.reset();
+
+						onNextTick(() => newContactReactor.add(FormStarted()));
 					}}
 				/>
 				{#if unsavedChanges}
