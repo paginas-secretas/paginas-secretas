@@ -45,6 +45,10 @@ type RootTranslation = {
 		 * Y​o​u​ ​n​e​e​d​ ​a​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​t​o​ ​l​o​a​d​ ​t​h​i​s​ ​c​o​n​t​a​c​t​s​ ​l​i​s​t​.
 		 */
 		encryptedContacts: string;
+		/**
+		 * I​'​m​ ​s​o​r​r​y​,​ ​t​h​i​s​ ​a​p​p​l​i​c​a​t​i​o​n​ ​i​s​n​'​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​m​o​b​i​l​e​ ​y​e​t​.
+		 */
+		mobileLayoutNotSupported: string;
 	};
 	form: {
 		newContact: {
@@ -489,6 +493,10 @@ export type TranslationFunctions = {
 		 * You need a private key to load this contacts list.
 		 */
 		encryptedContacts: () => LocalizedString;
+		/**
+		 * I'm sorry, this application isn't available on mobile yet.
+		 */
+		mobileLayoutNotSupported: () => LocalizedString;
 	};
 	form: {
 		newContact: {

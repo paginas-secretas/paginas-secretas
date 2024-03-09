@@ -15,7 +15,8 @@ const en = {
 	generateKeyPair: 'Generate keys',
 	states: {
 		emptyContactList: "You haven't added a contact record yet.",
-		encryptedContacts: 'You need a private key to load this contacts list.'
+		encryptedContacts: 'You need a private key to load this contacts list.',
+		mobileLayoutNotSupported: "I'm sorry, this application isn't available on mobile yet."
 	},
 	form: {
 		newContact: {
