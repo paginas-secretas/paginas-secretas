@@ -61,9 +61,9 @@
 >
 	{#if $contactsReactor.value.length > 0}
 		<ContactsViewer {contactsReactor} />
+	{:else}
+		<div class="flex flex-col justify-center h-screen">
+			<EncryptedContacts />
+		</div>
 	{/if}
 </ReactorListener>
-
-<div class="flex flex-col justify-center h-screen">
-	<EncryptedContacts />
-</div>
