@@ -8,6 +8,7 @@
 		VerticalNotificationGroup
 	} from '@components';
 	import { EmojiLumberdashClient, putLumberdashToWork } from '@web-pacotes/lumberdash';
+	import ClientSideRouting from './csr.svelte';
 
 	registerVault(globalThis.window);
 	putLumberdashToWork([new EmojiLumberdashClient()]);
@@ -19,7 +20,9 @@
 
 <div class="max-lg:hidden">
 	<ReactorProvider reactor={notifications}>
-		<slot />
+		<ClientSideRouting>
+			<slot />
+		</ClientSideRouting>
 		<VerticalNotificationGroup values={$notifications.value} />
 	</ReactorProvider>
 </div>
