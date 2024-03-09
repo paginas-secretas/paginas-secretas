@@ -8,5 +8,5 @@
 		<FeatureNotAvailable size="m" />
 	</div>
 
-	<p class="text-lg">{$LL.states.mobileLayoutNotSupported()}</p>
+	<p class="text-lg text-center">{$LL.states.mobileLayoutNotSupported()}</p>
 </div>
