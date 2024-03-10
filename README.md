@@ -17,9 +17,7 @@ Contact list like app with E2E encryption
 
 ## Demo
 
--
-
----
+- ***
 
 ## Bugs and Contributions
 
