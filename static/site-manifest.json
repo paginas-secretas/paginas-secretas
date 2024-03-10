@@ -1,6 +1,6 @@
 {
-	"name": "replace-by-name",
-	"short_name": "replace-by-name",
+	"name": "paginas-secretas",
+	"short_name": "paginas-secretas",
 	"icons": [
 		{
 			"src": "/favicon.ico",
@@ -30,7 +30,7 @@
 			"purpose": "maskable"
 		}
 	],
-	"theme_color": "#ffffff",
-	"background_color": "#ffffff",
+	"theme_color": "#252527",
+	"background_color": "#252527",
 	"display": "standalone"
 }
