@@ -119,7 +119,7 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 				emit(
 					ContactsShared(
 						this.state.value,
-						new URL(`${window.location.origin}/${result.ref}/${result.hash}`)
+						new URL(`${window.location.origin}?ref=${result.ref}&hash=${result.hash}`)
 					)
 				);
 			} catch (error) {
