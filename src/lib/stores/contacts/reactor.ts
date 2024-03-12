@@ -40,7 +40,8 @@ import {
 	DecryptContactsFailed,
 	ImportPublicKeyFailed,
 	SaveContactsFailed,
-	ShareContactsFailed
+	ShareContactsFailed,
+	ContactsLoaded
 } from './state';
 import { logError } from '@web-pacotes/lumberdash';
 import { browser } from '$app/environment';
@@ -69,7 +70,7 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 						this.symmetricKey = cached.symmetric;
 						this.asymmetricKey = cached.asymmetric;
 
-						emit(ContactsUpdated(cached.contactsList));
+						emit(ContactsLoaded(cached.contactsList));
 
 						return;
 					}

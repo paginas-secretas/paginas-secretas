@@ -26,7 +26,7 @@
 		</div>
 
 		<section>
-			<form id={form.id} on:submit={() => onSubmit(submission)}>
+			<form id={form.id} on:submit|preventDefault={() => onSubmit(submission)}>
 				<VerticalFormGroup {form} onSubmit={(formSubmission) => (submission = formSubmission)} />
 			</form>
 		</section>

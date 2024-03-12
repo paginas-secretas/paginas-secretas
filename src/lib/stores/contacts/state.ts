@@ -1,6 +1,14 @@
 import type { ContactsList } from '@models';
 import { isTypedOf } from '@core';
 
+export function ContactsLoaded(value: ContactsList) {
+	return {
+		value: value,
+		readonly: false,
+		type: 'contacts-loaded' as const
+	};
+}
+
 export function ContactsUpdated(value: ContactsList) {
 	return {
 		value: value,
@@ -79,6 +87,7 @@ export function ImportPublicKeyFailed(value: ContactsList) {
 	};
 }
 
+export type ContactsLoaded = ReturnType<typeof ContactsLoaded>;
 export type ContactsUpdated = ReturnType<typeof ContactsUpdated>;
 export type ContactsSaved = ReturnType<typeof ContactsSaved>;
 export type ContactsShared = ReturnType<typeof ContactsShared>;
@@ -90,6 +99,7 @@ export type ShareContactsFailed = ReturnType<typeof ShareContactsFailed>;
 export type ImportPublicKeyFailed = ReturnType<typeof ImportPublicKeyFailed>;
 
 export type ContactsState =
+	| ContactsLoaded
 	| ContactsUpdated
 	| ContactsSaved
 	| ContactsShared
@@ -99,6 +109,9 @@ export type ContactsState =
 	| SaveContactsFailed
 	| ShareContactsFailed
 	| ImportPublicKeyFailed;
+
+export const isContactsLoaded = (state: ContactsState): state is ContactsLoaded =>
+	isTypedOf<ContactsLoaded>(state, 'contacts-loaded');
 
 export const isContactsSaved = (state: ContactsState): state is ContactsSaved =>
 	isTypedOf<ContactsSaved>(state, 'contacts-saved');

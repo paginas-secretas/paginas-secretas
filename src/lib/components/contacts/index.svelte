@@ -19,6 +19,7 @@
 		ImportPublicKeyFormReactor,
 		isContactsDecrypted,
 		isContactsInitializationFailed,
+		isContactsLoaded,
 		isContactsSaved,
 		isContactsShared,
 		isFormFinish,
@@ -64,6 +65,7 @@
 	$: unsavedChanges =
 		!isContactsSaved($contactsReactor) &&
 		!isContactsShared($contactsReactor) &&
+		!isContactsLoaded($contactsReactor) &&
 		$contactsReactor.value.length > 0;
 </script>
 
