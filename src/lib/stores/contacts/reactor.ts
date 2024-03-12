@@ -43,6 +43,7 @@ import {
 	ShareContactsFailed
 } from './state';
 import { logError } from '@web-pacotes/lumberdash';
+import { browser } from '$app/environment';
 
 export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 	private symmetricKey!: SymmetricKey;
@@ -116,12 +117,12 @@ export class ContactsReactor extends Reactor<ContactsEvent, ContactsState> {
 				const symmetricKey = await vault.symmetricCrypto.generate();
 				const result = await storeContactsListInManager(symmetricKey, publicKey, this.state.value);
 
-				emit(
-					ContactsShared(
-						this.state.value,
-						new URL(`${window.location.origin}/${result.ref}/${result.hash}`)
-					)
-				);
+				let url = `${window.location.origin}/${result.ref}/${result.hash}`;
+				if (browser) {
+					url = `${window.location.origin}?ref=${result.ref}&hash=${result.hash}`;
+				}
+
+				emit(ContactsShared(this.state.value, new URL(url)));
 			} catch (error) {
 				const wrapped = wrapError(error);
 				logError(wrapped);
