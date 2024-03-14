@@ -1,0 +1,1 @@
+import{d as e,s as a}from"../chunks/no-contacts-found.8a4a41c5.js";import{l as t}from"../chunks/i18n-util.async.e43d04b6.js";import{P as m}from"../chunks/_page.395fcd07.js";const l=async()=>{const o=e();await t(o),a(o)},s=Object.freeze(Object.defineProperty({__proto__:null,load:l},Symbol.toStringTag,{value:"Module"}));export{m as component,s as universal};
