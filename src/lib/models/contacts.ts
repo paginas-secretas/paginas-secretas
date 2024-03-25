@@ -62,6 +62,12 @@ export interface ParsedLocalContactsList {
 	ref: string;
 }
 
+export interface ContactsListId {
+	name: string;
+	hash: string;
+	ref: string;
+}
+
 export function toEncryptedContactsInfo(contacts: EncryptedContactsList): EncryptedContactsInfo {
 	const json = atob(contacts.contacts);
 

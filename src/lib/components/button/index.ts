@@ -6,3 +6,4 @@ export { default as OptionsButton } from './options-button.svelte';
 export { default as CopyButton } from './copy-button.svelte';
 export { default as DownloadButton } from './download-button.svelte';
 export { default as AddPublicKeyButton } from './add-public-key-button.svelte';
+export { default as ContactsListButton } from './contacts-list-button.svelte';
